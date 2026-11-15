@@ -91,5 +91,28 @@
       "aliasing",
       "spectrum"
     ]
+  },
+  {
+    "id": "cosmic-distance-ladder",
+    "title": "Cosmic Distance Ladder",
+    "summary": "Measure the universe with parallax, Cepheid variables, standardized supernovae and low-redshift expansion models across four learning levels.",
+    "subject": "Earth & Space",
+    "levels": [
+      "Primary",
+      "Lower secondary",
+      "Upper secondary",
+      "University"
+    ],
+    "path": "visualizations/cosmic-distance-ladder/",
+    "keywords": [
+      "cosmic distance ladder",
+      "parallax",
+      "Cepheids",
+      "Type Ia supernova",
+      "redshift",
+      "Hubble constant",
+      "astronomy",
+      "distance modulus"
+    ]
   }
 ]
