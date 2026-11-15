@@ -114,5 +114,28 @@
       "astronomy",
       "distance modulus"
     ]
+  },
+  {
+    "id": "dalton-atomic-model",
+    "title": "Dalton's atomic model",
+    "summary": "Build atomic compounds, compare chemical proportions, conserve atoms, and investigate how Dalton's theory evolved through four learning levels.",
+    "subject": "Chemistry",
+    "levels": [
+      "Primary",
+      "Lower secondary",
+      "Upper secondary",
+      "University"
+    ],
+    "path": "visualizations/dalton-atomic-model/",
+    "keywords": [
+      "Dalton",
+      "atomic theory",
+      "chemical proportions",
+      "stoichiometry",
+      "conservation of atoms",
+      "carbon monoxide",
+      "carbon dioxide",
+      "history of chemistry"
+    ]
   }
 ]
