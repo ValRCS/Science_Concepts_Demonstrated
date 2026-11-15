@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#091625">
+  <meta name="description" content="What is dark matter? Explore simulated galaxy rotation curves, invisible mass, and the evidence through four progressively deeper learning levels.">
+  <title>What is dark matter? | Science Concepts Demonstrated</title>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap header-row">
+      <a class="home-link" href="../../"><span class="home-icon" aria-hidden="true">∑</span> Science Concepts Demonstrated</a>
+      <a class="directory-link" href="../../#directory">← All concepts</a>
+    </div>
+  </header>
+  <main id="main" class="wrap">
+    <section class="intro" aria-labelledby="page-title">
+      <div class="eyebrow">EARTH &amp; SPACE <span class="separator">/</span> COSMOLOGY</div>
+      <h1 id="page-title">What is <span>dark matter?</span></h1>
+      <p class="lead">Astronomers can see stars orbiting galaxies. Their motion reveals gravity from much more matter than we can observe with telescopes. What could be making the difference?</p>
+      <p class="intro-fact"><span aria-hidden="true">✦</span> We have strong gravitational evidence for dark matter. We still do not know its microscopic identity.</p>
+    </section>
+
+    <section class="lab" aria-labelledby="lab-title">
+      <div class="section-heading">
+        <div><span class="kicker">01 / INTERACTIVE EXPERIMENT</span><h2 id="lab-title">The invisible gravity laboratory</h2></div>
+        <p>Change the galaxy model. Watch a tracked star and compare predicted orbital speeds.</p>
+      </div>
+      <div class="lab-grid">
+        <section class="panel galaxy-panel" aria-labelledby="galaxy-title">
+          <div class="panel-top"><h3 id="galaxy-title">A galaxy from above</h3><span class="model-pill">IDEALIZED MODEL</span></div>
+          <canvas id="galaxy" width="640" height="440" role="img" aria-label="Illustrated spiral galaxy and a highlighted star moving around a circular orbit; halo shading is schematic and not directly observable">A canvas-capable browser is required to see the galaxy illustration. The graph and numeric results remain available.</canvas>
+          <div class="scene-legend"><span><i class="key key-star"></i> Tracked star</span><span><i class="key key-disk"></i> Visible stars</span><span><i class="key key-halo"></i> Illustrative halo</span></div>
+          <p class="caption">The purple halo is a visualization aid, not emitted light or an image of dark matter. Animation time is greatly accelerated.</p>
+        </section>
+        <section class="panel controls-panel" aria-labelledby="controls-title">
+          <div class="panel-top"><h3 id="controls-title">Your experiment</h3></div>
+          <fieldset class="mode-fieldset">
+            <legend>Which gravity model?</legend>
+            <div class="choice-row" role="group" aria-label="Select the model for the tracked star">
+              <button type="button" class="choice" data-halo="true" aria-pressed="true">With dark halo</button>
+              <button type="button" class="choice" data-halo="false" aria-pressed="false">Visible mass only</button>
+            </div>
+          </fieldset>
+          <label class="range-label" for="radius">Tracked star's distance from centre <output id="radiusValue" for="radius">12 kpc</output></label>
+          <input id="radius" type="range" min="2" max="30" value="12" step="1">
+          <div class="advanced-controls" data-min-level="2" hidden>
+            <p class="control-group-title">Explore the galaxy's ingredients</p>
+            <label class="range-label" for="mass">Visible-matter mass <output id="massValue" for="mass">6 × 10¹⁰ M☉</output></label>
+            <input id="mass" type="range" min="1" max="12" step="0.5" value="6">
+            <label class="range-label" for="haloSpeed">Halo asymptotic speed <output id="haloSpeedValue" for="haloSpeed">205 km/s</output></label>
+            <input id="haloSpeed" type="range" min="0" max="300" step="5" value="205">
+          </div>
+          <div class="advanced-controls" data-min-level="3" hidden>
+            <p class="control-group-title">Analyze the density profiles</p>
+            <label class="range-label" for="core">Halo core radius <output id="coreValue" for="core">5 kpc</output></label>
+            <input id="core" type="range" min="1" max="15" step="1" value="5">
+            <label class="range-label" for="scale">Visible-matter scale length <output id="scaleValue" for="scale">3 kpc</output></label>
+            <input id="scale" type="range" min="1" max="10" step="0.5" value="3">
+          </div>
+          <div class="control-actions">
+            <button id="motion" type="button" aria-pressed="true">Pause orbit</button>
+            <button id="reset" type="button">Reset experiment</button>
+          </div>
+          <div class="readouts">
+            <div><span>Star's model speed</span><strong id="speedReadout">—</strong></div>
+            <div><span>Visible matter alone</span><strong id="visibleReadout">—</strong></div>
+            <div><span>Orbit period</span><strong id="periodReadout">—</strong></div>
+          </div>
+          <p id="model-status" class="status" role="status" aria-live="polite" aria-atomic="true">Computing the selected model…</p>
+        </section>
+      </div>
+
+      <section class="panel chart-panel" aria-labelledby="chart-title">
+        <div class="chart-heading"><div><h3 id="chart-title">Rotation curve: speed versus distance</h3><p>The two predictions use the same visible-matter model. Neither curve is observational data.</p></div>
+        <div class="chart-legend"><span><i class="key key-total"></i> With dark halo</span><span><i class="key key-visible"></i> Visible only</span></div></div>
+        <svg id="rotation-curve" viewBox="0 0 760 310" role="img" aria-label="Chart of predicted circular orbital speed in kilometres per second against galactocentric radius in kiloparsecs">
+          <title>Simulated galaxy rotation curves</title>
+          <desc>The orange curve shows the speed from visible matter alone, and the teal curve adds a dark-matter halo. A vertical guide marks the tracked star's radius.</desc>
+        </svg>
+        <p class="caption">Observe that adding an extended halo can keep speeds high at large radii. Changing a switch compares two separately idealized equilibrium models; it does not instantly remove mass from a real galaxy.</p>
+        <div class="reading-table-wrap">
+          <table class="reading-table">
+            <caption>Calculated speeds at the selected radius (not measured values)</caption>
+            <thead><tr><th scope="col">Radius</th><th scope="col">Visible-only</th><th scope="col">With halo</th><th scope="col">Halo contribution</th></tr></thead>
+            <tbody><tr><td id="tableRadius">—</td><td id="tableVisible">—</td><td id="tableTotal">—</td><td id="tableHalo">—</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+    </section>
+
+    <section class="learning" aria-labelledby="learning-title">
+      <div class="section-heading"><div><span class="kicker">02 / LEARN AT YOUR LEVEL</span><h2 id="learning-title">From discovery to research</h2></div><p>Switch levels freely. The galaxy laboratory remains the same; deeper controls appear as you progress.</p></div>
+      <div class="level-tabs" role="tablist" aria-label="Explanation level">
+        <button id="tab-1" type="button" role="tab" aria-controls="level-1" aria-selected="true" tabindex="0" data-level="1"><span>01</span> Discover <small>7–10</small></button>
+        <button id="tab-2" type="button" role="tab" aria-controls="level-2" aria-selected="false" tabindex="-1" data-level="2"><span>02</span> Explore <small>14–18</small></button>
+        <button id="tab-3" type="button" role="tab" aria-controls="level-3" aria-selected="false" tabindex="-1" data-level="3"><span>03</span> Analyze <small>University</small></button>
+        <button id="tab-4" type="button" role="tab" aria-controls="level-4" aria-selected="false" tabindex="-1" data-level="4"><span>04</span> Research <small>Graduate</small></button>
+      </div>
+
+      <article class="panel level-body" id="level-1" role="tabpanel" aria-labelledby="tab-1" tabindex="0">
+        <span class="kicker">LEVEL 1 / DISCOVER &amp; PLAY</span><h3>How can you notice something you cannot see?</h3>
+        <p>Imagine watching leaves move when you cannot feel the wind. The leaves show you that <em>something</em> is happening. Astronomers use the motion of stars in a similar way: their paths tell us about gravity.</p>
+        <p>Stars far from the centres of many galaxies travel surprisingly fast. The stars and gas we can see do not seem to provide enough gravity to explain those movements. Scientists call the missing source of gravity <strong>dark matter</strong>.</p>
+        <div class="experiment-prompt"><strong>Try it!</strong> Move the tracked star toward the galaxy's edge. Now switch between “With dark halo” and “Visible mass only.” Which model predicts the faster orbit far out?</div>
+        <p><strong>Important:</strong> Dark matter is not a black cloud or a shadow. It does not glow like stars, and we have not yet identified what it is made of.</p>
+      </article>
+      <article class="panel level-body" id="level-2" role="tabpanel" aria-labelledby="tab-2" tabindex="0" hidden>
+        <span class="kicker">LEVEL 2 / EXPLORE &amp; UNDERSTAND</span><h3>Why do galaxy rotation curves matter?</h3>
+        <p>Gravity holds orbiting objects on curved paths. In a simplified spherical system, if nearly all the mass is concentrated closer to the centre, the circular orbital speed decreases farther out: <strong>v ∝ 1/√r</strong>. Astronomers instead find that the outer rotation curves of many spiral galaxies remain approximately flat over large ranges.</p>
+        <p>A <strong>dark-matter halo</strong> is a proposed extended distribution of unseen mass. Its additional gravity increases the circular speed, particularly in outer regions. Real galaxies also contain ordinary matter we cannot see directly in visible-light photographs, such as gas.</p>
+        <div class="experiment-prompt"><strong>Investigate:</strong> Increase visible-matter mass, then increase halo speed. How do the two changes affect the orange and teal curves differently? Can you make the halo curve nearly flat in the outer galaxy?</div>
+        <p><strong>Units:</strong> 1 kiloparsec (kpc) is about 3,260 light-years. Orbital speed is shown in kilometres per second (km/s). The mass slider uses units of ten billion solar masses, M☉.</p>
+        <p>Other evidence comes from the way mass bends light (<strong>gravitational lensing</strong>), colliding galaxy clusters, and the early-universe cosmic microwave background. These are independent observations, not outputs of our toy galaxy.</p>
+      </article>
+      <article class="panel level-body" id="level-3" role="tabpanel" aria-labelledby="tab-3" tabindex="0" hidden>
+        <span class="kicker">LEVEL 3 / ANALYZE &amp; MODEL</span><h3>A circular-speed model with two mass components</h3>
+        <p>For a spherically symmetric gravitational mass distribution and a circular test-particle orbit, balancing centripetal acceleration against gravity gives:</p>
+        <div class="equation">v<sub>c</sub>²(r) / r = G M(&lt;r) / r², &nbsp; hence &nbsp; v<sub>c</sub>²(r) = G M(&lt;r) / r.</div>
+        <p>We approximate luminous matter by a <strong>Hernquist spherical profile</strong> with total mass M<sub>b</sub> and scale length a:</p>
+        <div class="equation">M<sub>b</sub>(&lt;r) = M<sub>b</sub> r² / (r + a)²; &nbsp; v<sub>b</sub>² = G M<sub>b</sub> r / (r + a)².</div>
+        <p>The halo has a <strong>cored pseudo-isothermal density profile</strong>, with x = r/r<sub>c</sub>:</p>
+        <div class="equation">ρ<sub>h</sub>(r) = ρ₀ / (1 + x²); &nbsp; M<sub>h</sub>(&lt;r) = 4πρ₀r<sub>c</sub>³ (x − arctan x).</div>
+        <div class="equation">v<sub>h</sub>²(r) = v<sub>∞</sub>² (1 − arctan(x)/x); &nbsp; v<sub>∞</sub>² = 4πGρ₀r<sub>c</sub>².</div>
+        <p>Gravitational accelerations add, so <strong>v<sub>total</sub>² = v<sub>b</sub>² + v<sub>h</sub>²</strong>. In the simulation, G = 4.30091 × 10⁻⁶ kpc (km/s)² M☉⁻¹. The “visible only” switch sets the halo term to zero, while keeping the baryonic model unchanged.</p>
+        <div class="experiment-prompt"><strong>Analyze:</strong> Raise the halo core radius while holding its asymptotic speed fixed. Where does the curve transition toward a plateau? Repeat with the baryonic scale length.</div>
+        <p><strong>Assumptions:</strong> Newtonian gravity, spherical symmetry, circular test-particle orbits, equilibrium, and an invented smooth mass profile. Real spiral-galaxy stars lie primarily in a flattened disk, whose force law differs from this spherical proxy. The generated curves must not be interpreted as fits to real observations.</p>
+      </article>
+      <article class="panel level-body" id="level-4" role="tabpanel" aria-labelledby="tab-4" tabindex="0" hidden>
+        <span class="kicker">LEVEL 4 / INVESTIGATE &amp; RESEARCH</span><h3>What do the observations establish, and what remains uncertain?</h3>
+        <p>Within the spherical circular-orbit approximation, a flat rotation curve v<sub>c</sub>(r) ≈ constant implies M(&lt;r) ∝ r and therefore ρ(r) ∝ r⁻² over the relevant range. Our cored halo approaches that behavior at large r. Its mass grows without bound as r → ∞, so it is <strong>not</strong> a globally realistic finite halo; a truncated profile or another halo prescription is necessary for large-scale prediction.</p>
+        <p>Cosmological simulations often use <strong>Navarro–Frenk–White (NFW)</strong>-like cusped profiles rather than this classroom core. Observations and modeling at small radii are affected by baryonic feedback, non-circular motions, inclination uncertainty, stellar mass-to-light ratios, and parameter degeneracies. A rotation curve alone does not uniquely identify a particle or an inner density profile.</p>
+        <p>Evidence for a nonluminous gravitating component arises from multiple scales: galaxy kinematics, lensing mass maps, galaxy-cluster mergers, large-scale structure, and cosmic microwave background anisotropies. The <strong>Bullet Cluster</strong> shows a lensing mass distribution spatially offset from much of its hot X-ray gas, a powerful challenge to models relying only on ordinary matter. The <strong>ΛCDM</strong> model describes the cosmic microwave background remarkably well but assumes a particular cosmological framework.</p>
+        <p>Particle candidates include axions and weakly interacting massive particles. Nonparticle alternatives, including modified-gravity theories, are investigated and face the obligation to explain <em>all</em> the evidence consistently. As of November 2026 no dark-matter particle has a confirmed laboratory detection; an unusual LZ event reported in September 2026 was explicitly <strong>not</strong> a discovery claim.</p>
+        <div class="experiment-prompt"><strong>Research exercise:</strong> Try to match an approximately flat outer curve using different visible masses and halo core radii. Which model parameters can the displayed curve constrain, and what extra observations (gas maps, lensing, stellar populations) would help break degeneracies?</div>
+        <p><strong>Model boundaries:</strong> no observational uncertainties or instrument selection effects; no self-consistent disk dynamics, relativistic lensing, cosmological expansion, halo truncation, or formation history. Animation time has no cosmological scaling.</p>
+      </article>
+    </section>
+
+    <section class="evidence" aria-labelledby="evidence-title">
+      <div class="section-heading"><div><span class="kicker">03 / OBSERVATIONS, NOT SIMULATIONS</span><h2 id="evidence-title">How do scientists know?</h2></div><p>Several independent kinds of measurement point to additional gravitating matter.</p></div>
+      <div class="evidence-grid">
+        <article class="evidence-card"><span class="evidence-index">01</span><h3>Galaxy rotation</h3><p>Stars and gas in many galaxies orbit faster in their outskirts than expected from concentrated ordinary matter alone.</p><a href="https://science.nasa.gov/dark-matter/">NASA: rotation evidence ↗</a></article>
+        <article class="evidence-card"><span class="evidence-index">02</span><h3>Gravitational lensing</h3><p>The distortion of background light maps total gravitational mass, even where no corresponding luminous material is apparent.</p><a href="https://science.nasa.gov/mission/hubble/science/science-behind-the-discoveries/hubble-dark-matter/">NASA: lensing maps ↗</a></article>
+        <article class="evidence-card"><span class="evidence-index">03</span><h3>Colliding clusters</h3><p>In the Bullet Cluster, the lensing-derived mass peaks are separated from much of the collision-heated ordinary gas.</p><a href="https://science.nasa.gov/missions/hubble/nasa-finds-direct-proof-of-dark-matter/">NASA: Bullet Cluster ↗</a></article>
+        <article class="evidence-card"><span class="evidence-index">04</span><h3>The early universe</h3><p>Patterns in the cosmic microwave background constrain the amount of ordinary and cold dark matter under ΛCDM.</p><a href="https://www.esa.int/Science_Exploration/Space_Science/Planck/Planck_science_highlights">ESA: Planck results ↗</a></article>
+      </div>
+      <section class="cosmic-recipe panel" aria-labelledby="recipe-title">
+        <div><h3 id="recipe-title">What is the universe made of?</h3><p>Illustrative shares of the <strong>total cosmic mass–energy density</strong> from ESA's Planck-era ΛCDM summary. Dark matter is not the same thing as dark energy.</p></div>
+        <div class="recipe-visual">
+          <div class="composition-bar" role="img" aria-label="4.9 percent ordinary matter, 26.8 percent dark matter, and 68.3 percent dark energy"><span class="normal" style="width:4.9%"></span><span class="dark" style="width:26.8%"></span><span class="energy" style="width:68.3%"></span></div>
+          <div class="composition-legend"><span><i class="key normal-key"></i> Ordinary matter <b>4.9%</b></span><span><i class="key dark-key"></i> Dark matter <b>26.8%</b></span><span><i class="key energy-key"></i> Dark energy <b>68.3%</b></span></div>
+          <p class="caption">Rounded historical Planck summary percentages, not adjustable simulation parameters. Different analyses and cosmological assumptions give slightly different estimates.</p>
+        </div>
+      </section>
+    </section>
+
+    <section class="references panel" aria-labelledby="references-title">
+      <span class="kicker">04 / SOURCES &amp; FURTHER READING</span><h2 id="references-title">Research and references</h2>
+      <ol>
+        <li><a href="https://science.nasa.gov/dark-matter/">NASA Science — Dark Matter</a>. Accessible overview, history, lensing, and the Bullet Cluster.</li>
+        <li><a href="https://www.esa.int/Science_Exploration/Space_Science/Planck/Planck_science_highlights">ESA — Planck science highlights</a>. Cosmic microwave background and representative cosmological composition.</li>
+        <li>Rubin, V. C., Ford, W. K., Jr., &amp; Thonnard, N. (1980). <a href="https://doi.org/10.1086/158003">Rotational properties of 21 Sc galaxies</a>. <i>Astrophysical Journal</i>, 238, 471–487. doi:10.1086/158003.</li>
+        <li>Clowe, D., et al. (2006). <a href="https://doi.org/10.1086/508162">A direct empirical proof of the existence of dark matter</a>. <i>Astrophysical Journal Letters</i>, 648, L109–L113. doi:10.1086/508162.</li>
+        <li>Planck Collaboration (2020). <a href="https://doi.org/10.1051/0004-6361/201833910">Planck 2018 results. VI. Cosmological parameters</a>. <i>Astronomy &amp; Astrophysics</i>, 641, A6. doi:10.1051/0004-6361/201833910.</li>
+        <li>Bertone, G., &amp; Hooper, D. (2018). <a href="https://doi.org/10.1103/RevModPhys.90.045002">History of dark matter</a>. <i>Reviews of Modern Physics</i>, 90, 045002. doi:10.1103/RevModPhys.90.045002.</li>
+        <li><a href="https://www.energy.gov/science/articles/lz-sees-surprising-result-search-dark-matter">U.S. Department of Energy (September 2026) — LZ dark-matter search update</a>. Explains why an unusual event is not a confirmed discovery.</li>
+      </ol>
+    </section>
+  </main>
+  <footer class="site-footer"><div class="wrap footer-row"><span>Science Concepts Demonstrated · Scientific models, not observational datasets</span><a href="../../">Back to the directory ↑</a></div></footer>
+</body>
+</html>

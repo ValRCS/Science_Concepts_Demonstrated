@@ -20,5 +20,29 @@
       "physics",
       "mapping"
     ]
+  },
+  {
+    "id": "what-is-dark-matter",
+    "title": "What is dark matter?",
+    "summary": "Compare galaxy rotation curves with and without a dark-matter halo, then examine the evidence and models at four learning levels.",
+    "subject": "Earth & Space",
+    "levels": [
+      "Primary",
+      "Lower secondary",
+      "Upper secondary",
+      "University"
+    ],
+    "path": "visualizations/what-is-dark-matter/",
+    "keywords": [
+      "dark matter",
+      "galaxies",
+      "rotation curves",
+      "gravity",
+      "cosmology",
+      "gravitational lensing",
+      "bullet cluster",
+      "halo",
+      "astronomy"
+    ]
   }
 ]
