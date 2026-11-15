@@ -67,5 +67,29 @@
       "quantum physics",
       "nucleus"
     ]
+  },
+  {
+    "id": "fourier-transform",
+    "title": "Fourier Transform",
+    "summary": "Build waveforms, calculate their Fourier spectra, explore harmonics, aliasing, leakage and inverse reconstruction across four learning levels.",
+    "subject": "Mathematics",
+    "levels": [
+      "Primary",
+      "Lower secondary",
+      "Upper secondary",
+      "University"
+    ],
+    "path": "visualizations/fourier-transform/",
+    "keywords": [
+      "Fourier transform",
+      "DFT",
+      "FFT",
+      "frequency",
+      "signal processing",
+      "harmonics",
+      "sampling",
+      "aliasing",
+      "spectrum"
+    ]
   }
 ]
