@@ -18,8 +18,8 @@
         <span>Science <strong>Concepts Demonstrated</strong></span>
       </a>
       <nav class="site-nav" aria-label="Main navigation">
-        <a href="#subjects">Subjects</a>
-        <a href="#directory">Directory</a>
+        <a href="#subjects">Categories</a>
+        <a href="#directory">Concepts</a>
         <a href="#about">About</a>
         <a class="repo-link" href="https://github.com/ValRCS/Science_Concepts_Demonstrated">GitHub <span aria-hidden="true">↗</span></a>
       </nav>
@@ -33,8 +33,8 @@
         <h1 id="hero-title">Science becomes clearer when you can <em>see it.</em></h1>
         <p class="lead">Small, focused visualizations that turn ideas from mathematics and science into something you can experiment with — from school lessons to university concepts.</p>
         <div class="hero-actions">
-          <a class="button button-primary" href="#directory">Browse concepts <span aria-hidden="true">↓</span></a>
-          <a class="button button-secondary" href="#about">How this works</a>
+          <a class="button button-primary" href="#subjects">Explore categories <span aria-hidden="true">↓</span></a>
+          <a class="button button-secondary" href="#directory">All concepts</a>
         </div>
         <p class="hero-note">Free to explore · In your browser · No account required</p>
       </div>
@@ -62,15 +62,75 @@
     <section id="subjects" class="section subject-section" aria-labelledby="subjects-title">
       <div class="container">
         <div class="section-heading">
-          <div><span class="kicker">01 / EXPLORE</span><h2 id="subjects-title">Find your subject</h2><p>Start with a field of interest. You can narrow the directory further by school level or keyword.</p></div>
+          <div><span class="kicker">01 / EXPLORE</span><h2 id="subjects-title">Find your subject</h2><p>Choose a category, then open a demonstration directly. The concept list updates automatically as new pages are published.</p></div>
         </div>
         <div class="subject-grid" id="subject-grid">
-          <button class="subject-card" type="button" data-subject="Mathematics"><span class="subject-icon math" aria-hidden="true">∑</span><span class="subject-name">Mathematics</span><span class="subject-description">Patterns, functions, geometry, and change.</span><span class="subject-count"><span data-count-for="Mathematics">0</span> concepts <span aria-hidden="true">↗</span></span></button>
-          <button class="subject-card" type="button" data-subject="Physics"><span class="subject-icon physics" aria-hidden="true">⚛</span><span class="subject-name">Physics</span><span class="subject-description">Motion, forces, energy, and waves.</span><span class="subject-count"><span data-count-for="Physics">0</span> concepts <span aria-hidden="true">↗</span></span></button>
-          <button class="subject-card" type="button" data-subject="Chemistry"><span class="subject-icon chemistry" aria-hidden="true">⬡</span><span class="subject-name">Chemistry</span><span class="subject-description">Atoms, molecules, and transformations.</span><span class="subject-count"><span data-count-for="Chemistry">0</span> concepts <span aria-hidden="true">↗</span></span></button>
-          <button class="subject-card" type="button" data-subject="Biology"><span class="subject-icon biology" aria-hidden="true">✿</span><span class="subject-name">Biology</span><span class="subject-description">Living systems, cells, and ecosystems.</span><span class="subject-count"><span data-count-for="Biology">0</span> concepts <span aria-hidden="true">↗</span></span></button>
-          <button class="subject-card" type="button" data-subject="Computer Science"><span class="subject-icon computing" aria-hidden="true">&lt;/&gt;</span><span class="subject-name">Computer Science</span><span class="subject-description">Algorithms, data, and computation.</span><span class="subject-count"><span data-count-for="Computer Science">0</span> concepts <span aria-hidden="true">↗</span></span></button>
-          <button class="subject-card" type="button" data-subject="Earth & Space"><span class="subject-icon earth" aria-hidden="true">◎</span><span class="subject-name">Earth &amp; Space</span><span class="subject-description">Our planet, the sky, and the universe.</span><span class="subject-count"><span data-count-for="Earth & Space">0</span> concepts <span aria-hidden="true">↗</span></span></button>
+          <article class="subject-card">
+            <a class="subject-jump" href="#category-mathematics" data-subject-jump="Mathematics" aria-label="Browse Mathematics concepts">
+              <span class="subject-icon math" aria-hidden="true">∑</span>
+              <span class="subject-name">Mathematics</span>
+              <span class="subject-description">Patterns, functions, geometry, and change.</span>
+              <span class="subject-count"><span data-count-for="Mathematics">0</span> concepts <span aria-hidden="true">↘</span></span>
+            </a>
+            <ul class="subject-shortcuts" data-subject-links="Mathematics" aria-label="Mathematics demonstrations">
+              <li class="subject-coming-soon">Loading concepts…</li>
+            </ul>
+          </article>
+          <article class="subject-card">
+            <a class="subject-jump" href="#category-physics" data-subject-jump="Physics" aria-label="Browse Physics concepts">
+              <span class="subject-icon physics" aria-hidden="true">⚛</span>
+              <span class="subject-name">Physics</span>
+              <span class="subject-description">Motion, forces, energy, and waves.</span>
+              <span class="subject-count"><span data-count-for="Physics">0</span> concepts <span aria-hidden="true">↘</span></span>
+            </a>
+            <ul class="subject-shortcuts" data-subject-links="Physics" aria-label="Physics demonstrations">
+              <li class="subject-coming-soon">Loading concepts…</li>
+            </ul>
+          </article>
+          <article class="subject-card">
+            <a class="subject-jump" href="#category-chemistry" data-subject-jump="Chemistry" aria-label="Browse Chemistry concepts">
+              <span class="subject-icon chemistry" aria-hidden="true">⬡</span>
+              <span class="subject-name">Chemistry</span>
+              <span class="subject-description">Atoms, molecules, and transformations.</span>
+              <span class="subject-count"><span data-count-for="Chemistry">0</span> concepts <span aria-hidden="true">↘</span></span>
+            </a>
+            <ul class="subject-shortcuts" data-subject-links="Chemistry" aria-label="Chemistry demonstrations">
+              <li class="subject-coming-soon">Loading concepts…</li>
+            </ul>
+          </article>
+          <article class="subject-card">
+            <a class="subject-jump" href="#category-biology" data-subject-jump="Biology" aria-label="Browse Biology concepts">
+              <span class="subject-icon biology" aria-hidden="true">✿</span>
+              <span class="subject-name">Biology</span>
+              <span class="subject-description">Living systems, cells, and ecosystems.</span>
+              <span class="subject-count"><span data-count-for="Biology">0</span> concepts <span aria-hidden="true">↘</span></span>
+            </a>
+            <ul class="subject-shortcuts" data-subject-links="Biology" aria-label="Biology demonstrations">
+              <li class="subject-coming-soon">Loading concepts…</li>
+            </ul>
+          </article>
+          <article class="subject-card">
+            <a class="subject-jump" href="#category-computer-science" data-subject-jump="Computer Science" aria-label="Browse Computer Science concepts">
+              <span class="subject-icon computing" aria-hidden="true">&lt;/&gt;</span>
+              <span class="subject-name">Computer Science</span>
+              <span class="subject-description">Algorithms, data, and computation.</span>
+              <span class="subject-count"><span data-count-for="Computer Science">0</span> concepts <span aria-hidden="true">↘</span></span>
+            </a>
+            <ul class="subject-shortcuts" data-subject-links="Computer Science" aria-label="Computer Science demonstrations">
+              <li class="subject-coming-soon">Loading concepts…</li>
+            </ul>
+          </article>
+          <article class="subject-card">
+            <a class="subject-jump" href="#category-earth-and-space" data-subject-jump="Earth &amp; Space" aria-label="Browse Earth &amp; Space concepts">
+              <span class="subject-icon earth" aria-hidden="true">◎</span>
+              <span class="subject-name">Earth &amp; Space</span>
+              <span class="subject-description">Our planet, the sky, and the universe.</span>
+              <span class="subject-count"><span data-count-for="Earth &amp; Space">0</span> concepts <span aria-hidden="true">↘</span></span>
+            </a>
+            <ul class="subject-shortcuts" data-subject-links="Earth &amp; Space" aria-label="Earth &amp; Space demonstrations">
+              <li class="subject-coming-soon">Loading concepts…</li>
+            </ul>
+          </article>
         </div>
       </div>
     </section>
@@ -78,20 +138,88 @@
     <section id="directory" class="section directory-section" aria-labelledby="directory-title">
       <div class="container">
         <div class="section-heading">
-          <div><span class="kicker">02 / DISCOVER</span><h2 id="directory-title">Concept directory</h2><p>Every published concept gets its own page, with an explanation and an interactive model.</p></div>
+          <div><span class="kicker">02 / DISCOVER</span><h2 id="directory-title">Concept directory</h2><p>Explore the growing library by category, or search and filter across all demonstrations.</p></div>
           <span id="catalog-total" class="catalog-total" aria-live="polite">Loading catalog…</span>
         </div>
+        <nav class="directory-jump" aria-label="Jump to a category">
+          <span class="directory-jump-label">Jump to category</span>
+          <a href="#category-mathematics" data-category-jump="Mathematics">Mathematics</a>
+          <a href="#category-physics" data-category-jump="Physics">Physics</a>
+          <a href="#category-chemistry" data-category-jump="Chemistry">Chemistry</a>
+          <a href="#category-biology" data-category-jump="Biology">Biology</a>
+          <a href="#category-computer-science" data-category-jump="Computer Science">Computer Science</a>
+          <a href="#category-earth-and-space" data-category-jump="Earth &amp; Space">Earth &amp; Space</a>
+        </nav>
         <div id="catalog-controls" class="catalog-controls" hidden>
-          <label class="field search-field"><span>Search concepts</span><input type="search" id="concept-search" placeholder="Search by topic or keyword…" autocomplete="off"></label>
-          <label class="field"><span>Subject</span><select id="subject-filter"><option value="All">All subjects</option><option>Mathematics</option><option>Physics</option><option>Chemistry</option><option>Biology</option><option>Computer Science</option><option>Earth &amp; Space</option></select></label>
-          <label class="field"><span>Level</span><select id="level-filter"><option value="All">All levels</option><option>Primary</option><option>Lower secondary</option><option>Upper secondary</option><option>University</option></select></label>
+          <label class="field search-field"><span>Search concepts</span><input type="search" id="concept-search" placeholder="Search titles, topics, or keywords…" autocomplete="off"></label>
+          <label class="field"><span>Category</span><select id="subject-filter"><option value="All">All categories</option><option>Mathematics</option><option>Physics</option><option>Chemistry</option><option>Biology</option><option>Computer Science</option><option>Earth &amp; Space</option></select></label>
+          <label class="field"><span>School level</span><select id="level-filter"><option value="All">All levels</option><option>Primary</option><option>Lower secondary</option><option>Upper secondary</option><option>University</option></select></label>
         </div>
-        <p id="catalog-status" class="results-status" role="status" aria-live="polite"></p>
-        <div id="concept-grid" class="concept-grid"></div>
+        <div class="directory-results">
+          <p id="catalog-status" class="results-status" role="status" aria-live="polite">Loading the directory…</p>
+          <button id="clear-filters" type="button" class="clear-filters" hidden>Clear filters</button>
+        </div>
+        <noscript><p class="catalog-noscript">Enable JavaScript to load the category directory from concepts.json.</p></noscript>
+        <div id="concept-grid" class="directory-groups">
+          <section class="directory-group" id="category-mathematics" data-directory-group="Mathematics" aria-labelledby="category-heading-mathematics">
+            <div class="directory-group-heading">
+              <span class="subject-icon math" aria-hidden="true">∑</span>
+              <div class="directory-group-title"><h3 id="category-heading-mathematics">Mathematics</h3><p>Patterns, functions, geometry, and change.</p></div>
+              <span class="group-count" data-group-count="Mathematics">0 concepts</span>
+            </div>
+            <div class="concept-grid" data-concept-grid="Mathematics"></div>
+            <p class="group-placeholder" data-group-placeholder="Mathematics">No published concepts in this category yet.</p>
+          </section>
+          <section class="directory-group" id="category-physics" data-directory-group="Physics" aria-labelledby="category-heading-physics">
+            <div class="directory-group-heading">
+              <span class="subject-icon physics" aria-hidden="true">⚛</span>
+              <div class="directory-group-title"><h3 id="category-heading-physics">Physics</h3><p>Motion, forces, energy, and waves.</p></div>
+              <span class="group-count" data-group-count="Physics">0 concepts</span>
+            </div>
+            <div class="concept-grid" data-concept-grid="Physics"></div>
+            <p class="group-placeholder" data-group-placeholder="Physics">No published concepts in this category yet.</p>
+          </section>
+          <section class="directory-group" id="category-chemistry" data-directory-group="Chemistry" aria-labelledby="category-heading-chemistry">
+            <div class="directory-group-heading">
+              <span class="subject-icon chemistry" aria-hidden="true">⬡</span>
+              <div class="directory-group-title"><h3 id="category-heading-chemistry">Chemistry</h3><p>Atoms, molecules, and transformations.</p></div>
+              <span class="group-count" data-group-count="Chemistry">0 concepts</span>
+            </div>
+            <div class="concept-grid" data-concept-grid="Chemistry"></div>
+            <p class="group-placeholder" data-group-placeholder="Chemistry">No published concepts in this category yet.</p>
+          </section>
+          <section class="directory-group" id="category-biology" data-directory-group="Biology" aria-labelledby="category-heading-biology">
+            <div class="directory-group-heading">
+              <span class="subject-icon biology" aria-hidden="true">✿</span>
+              <div class="directory-group-title"><h3 id="category-heading-biology">Biology</h3><p>Living systems, cells, and ecosystems.</p></div>
+              <span class="group-count" data-group-count="Biology">0 concepts</span>
+            </div>
+            <div class="concept-grid" data-concept-grid="Biology"></div>
+            <p class="group-placeholder" data-group-placeholder="Biology">No published concepts in this category yet.</p>
+          </section>
+          <section class="directory-group" id="category-computer-science" data-directory-group="Computer Science" aria-labelledby="category-heading-computer-science">
+            <div class="directory-group-heading">
+              <span class="subject-icon computing" aria-hidden="true">&lt;/&gt;</span>
+              <div class="directory-group-title"><h3 id="category-heading-computer-science">Computer Science</h3><p>Algorithms, data, and computation.</p></div>
+              <span class="group-count" data-group-count="Computer Science">0 concepts</span>
+            </div>
+            <div class="concept-grid" data-concept-grid="Computer Science"></div>
+            <p class="group-placeholder" data-group-placeholder="Computer Science">No published concepts in this category yet.</p>
+          </section>
+          <section class="directory-group" id="category-earth-and-space" data-directory-group="Earth &amp; Space" aria-labelledby="category-heading-earth-and-space">
+            <div class="directory-group-heading">
+              <span class="subject-icon earth" aria-hidden="true">◎</span>
+              <div class="directory-group-title"><h3 id="category-heading-earth-and-space">Earth &amp; Space</h3><p>Our planet, the sky, and the universe.</p></div>
+              <span class="group-count" data-group-count="Earth &amp; Space">0 concepts</span>
+            </div>
+            <div class="concept-grid" data-concept-grid="Earth &amp; Space"></div>
+            <p class="group-placeholder" data-group-placeholder="Earth &amp; Space">No published concepts in this category yet.</p>
+          </section>
+        </div>
         <div id="empty-state" class="empty-state" hidden>
           <span class="empty-icon" aria-hidden="true">✦</span>
           <h3 id="empty-title">A collection in the making</h3>
-          <p id="empty-description">The first interactive visualizations will appear here as they are published. In the meantime, explore the subjects above.</p>
+          <p id="empty-description">New demonstrations will appear here as they are added to the catalog.</p>
         </div>
       </div>
     </section>

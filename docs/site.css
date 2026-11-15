@@ -123,3 +123,54 @@ h1 em { font-style: normal; color: #3760b4; }
   .subject-card { transition: none; }
   .subject-card:hover { transform: none; }
 }
+
+/* Category-to-concept navigation */
+.subject-card { padding: 0; min-height: 0; overflow: hidden; }
+.subject-jump { display: flex; flex-direction: column; align-items: flex-start; padding: 25px 25px 15px; text-decoration: none; color: inherit; flex: 1 0 auto; }
+.subject-jump:hover .subject-name { color: var(--blue); text-decoration: underline; }
+.subject-jump .subject-name { margin-top: 18px; }
+.subject-shortcuts { list-style: none; padding: 13px 25px 23px; margin: auto 0 0; border-top: 1px solid #ebeff5; width: 100%; display: grid; gap: 8px; }
+.subject-shortcuts li { font-size: 13px; line-height: 1.5; }
+.subject-shortcuts li a { color: #2e558f; text-decoration: none; font-weight: 650; }
+.subject-shortcuts li a:hover { text-decoration: underline; }
+.subject-shortcuts .subject-coming-soon { color: #77859a; font-weight: 500; }
+.subject-shortcuts .subject-more a { font-size: 12px; color: #167a7c; }
+.directory-jump { display: flex; flex-wrap: wrap; align-items: center; gap: 9px; margin: -8px 0 24px; }
+.directory-jump-label { font-size: 12px; font-weight: 800; color: #61718e; margin-right: 4px; }
+.directory-jump a { padding: 7px 12px; border: 1px solid #d2ddea; border-radius: 999px; background: white; color: #34527c; font-size: 12px; font-weight: 700; text-decoration: none; }
+.directory-jump a:hover { background: #e9f4f5; border-color: #9ccfca; color: #156c68; }
+.directory-results { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; min-height: 62px; }
+.directory-results .results-status { margin: 14px 0; }
+.clear-filters { background: #fff; border: 1px solid #c6d5e5; color: #34527c; border-radius: 9px; font-weight: 720; font-size: 12px; padding: 8px 13px; }
+.clear-filters:hover { border-color: #6d9ab2; background: #eaf3f7; }
+.directory-groups { display: grid; gap: 21px; }
+.directory-group { scroll-margin-top: 28px; background: #fff; border: 1px solid #dfe6ee; border-radius: 18px; padding: 25px; }
+.directory-group:target { border-color: #65bcb1; box-shadow: 0 0 0 3px #168d8123; }
+.directory-group-heading { display: flex; align-items: center; gap: 15px; margin-bottom: 19px; }
+.directory-group-title { min-width: 0; flex: 1; }
+.directory-group-title h3 { font-size: 22px; letter-spacing: -.03em; margin: 0 0 3px; }
+.directory-group-title p { font-size: 13px; color: var(--muted); margin: 0; }
+.group-count { font-size: 12px; font-weight: 800; color: #4a678d; background: #edf2f9; padding: 6px 12px; border-radius: 99px; white-space: nowrap; }
+.directory-group .concept-grid { grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); }
+.directory-group .concept-card { min-height: 190px; padding: 0; overflow: hidden; transition: border-color .18s ease, box-shadow .18s ease; }
+.directory-group .concept-card:hover { border-color: #a6c4da; box-shadow: 0 8px 24px rgba(29, 51, 84, .08); }
+.concept-card-link { display: flex; flex-direction: column; flex: 1; width: 100%; padding: 23px; color: inherit; text-decoration: none; }
+.concept-card-link h4 { margin: 10px 0 6px; font-size: 19px; letter-spacing: -.025em; }
+.concept-card-link:hover h4 { color: var(--blue); text-decoration: underline; }
+.concept-card-link p { color: var(--muted); font-size: 14px; margin-bottom: 15px; }
+.concept-card-link .level-tags { margin-top: auto; }
+.concept-card-action { display: block; margin-top: 18px; color: #227b7d; font-weight: 800; font-size: 13px; }
+.group-placeholder { font-size: 14px; padding: 14px 17px; border: 1px dashed #d3dfeb; background: #f9fbfd; color: #687994; border-radius: 10px; margin: 0; }
+.catalog-noscript { margin: 15px 0; color: #944c13; font-weight: 650; }
+@media(max-width: 650px) {
+  .directory-group { padding: 16px; }
+  .directory-group-heading { flex-wrap: wrap; gap: 10px; }
+  .directory-group-title { flex-basis: calc(100% - 58px); }
+  .group-count { margin-left: 55px; }
+  .subject-jump { padding: 22px 22px 14px; }
+  .subject-shortcuts { padding: 12px 22px 21px; }
+  .directory-jump { gap: 7px; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .directory-group .concept-card { transition: none; }
+}

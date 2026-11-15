@@ -28,13 +28,13 @@ Science_Concepts_Demonstrated/
     ├── index.html            # Public homepage and concept directory
     ├── site.css              # Shared homepage styles
     ├── site.js               # Directory search and filtering
-    ├── concepts.json         # Public concept catalog (initially empty)
-    └── visualizations/       # One subfolder per future concept
+    ├── concepts.json         # Public concept catalog (source of navigation)
+    └── visualizations/       # Self-contained concept pages
         └── <concept-slug>/
             └── index.html
 ```
 
-The `visualizations/` structure is a **convention for upcoming entries**, not a claim that demonstrations already exist. Source notes, planning materials, research, or organizational files can live outside `docs/` so they are not published as part of the site.
+The `visualizations/` convention now contains published pages, including LiDAR and dark matter. Source notes, planning materials, research, and other organizational files can live outside `docs/`.
 
 ## Run locally
 
@@ -77,7 +77,7 @@ GitHub Pages is **not activated merely by adding `docs/`**; these settings must 
 
 This example is **documentation only**; it is not registered in the live catalog and the example page does not exist.
 
-The catalog must be a JSON array. Valid subjects are `Mathematics`, `Physics`, `Chemistry`, `Biology`, `Computer Science`, and `Earth & Space`. Valid levels are `Primary`, `Lower secondary`, `Upper secondary`, and `University`. Use URL-safe, lowercase hyphenated folder names, and set `path` to `visualizations/<concept-slug>/`. The homepage reads this manifest automatically, supports keyword search and filters by subject and level, and does not need manual edits for new entries.
+The catalog must be a JSON array. Valid subjects are `Mathematics`, `Physics`, `Chemistry`, `Biology`, `Computer Science`, and `Earth & Space`. Valid levels are `Primary`, `Lower secondary`, `Upper secondary`, and `University`. Use URL-safe, lowercase hyphenated folder names, and set `path` to `visualizations/<concept-slug>/`. The homepage reads this manifest automatically and builds a **category-to-concept navigation directory**: six category cards link to their sections and list available concept pages; grouped concept cards link directly to demonstrations. Keyword search, category filtering, and school-level filtering refine the grouped directory. New entries appear automatically without editing the homepage. Category bookmarks use `#category-mathematics`, `#category-physics`, `#category-chemistry`, `#category-biology`, `#category-computer-science`, and `#category-earth-and-space`. All links remain relative for GitHub Pages.
 
 ### Recommended structure for an individual concept
 
