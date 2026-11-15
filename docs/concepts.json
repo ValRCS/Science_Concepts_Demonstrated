@@ -44,5 +44,28 @@
       "halo",
       "astronomy"
     ]
+  },
+  {
+    "id": "rutherford-bohr-atomic-model",
+    "title": "Rutherford–Bohr atomic model",
+    "summary": "Explore hydrogen's quantized energy levels, photon emission and absorption, and the historical limits of the nuclear and Bohr models.",
+    "subject": "Physics",
+    "levels": [
+      "Primary",
+      "Lower secondary",
+      "Upper secondary",
+      "University"
+    ],
+    "path": "visualizations/rutherford-bohr-atomic-model/",
+    "keywords": [
+      "Rutherford",
+      "Bohr",
+      "atom",
+      "hydrogen",
+      "spectral lines",
+      "energy levels",
+      "quantum physics",
+      "nucleus"
+    ]
   }
 ]
