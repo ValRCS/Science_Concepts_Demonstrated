@@ -137,5 +137,28 @@
       "carbon dioxide",
       "history of chemistry"
     ]
+  },
+  {
+    "id": "michelson-morley-experiment",
+    "title": "Michelson–Morley experiment",
+    "summary": "Rotate an interferometer, compare classical ether-wind fringe shifts with special relativity, and explore the 1887 null result across four learning levels.",
+    "subject": "Physics",
+    "levels": [
+      "Primary",
+      "Lower secondary",
+      "Upper secondary",
+      "University"
+    ],
+    "path": "visualizations/michelson-morley-experiment/",
+    "keywords": [
+      "Michelson",
+      "Morley",
+      "ether wind",
+      "interferometer",
+      "interference",
+      "special relativity",
+      "Lorentz invariance",
+      "optics"
+    ]
   }
 ]
