@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>How LiDAR works | Science Concepts Demonstrated</title>
+<style>
+:root{font-family:system-ui,-apple-system,sans-serif;color:#eaf2ff;background:#0c1425;color-scheme:dark}*{box-sizing:border-box}body{margin:0}main,header,footer{max-width:1120px;margin:auto;padding:22px}a{color:#86dff4}h1{font-size:clamp(2rem,5vw,3.5rem);margin:.3em 0}h2{margin-top:0}p{line-height:1.65;color:#c5d2e5}.eyebrow{color:#65dcc7;letter-spacing:.13em;text-transform:uppercase;font-weight:700;font-size:.8rem}.panel{background:#17243a;border:1px solid #31435f;border-radius:18px;padding:20px;margin:18px 0}.layout{display:grid;grid-template-columns:minmax(0,2fr) minmax(240px,1fr);gap:18px}canvas{width:100%;height:auto;background:#0a1728;border-radius:12px;display:block}label{display:block;margin:15px 0;color:#dce8f8}input[type=range]{width:100%;accent-color:#62ddc6}output{color:#7cead7;font-weight:700}button{background:#263b57;border:1px solid #58728d;border-radius:9px;color:white;padding:10px 14px;cursor:pointer;margin:4px}button[aria-pressed=true],button:hover{background:#126c73}button:focus-visible,input:focus-visible{outline:3px solid #ffe28b;outline-offset:3px}.stat{font-variant-numeric:tabular-nums;font-size:1.2rem;color:#fff}.small{font-size:.87rem}.levels{display:flex;flex-wrap:wrap;gap:7px}.levels button{flex:1;min-width:150px}.explanation{min-height:220px}code{color:#8ce6db}ul{line-height:1.8}footer{color:#a7b7cc}@media(max-width:750px){.layout{grid-template-columns:1fr}}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+</style></head><body>
+<header><a href="../../">← Science Concepts Demonstrated</a></header>
+<main><div class="eyebrow">Physics · Light · Remote sensing</div><h1>How does LiDAR work?</h1>
+<p>LiDAR sends out laser light and measures how long the reflections take to return. By repeating this measurement in different directions, it maps the surroundings.</p>
+<div class="layout"><section class="panel"><h2>Laser scanner laboratory</h2><canvas id="scene" width="760" height="520" role="img" aria-label="Top-down simulated LiDAR scanner, obstacles, laser beams, and measured points">Your browser needs Canvas support.</canvas>
+<p class="small">Cyan = current laser ray · green dots = detected surfaces · outlined shapes = actual objects. This is an idealized 2D model, not a live sensor.</p>
+</section><section class="panel"><h2>Experiment controls</h2>
+<label>Number of directions: <output id="raysOut">72</output><input id="rays" type="range" min="12" max="360" step="12" value="72"></label>
+<label>Maximum range: <output id="rangeOut">9</output> m<input id="range" type="range" min="3" max="12" step="1" value="9"></label>
+<label>Distance uncertainty: <output id="noiseOut">0</output> cm<input id="noise" type="range" min="0" max="30" step="1" value="0"></label>
+<button id="toggle" aria-pressed="false">Pause scan</button><button id="reset">Reset</button><button id="step">Step one ray</button>
+<p>Measured distance<br><strong class="stat" id="distance">—</strong></p><p>Round-trip light time<br><strong class="stat" id="flight">—</strong></p>
+<p>Detected points<br><strong class="stat" id="points">0</strong></p>
+</section></div>
+<section class="panel"><h2>Choose your explanation level</h2><div class="levels" role="group" aria-label="Educational level">
+<button data-level="1" aria-pressed="true">1 · Discover (7–10)</button><button data-level="2" aria-pressed="false">2 · Explore (14–18)</button><button data-level="3" aria-pressed="false">3 · Analyze (university)</button><button data-level="4" aria-pressed="false">4 · Research (graduate)</button></div>
+<article id="explanation" class="explanation" aria-live="polite"></article></section>
+<section class="panel"><h2>References and further reading</h2><ul>
+<li><a href="https://oceanservice.noaa.gov/facts/lidar.html">NOAA National Ocean Service — What is LiDAR?</a> (introductory)</li>
+<li><a href="https://www.usgs.gov/3d-elevation-program/what-lidar-data">USGS — What is LiDAR data?</a> (mapping applications)</li>
+<li><a href="https://doi.org/10.1016/j.isprsjprs.2017.11.001">Shan &amp; Toth (eds.), related ISPRS literature</a> (advanced context; verify specific publications independently)</li>
+</ul></section></main><footer>Interactive educational model · <a href="../../">Return to concept directory</a></footer>
+<script>
+"use strict";
+const canvas=document.getElementById("scene"),ctx=canvas.getContext("2d");
+const $=id=>document.getElementById(id),C=299792458,scale=38,ox=380,oy=260;
+const shapes=[{x:-7,y:-5,w:3,h:2},{x:3,y:-6,w:3,h:4},{x:4,y:2,w:3,h:3},{x:-6,y:3,w:3,h:2},{x:-1,y:-8,w:2,h:2}];
+const texts={
+1:`<h3>Discover and play</h3><p>Imagine shouting in a canyon and listening for the echo. LiDAR does something similar with <strong>light</strong> instead of sound. A laser sends a tiny flash toward an object. Some light bounces back. The scanner measures the wait and learns how far away the object is.</p><p><strong>Try it:</strong> Change the number of directions. Do more green dots help you recognize the objects? Reduce the maximum range: which objects disappear?</p><p>Real LiDAR is used to map forests, buildings, roads, and landscapes.</p>`,
+2:`<h3>Explore and understand</h3><p>A pulsed time-of-flight LiDAR measures the interval between emitting a laser pulse and receiving its reflection. Light travels about 300 million metres per second. Since the pulse travels <em>to the object and back</em>, distance is <strong>d = c × Δt / 2</strong>.</p><p>For a target 3 m away, the round trip takes about <strong>20 nanoseconds</strong>. Try a smaller angular sample count: a narrow object may be missed between adjacent rays. More rays improve angular sampling but do not automatically improve distance precision.</p><p><strong>Question:</strong> Why must the measured time be divided by two?</p>`,
+3:`<h3>Analyze and model</h3><p>For beam direction θ and range r, the ideal point is <strong>(x,y) = (r cos θ, r sin θ)</strong>. This simulator uses ray–axis-aligned-rectangle intersections, finite maximum range, and equally spaced angular samples Δθ = 2π/N. It adds bounded synthetic radial perturbations as a teaching aid.</p><p>The approximate lateral spacing between rays at range r is <strong>r Δθ</strong> (Δθ in radians, small-angle approximation). A 1° angular increment produces roughly 8.7 cm spacing at 5 m. Angular sampling and range precision are different characteristics.</p><p>Assumptions: 2D static scene, point-like emitter, perfect returns from intersected surfaces, no occlusion transparency, no intensity effects, no beam divergence, and no multipath. The display is a top-down planar scan, not a 3D point cloud.</p>`,
+4:`<h3>Investigate and research</h3><p>Practical LiDAR may employ pulsed direct time-of-flight, phase-shift ranging, or frequency-modulated continuous-wave techniques. This demonstration represents only pulsed direct time-of-flight geometry. A simplified timing uncertainty model gives <strong>σᵣ ≈ (c/2)σₜ</strong>; a 1 ns timing uncertainty corresponds to about 15 cm of range uncertainty. Real systems use sophisticated timing estimation, calibration, and signal processing.</p><p>For a planar scan, the Jacobian mapping polar measurements (r,θ) to Cartesian coordinates is <strong>J = [[cosθ, −r sinθ],[sinθ, r cosθ]]</strong>. If range and angle errors are independent with covariance Σ = diag(σᵣ², σθ²), then <strong>Σxy ≈ JΣJᵀ</strong>. Uncertainty grows anisotropically with range.</p><p>Research issues include beam footprint and divergence, material-dependent reflectance, atmospheric attenuation, multiple returns, waveform processing, motion compensation, SLAM registration, calibration, point-cloud classification, and uncertainty propagation. The noise slider here is uniform bounded illustration, not a validated physical noise model.</p>`
+};
+let index=0,playing=true,points=[],last=0,level=1;
+function values(){return {n:+$("rays").value,max:+$("range").value,noise:+$("noise").value/100}}
+function intersect(a,dx,dy,s){let lo=0,hi=Infinity;for(const [o,d,min,max] of [[0,dx,s.x,s.x+s.w],[0,dy,s.y,s.y+s.h]]){if(Math.abs(d)<1e-12){if(o<min||o>max)return Infinity;}else{let t1=(min-o)/d,t2=(max-o)/d;lo=Math.max(lo,Math.min(t1,t2));hi=Math.min(hi,Math.max(t1,t2));}}return hi>=lo&&hi>=0?Math.max(0,lo):Infinity}
+function measure(i){const v=values(),theta=i*2*Math.PI/v.n,dx=Math.cos(theta),dy=Math.sin(theta);let r=Math.min(...shapes.map(s=>intersect(0,dx,dy,s)));if(!Number.isFinite(r)||r>v.max)return {theta,r:null};const noisy=Math.max(0,r+(Math.random()*2-1)*v.noise);return {theta,r:noisy,actual:r}}
+function scan(){let v=values(),m=measure(index);points.push(m);if(points.length>v.n)points.shift();index=(index+1)%v.n;return m}
+function draw(m){let v=values();ctx.clearRect(0,0,760,520);ctx.save();ctx.translate(ox,oy);ctx.scale(scale,-scale);
+ctx.strokeStyle="#243b54";ctx.lineWidth=.025;for(let x=-10;x<=10;x++) {ctx.beginPath();ctx.moveTo(x,-7);ctx.lineTo(x,7);ctx.stroke()}for(let y=-7;y<=7;y++){ctx.beginPath();ctx.moveTo(-10,y);ctx.lineTo(10,y);ctx.stroke()}
+ctx.strokeStyle="#587e9a";ctx.lineWidth=.055;for(let s of shapes)ctx.strokeRect(s.x,s.y,s.w,s.h);
+ctx.strokeStyle="#254b55";ctx.lineWidth=.04;ctx.beginPath();ctx.arc(0,0,v.max,0,Math.PI*2);ctx.stroke();
+for(const p of points){if(p.r===null)continue;ctx.fillStyle="#63e6bc";ctx.beginPath();ctx.arc(p.r*Math.cos(p.theta),p.r*Math.sin(p.theta),.065,0,2*Math.PI);ctx.fill()}
+ctx.strokeStyle="#6ed9ff";ctx.lineWidth=.07;ctx.beginPath();ctx.moveTo(0,0);let len=m.r??v.max;ctx.lineTo(len*Math.cos(m.theta),len*Math.sin(m.theta));ctx.stroke();
+ctx.fillStyle="#ffe6a1";ctx.beginPath();ctx.arc(0,0,.16,0,2*Math.PI);ctx.fill();ctx.restore();
+$("distance").textContent=m.r===null?"No return":m.r.toFixed(2)+" m";$("flight").textContent=m.r===null?"—":(2*m.actual/C*1e9).toFixed(2)+" ns";$("points").textContent=points.filter(p=>p.r!==null).length.toString()}
+function frame(t){if(playing&&t-last>65){last=t;draw(scan())}requestAnimationFrame(frame)}
+function reset(){index=0;points=[];draw(scan())}
+for(const id of ["rays","range","noise"])$(id).addEventListener("input",()=>{$(id+"Out").textContent=$(id).value;reset()});
+$("reset").onclick=()=>{for(const [id,val] of [["rays",72],["range",9],["noise",0]]){$(id).value=val;$(id+"Out").textContent=val}reset()};
+$("toggle").onclick=()=>{playing=!playing;$("toggle").textContent=playing?"Pause scan":"Resume scan";$("toggle").setAttribute("aria-pressed",String(!playing))};
+$("step").onclick=()=>{playing=false;$("toggle").textContent="Resume scan";$("toggle").setAttribute("aria-pressed","true");draw(scan())};
+document.querySelectorAll("[data-level]").forEach(b=>b.onclick=()=>{level=+b.dataset.level;document.querySelectorAll("[data-level]").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));$("explanation").innerHTML=texts[level]});
+$("explanation").innerHTML=texts[1];if(matchMedia("(prefers-reduced-motion: reduce)").matches){playing=false;$("toggle").textContent="Resume scan";$("toggle").setAttribute("aria-pressed","true")}reset();requestAnimationFrame(frame);
+</script></body></html>
