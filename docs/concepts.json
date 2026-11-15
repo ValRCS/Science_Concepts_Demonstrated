@@ -1,1 +1,24 @@
-[]
+[
+  {
+    "id": "how-lidar-works",
+    "title": "How LiDAR works",
+    "summary": "Scan a scene with laser rays, measure round-trip light travel time, and explore sampling and uncertainty across four learning levels.",
+    "subject": "Physics",
+    "levels": [
+      "Primary",
+      "Lower secondary",
+      "Upper secondary",
+      "University"
+    ],
+    "path": "visualizations/how-lidar-works/",
+    "keywords": [
+      "lidar",
+      "laser",
+      "time of flight",
+      "remote sensing",
+      "point cloud",
+      "physics",
+      "mapping"
+    ]
+  }
+]
