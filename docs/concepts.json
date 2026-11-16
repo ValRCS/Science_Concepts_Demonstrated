@@ -160,5 +160,29 @@
       "Lorentz invariance",
       "optics"
     ]
+  },
+  {
+    "id": "antimatter",
+    "title": "Antimatter: the mirror partners of matter",
+    "summary": "Explore electron–positron annihilation, pair production, antihydrogen, PET detection and the cosmic matter excess across four learning levels.",
+    "subject": "Physics",
+    "levels": [
+      "Primary",
+      "Lower secondary",
+      "Upper secondary",
+      "University"
+    ],
+    "path": "visualizations/antimatter/",
+    "keywords": [
+      "antimatter",
+      "positron",
+      "annihilation",
+      "pair production",
+      "antihydrogen",
+      "PET",
+      "baryogenesis",
+      "CP violation",
+      "particle physics"
+    ]
   }
 ]
