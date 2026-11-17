@@ -89,9 +89,10 @@ The graph plots **Δτ**, a cumulative extra light time in minutes **relative to
 - [x] Verify historical dates and claims against ScienceNorway, Niels Bohr Institute and Paris Observatory.
 - [x] Check c and AU against BIPM and JPL.
 - [x] Check Io orbital period against NASA's Jovian Satellite Fact Sheet.
-- [ ] Confirm HTML IDs, relative links, JS parsing and numerical model through post-write checks.
-- [ ] Confirm the catalog entry and fetch each new file from the repository.
-- [ ] Test browser interaction, keyboard navigation, narrow screens and reduced-motion preference in a live browser when available.
+- [x] Confirm HTML IDs, relative links, JS parsing and numerical model through post-write checks (source read back; nine independent numeric checkpoints and interactive rendering tested in a simulated DOM).
+- [x] Confirm the catalog entry and fetch each new file from the repository.
+- [ ] Test layout, keyboard navigation, narrow screens and reduced-motion behavior in a live browser (not available in this session).
+- [ ] Run the committed Node regression suite in a checkout: `node --test tests/speed-of-light.test.cjs` (written and syntax-reviewed; not executed in a Node checkout).
 
 ## Sources
 
