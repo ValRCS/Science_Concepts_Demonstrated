@@ -184,5 +184,31 @@
       "CP violation",
       "particle physics"
     ]
+  },
+  {
+    "id": "speed-of-light",
+    "title": "Speed of light: Rømer's cosmic clock",
+    "summary": "Move Earth around the Sun to reveal Io eclipse-timing delays, compare Rømer's 1676 inference with modern physics, and calculate light travel times at four learning levels.",
+    "subject": "Physics",
+    "levels": [
+      "Primary",
+      "Lower secondary",
+      "Upper secondary",
+      "University"
+    ],
+    "path": "visualizations/speed-of-light/",
+    "keywords": [
+      "speed of light",
+      "Ole Rømer",
+      "Romer",
+      "Io",
+      "Jupiter",
+      "eclipse timing",
+      "light travel time",
+      "1676",
+      "astronomy",
+      "special relativity",
+      "history of physics"
+    ]
   }
 ]
