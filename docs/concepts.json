@@ -210,5 +210,28 @@
       "special relativity",
       "history of physics"
     ]
+  },
+  {
+    "id": "classical-double-slit-experiment",
+    "title": "Classical double-slit experiment",
+    "summary": "Explore Young's wave interference with adjustable wavelength, slit separation, slit width and screen distance, from intuitive fringes to Fraunhofer diffraction.",
+    "subject": "Physics",
+    "levels": [
+      "Primary",
+      "Lower secondary",
+      "Upper secondary",
+      "University"
+    ],
+    "path": "visualizations/classical-double-slit-experiment/",
+    "keywords": [
+      "double slit",
+      "Young",
+      "interference",
+      "diffraction",
+      "classical optics",
+      "wave",
+      "Fraunhofer",
+      "coherence"
+    ]
   }
 ]
