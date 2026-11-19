@@ -142,7 +142,10 @@ footer{font-size:.9rem;color:var(--muted)}
   .level-tabs button{padding:.7rem;min-height:75px}
   .level-tabs strong{font-size:.92rem}
   .level-tabs small{font-size:.72rem}
-  .signal-shell svg{min-width:450px}
+  /* Keep both near and far Earth in view on narrow phones. */
+  .signal-shell svg{min-width:0;width:100%}
+  .signal-shell svg .label-large{font-size:20px}
+  .signal-shell svg .label-small{font-size:17px}
   .stat-grid,[data-active-level="1"] .stat-grid,.model-grid,.research-controls,.calculator-grid,.history-grid{grid-template-columns:1fr}
   .stat-grid strong{font-size:1.2rem}
   .signal-clock{flex-wrap:wrap}
