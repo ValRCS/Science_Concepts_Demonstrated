@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1727">
+  <meta name="description" content="Explore radiometric dating through a simulated atomic clock, half-life graphs, three isotope systems, geological layers and scientific uncertainty at four learning levels.">
+  <title>Radiometric Dating: Earth's Atomic Clocks | Science Concepts Demonstrated</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#experiment">Skip to the experiment</a>
+  <header class="site-header">
+    <a class="brand" href="../../">∑ Science Concepts Demonstrated</a>
+    <nav aria-label="Page navigation">
+      <a href="#experiment">Atomic clock</a><a href="#activities">Experiments</a>
+      <a href="#learn">Four levels</a><a href="#sources">References</a>
+      <a href="../../#category-earth-and-space">← Directory</a>
+    </nav>
+  </header>
+  <main>
+    <section class="hero">
+      <p class="eyebrow">EARTH &amp; SPACE / GEOCHRONOLOGY / NUCLEAR PHYSICS</p>
+      <h1>How old is it? <em>Ask the atoms.</em></h1>
+      <p class="lead">Some atoms transform naturally. Their individual changes are unpredictable, but in a large sample the proportion remaining follows a reliable pattern. Scientists use that pattern—together with the history of the material—to estimate ages.</p>
+      <div class="stat-row" aria-label="Three natural atomic clocks">
+        <div><strong>5,730 years</strong><span>Carbon-14: recent organic material</span></div>
+        <div><strong>1.25 billion years</strong><span>Potassium-40: minerals and volcanic events</span></div>
+        <div><strong>4.47 billion years</strong><span>Uranium-238: ancient minerals</span></div>
+      </div>
+    </section>
+
+    <section id="experiment" class="panel lab" aria-labelledby="lab-title">
+      <div class="section-head"><div><p class="eyebrow">THE MAIN DEMONSTRATION</p><h2 id="lab-title">An atomic clock you can explore</h2></div><span class="tag">SIMULATED ATOMS · CALCULATED CURVE</span></div>
+      <p class="panel-intro"><strong>Predict:</strong> if half of a large collection of radioactive parent atoms has transformed, how many half-lives have passed? Move the time slider or press Play to test your idea.</p>
+      <div class="lab-layout">
+        <div class="visual-column">
+          <div class="visual-card">
+            <div class="visual-title"><h3>Inside a sample</h3><span id="sample-count">180 simulated atoms</span></div>
+            <svg id="atoms-svg" viewBox="0 0 620 250" role="img" aria-label="An illustrative population of 180 atoms changing from parent to decayed state; individual simulated decay events vary randomly around the calculated expectation."><title>Simulated radioactive atoms</title></svg>
+            <div class="legend"><span><i class="dot parent-dot"></i> Parent atoms</span><span><i class="dot daughter-dot"></i> Atoms that have decayed</span></div>
+            <p class="figure-note">Each dot represents one simulated parent atom at the start. The dots are an illustrative sample, not a count of atoms in a real rock. Potassium-40 dots include <em>both</em> daughter branches; uranium-238 is represented by an idealized eventual lead-206 product.</p>
+          </div>
+          <div class="visual-card">
+            <div class="visual-title"><h3>Expected decay over time</h3><span>Proportions of the original sample</span></div>
+            <svg id="decay-chart" viewBox="0 0 720 292" role="img" aria-label="Calculated exponential parent fraction and cumulative decayed fraction from zero to ten half-lives with a moving time indicator."><title>Exponential decay curves</title></svg>
+            <div class="legend"><span><i class="line-key parent-line"></i> Parent remaining</span><span><i class="line-key daughter-line"></i> Total decayed</span><span><i class="line-key cursor-line"></i> Selected time</span></div>
+            <p class="figure-note">These smooth lines are theoretical expectations, not observed measurements. “Total decayed” is not automatically the concentration of a particular daughter isotope.</p>
+          </div>
+        </div>
+        <div class="controls">
+          <label for="clock">Choose your isotope clock</label>
+          <select id="clock">
+            <option value="c14">Carbon-14 → Nitrogen-14</option>
+            <option value="k40">Potassium-40 → Argon-40 / Calcium-40</option>
+            <option value="u238">Uranium-238 → Lead-206 (decay chain)</option>
+          </select>
+          <p id="clock-description" class="control-hint">A clock for formerly living material. Its useful range is limited.</p>
+          <label for="elapsed">Elapsed half-lives <output id="elapsed-value" for="elapsed">1.00</output></label>
+          <input id="elapsed" type="range" min="0" max="10" step="0.05" value="1" aria-describedby="elapsed-hint">
+          <div class="range-ends" id="elapsed-hint"><span>0: all parent</span><span>10: almost none</span></div>
+          <div class="actions"><button id="play" type="button" aria-pressed="false">▶ Play</button><button id="reset" type="button" class="secondary">↺ Reset</button></div>
+          <div class="readout-grid" aria-live="off">
+            <div><span>Time elapsed</span><strong id="age-value">5,730 years</strong></div>
+            <div><span>Parent remaining</span><strong id="parent-value">50.00%</strong></div>
+            <div><span>Expected atoms remaining</span><strong id="expected-value">90 of 180</strong></div>
+            <div><span>Simulated atoms remaining</span><strong id="actual-value">—</strong></div>
+          </div>
+          <p id="branch-output" class="branch-note"></p>
+          <p id="lab-feedback" class="feedback" role="status" aria-live="polite">After one half-life, 50% of the original parent population is expected to remain.</p>
+          <p id="age-warning" class="warning" hidden></p>
+          <div class="mini-experiment"><h3>Quick prediction</h3><p>What fraction remains after <strong>two</strong> half-lives?</p>
+            <div class="choice-row" role="group" aria-label="Predict the remaining parent fraction">
+              <button type="button" data-predict="50">50%</button>
+              <button type="button" data-predict="25">25%</button>
+              <button type="button" data-predict="0">0%</button>
+            </div><p id="prediction-feedback" role="status" aria-live="polite">Choose an answer to check your prediction.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" id="age-lab" aria-labelledby="age-title">
+      <div class="section-head"><div><p class="eyebrow">WORK BACKWARDS</p><h2 id="age-title">Measure a sample. Infer its age.</h2></div><span class="tag">IDEALIZED CLOSED SYSTEM</span></div>
+      <p>Imagine that a laboratory can estimate the fraction of original parent atoms still present. Set that fraction to calculate how much time would have elapsed under the ideal exponential model.</p>
+      <div class="two-col">
+        <div class="controls inset">
+          <label for="measured">Measured parent remaining <output id="measured-value" for="measured">25%</output></label>
+          <input id="measured" type="range" min="1" max="100" step="0.5" value="25">
+          <label for="uncertainty">Illustrative measurement uncertainty <output id="uncertainty-value" for="uncertainty">±1.0 percentage point</output></label>
+          <input id="uncertainty" type="range" min="0" max="5" step="0.5" value="1">
+          <div class="actions">
+            <button type="button" data-fraction="50" class="secondary">Try 50%</button>
+            <button type="button" data-fraction="25" class="secondary">Try 25%</button>
+            <button type="button" data-fraction="12.5" class="secondary">Try 12.5%</button>
+          </div>
+        </div>
+        <div class="result-card">
+          <span class="small-label">APPARENT IDEAL-MODEL AGE</span>
+          <strong id="inferred-age">11,460 years</strong>
+          <p id="inferred-equation">t = −ln(0.25) ÷ λ = 2.00 half-lives</p>
+          <div class="result-rule"></div>
+          <span class="small-label">ILLUSTRATIVE UNCERTAINTY INTERVAL</span>
+          <strong class="smaller" id="inferred-range">—</strong>
+          <p class="fine" id="range-note">This interval propagates only the chosen parent-fraction error. It is not a calibrated confidence interval and excludes systematic effects and decay-constant uncertainty.</p>
+        </div>
+      </div>
+      <p class="figure-note"><strong>Important:</strong> this is an ideal parent-fraction exercise. Actual radiocarbon dating uses a normalized radiocarbon measurement and a conventional age definition, then requires calibration to calendar years. Mineral dating generally requires measured parent/daughter ratios and corrections for initial daughters. These are not interchangeable measurements.</p>
+    </section>
+
+    <section class="panel" id="activities" aria-labelledby="activities-title">
+      <div class="section-head"><div><p class="eyebrow">HANDS-ON INVESTIGATIONS</p><h2 id="activities-title">Three experiments with real geological meaning</h2></div></div>
+      <div class="activity-grid">
+        <article class="activity">
+          <p class="activity-index">01 · SELECT A METHOD</p><h3>Which clock belongs to this sample?</h3>
+          <label for="material">Material</label>
+          <select id="material"><option value="wood">Charcoal from an ancient campfire</option><option value="ash">Minerals in a volcanic ash layer</option><option value="zircon">Zircon crystal in an old rock</option><option value="fossil">Dinosaur bone in sedimentary rock</option></select>
+          <label for="method">Proposed dating method</label>
+          <select id="method"><option value="c14">Radiocarbon (¹⁴C)</option><option value="k40">Potassium–argon (⁴⁰K–⁴⁰Ar)</option><option value="u238">Uranium–lead (U–Pb)</option></select>
+          <button id="method-check" type="button">Evaluate method</button>
+          <p id="method-result" class="activity-result" role="status" aria-live="polite">Select a material and method, then evaluate the match.</p>
+        </article>
+        <article class="activity">
+          <p class="activity-index">02 · STRATIGRAPHY</p><h3>Date a fossil-bearing layer</h3>
+          <div class="strata" aria-label="Schematic rock layers: younger dated volcanic ash above a fossil-bearing sedimentary layer, older dated ash below">
+            <div class="stratum ash younger">Younger volcanic ash <span id="upper-layer-label">66 Ma</span></div>
+            <div class="stratum fossil">🦴 Fossil-bearing sediment</div>
+            <div class="stratum ash older">Older volcanic ash <span id="lower-layer-label">72 Ma</span></div>
+          </div>
+          <label for="upper-layer">Upper ash age <output id="upper-value">66 Ma</output></label>
+          <input id="upper-layer" type="range" min="60" max="69" step="1" value="66">
+          <label for="lower-layer">Lower ash age <output id="lower-value">72 Ma</output></label>
+          <input id="lower-layer" type="range" min="70" max="80" step="1" value="72">
+          <p id="strata-result" class="activity-result" aria-live="polite">If the layers are undisturbed, the fossil layer lies between 66 and 72 million years old.</p>
+        </article>
+        <article class="activity">
+          <p class="activity-index">03 · TEST AN ASSUMPTION</p><h3>What if the clock is disturbed?</h3>
+          <label for="mineral-clock">Mineral clock</label>
+          <select id="mineral-clock"><option value="k40">Potassium–argon</option><option value="u238">Uranium–lead</option></select>
+          <label for="disturbance">Disturbance</label>
+          <select id="disturbance"><option value="closed">None: closed system</option><option value="loss">Loss of radiogenic daughter atoms</option><option value="inherit">Additional inherited daughter atoms</option></select>
+          <label for="disturbance-amount">Disturbance magnitude <output id="disturbance-value">30%</output></label>
+          <input id="disturbance-amount" type="range" min="0" max="60" step="5" value="30">
+          <p class="fine">True model age: 1.5 half-lives. Loss means removing this percentage of accumulated radiogenic daughter; inheritance adds this percentage of initial-parent equivalents, multiplied by the relevant daughter-branch fraction.</p>
+          <div class="comparison"><div><span>True age</span><strong id="true-age">—</strong></div><div><span>Inferred age</span><strong id="apparent-age">—</strong></div></div>
+          <p id="disturbance-result" class="activity-result" aria-live="polite">Test whether changing the isotope inventory changes the inferred age.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="learn" class="panel learning" aria-labelledby="learn-title">
+      <div class="section-head"><div><p class="eyebrow">ONE MODEL · FOUR DEPTHS</p><h2 id="learn-title">Choose your learning level</h2></div></div>
+      <div class="level-tabs" role="tablist" aria-label="Learning level">
+        <button type="button" role="tab" id="tab-1" aria-controls="level-1" aria-selected="true" tabindex="0" data-level="1">1 · Discover</button>
+        <button type="button" role="tab" id="tab-2" aria-controls="level-2" aria-selected="false" tabindex="-1" data-level="2">2 · Explore</button>
+        <button type="button" role="tab" id="tab-3" aria-controls="level-3" aria-selected="false" tabindex="-1" data-level="3">3 · Analyze</button>
+        <button type="button" role="tab" id="tab-4" aria-controls="level-4" aria-selected="false" tabindex="-1" data-level="4">4 · Research</button>
+      </div>
+      <article class="level-content" id="level-1" role="tabpanel" aria-labelledby="tab-1" tabindex="0">
+        <h3>Atoms can tell us about long-ago events</h3>
+        <p>Imagine finding a piece of wood from an ancient fire. While the tree was alive, it exchanged carbon with its surroundings. After it died, its radioactive carbon-14 gradually diminished. If we know what to compare it with, we can estimate how long ago the tree stopped exchanging carbon.</p>
+        <p>Each radioactive atom might change at any moment. We cannot predict <em>which</em> one changes next. But if we have a huge number of them, we can predict how many will remain on average.</p>
+        <ol><li>In the main experiment, start at zero half-lives. Most dots are still their original color.</li><li>Move to one half-life. About half should still represent parent atoms.</li><li>Move to two half-lives. Ask: half of the <em>original</em> atoms, or half of the ones that remained?</li></ol>
+        <p class="takeaway">Remember: one half-life removes about half of what is still there—not the same number of atoms every time.</p>
+      </article>
+      <article class="level-content" id="level-2" role="tabpanel" aria-labelledby="tab-2" tabindex="0" hidden>
+        <h3>Understanding half-life and choosing the right clock</h3>
+        <p>An <strong>isotope</strong> is a form of an element with a particular number of neutrons. A radioactive <strong>parent nuclide</strong> transforms through nuclear decay. Its <strong>half-life</strong> is the time required for half of a large parent population to decay on average. A <strong>daughter nuclide</strong> is a product of that decay or decay chain.</p>
+        <div class="table-wrap"><table><caption>Illustrative half-life comparison</caption><thead><tr><th>Half-lives passed</th><th>Parent fraction left</th><th>Total fraction decayed</th></tr></thead><tbody><tr><td>0</td><td>100%</td><td>0%</td></tr><tr><td>1</td><td>50%</td><td>50%</td></tr><tr><td>2</td><td>25%</td><td>75%</td></tr><tr><td>3</td><td>12.5%</td><td>87.5%</td></tr><tr><td>4</td><td>6.25%</td><td>93.75%</td></tr></tbody></table></div>
+        <p>Carbon-14 is useful for relatively recent organic remains, often up to approximately 50,000 years. Potassium–argon can date suitable potassium-rich minerals after cooling or formation; uranium–lead is especially useful in zircon. Different methods constrain different events, and laboratory procedures depend on the material.</p>
+        <p><strong>Try it:</strong> use the material-choice experiment. Can you radiocarbon-date a 150-million-year-old dinosaur? No: essentially no original carbon-14 could survive across that span, and fossil mineral replacement complicates the question. Instead, geologists often date surrounding volcanic layers or other age-constraining materials.</p>
+        <p>In the rock-layer experiment, the older layer is lower and the younger layer higher only when the sequence has not been overturned or disturbed. The fossil's age is then <em>bracketed</em>, not measured directly by the two ash ages.</p>
+      </article>
+      <article class="level-content" id="level-3" role="tabpanel" aria-labelledby="tab-3" tabindex="0" hidden>
+        <h3>Exponential decay, age inversion and isotope ratios</h3>
+        <p>Let <em>N(t)</em> be the expected number of surviving parent atoms, <em>N₀</em> the initial number, <em>λ</em> the decay constant (time⁻¹), and <em>T½</em> the half-life. Independent decays with constant hazard satisfy:</p>
+        <div class="equation">dN/dt = −λN &emsp; ⇒ &emsp; N(t) = N₀ e<sup>−λt</sup></div>
+        <div class="equation">λ = ln(2) / T½ &emsp; ; &emsp; t = ln(N₀ / N) / λ = −ln(f) / λ</div>
+        <p>Here <em>f = N/N₀</em> is the surviving parent fraction. This is a convenient mathematical demonstration, but <em>N₀</em> is generally not directly known in a real mineral. With a radiogenic daughter amount <em>D*</em>, branch fraction <em>b</em>, surviving parent <em>P</em> and suitable closed-system assumptions:</p>
+        <div class="equation">D* = b N₀ (1 − e<sup>−λt</sup>) &emsp; ; &emsp; t = ln(1 + D* / (bP)) / λ</div>
+        <p><strong>Potassium–argon caveat:</strong> only roughly 10.7% of potassium-40 decays produce argon-40; the dominant branch produces calcium-40. Thus the argon daughter is not equal to all decayed parent atoms. The main graph correctly depicts <em>all decay events</em>, while the mineral disturbance exercise uses the explicit argon branch.</p>
+        <p><strong>Uranium–lead caveat:</strong> uranium-238 reaches stable lead-206 through a multistep decay chain. The simple accumulated-daughter expression is an effective long-time approximation when the intermediate daughters are short-lived compared with the studied timescale; actual U–Pb calculations use full isotopic measurements and geological screening.</p>
+        <p>The age-estimator's interval follows from the chosen absolute error in the parent fraction. Because the relationship is logarithmic, symmetric uncertainty in <em>f</em> produces an asymmetric age interval. The example is not a statistical confidence interval, and the exercise excludes isotope fractionation, initial daughter correction, contamination, instrumental errors and uncertainty in decay constants.</p>
+        <p><strong>Computational investigation:</strong> compare the scattered dot count (180 simulated events) with the smooth large-population curve. Increase time in steps. Why does a sample containing trillions of atoms give far more stable fractions than this small picture?</p>
+      </article>
+      <article class="level-content" id="level-4" role="tabpanel" aria-labelledby="tab-4" tabindex="0" hidden>
+        <h3>From isotope ratios to defensible geological ages</h3>
+        <p><strong>The clock's zero-point is physical, not universal.</strong> Radiocarbon tracks cessation of biological carbon exchange, subject to reservoir and contamination effects. K–Ar may record cooling through effective argon retention rather than initial mineral crystallization. Zircon U–Pb commonly records crystallization, but later metamorphism, inherited cores or lead loss can alter the interpretation. Dodson's closure-temperature framework helps explain diffusion-controlled retention during cooling.</p>
+        <p><strong>Initial daughter corrections and isochrons:</strong> many systems contain daughter nuclides when they form. Instead of assuming zero initial daughter, appropriately chosen co-genetic samples and isotope ratios can be used to fit an isochron. Agreement with model assumptions, mixing tests, and geological context matter; an apparent straight line is not automatically an age.</p>
+        <p><strong>Dual U–Pb chronometers:</strong> uranium-238 → lead-206 and uranium-235 → lead-207 provide two independent decay constants. Concordant ages strengthen interpretation; discordance can indicate lead loss, inheritance or other open-system histories. Concordia/discordia analysis and error ellipses require actual isotope-ratio data and correlated uncertainties—our simple parent/daughter graph is <em>not</em> a concordia diagram.</p>
+        <p><strong>Radiocarbon calibration:</strong> conventional radiocarbon ages are normally quoted in years BP (before AD 1950) using the conventional Libby half-life of 5,568 years and standard normalization. Calendar-age interpretation requires calibration datasets such as IntCal20, reflecting variation in past atmospheric ¹⁴C. A 5,730-year physical half-life exercise is neither a conventional BP determination nor a calibrated calendar date.</p>
+        <p><strong>Uncertainty and model criticism:</strong> distinguish analytical precision from geological accuracy. Typical workflows incorporate standards, blanks, isotopic corrections, reference-material checks, propagated uncertainties and independent stratigraphic evidence. Examine the disturbance experiment: loss of radiogenic daughter gives a younger apparent age; additional daughter yields an older one in this simplified model. Real disturbances can be time-dependent, partial and spatially heterogeneous.</p>
+        <p><strong>Research question:</strong> what corroborating evidence would make a billion-year mineral age trustworthy? Consider mineral textures, multiple isotope systems, geological setting, reproducible isotope measurements and agreement among grains.</p>
+      </article>
+    </section>
+
+    <section class="panel limitations" aria-labelledby="limits-title">
+      <div class="section-head"><div><p class="eyebrow">READ THE MODEL CORRECTLY</p><h2 id="limits-title">What the simulation assumes</h2></div></div>
+      <ul>
+        <li>Parent atoms decay independently, each with a constant probability per unit time. The dot display is a seeded stochastic illustration; smooth curves are theoretical expected fractions.</li>
+        <li>For the age inversion, the initial parent fraction is known, decay constant is fixed, and the system remains closed. Real measurements require additional chemical and isotopic information.</li>
+        <li>Potassium-40 decay to argon-40 is a minority branch; the selected daughter in an actual K–Ar measurement is not interchangeable with total decays.</li>
+        <li>Uranium–lead is a decay chain; the simplified total-decayed graph does not explicitly simulate intermediate nuclides or concordia.</li>
+        <li>Isotope-system changes keep the slider's elapsed <em>number of half-lives</em> fixed rather than chronological age. Different clocks therefore show different calendar durations.</li>
+        <li>For uranium-238, times older than Earth are marked hypothetical. Older radiocarbon examples also exceed the usual practical measurement range.</li>
+        <li>All lab scenarios are invented pedagogical examples, not published geochronological measurements or laboratory reports.</li>
+      </ul>
+    </section>
+
+    <section class="panel" id="sources" aria-labelledby="sources-title">
+      <div class="section-head"><div><p class="eyebrow">VERIFY AND LEARN MORE</p><h2 id="sources-title">References and further reading</h2></div></div>
+      <ol class="references">
+        <li><a href="https://www.usgs.gov/educational-resources/geologic-age-using-radioactive-decay-determine-geologic-age">USGS — Geologic Age: Using Radioactive Decay to Determine Geologic Age</a>. Accessible overview of geochronology and half-lives.</li>
+        <li><a href="https://www.nps.gov/subjects/geology/radiometric-age-dating.htm">U.S. National Park Service — Radiometric Age Dating</a>. Material and isotope selection.</li>
+        <li><a href="https://geoinfo.nmt.edu/labs/argon/methods/home.html">New Mexico Bureau of Geology — Argon Geochronology Methods</a>. K–Ar and argon methods, assumptions and corrections.</li>
+        <li>Reimer, P. J., et al. (2020). <a href="https://doi.org/10.1017/RDC.2020.41">The IntCal20 Northern Hemisphere Radiocarbon Age Calibration Curve (0–55 cal kBP)</a>. <em>Radiocarbon</em>, 62(4), 725–757.</li>
+        <li>Dodson, M. H. (1973). <a href="https://doi.org/10.1007/BF00373790">Closure temperature in cooling geochronological and petrological systems</a>. <em>Contributions to Mineralogy and Petrology</em>, 40, 259–274.</li>
+      </ol>
+    </section>
+    <section class="panel related"><h2>Related concepts</h2><p><a href="../rutherford-bohr-atomic-model/">Rutherford–Bohr atomic model</a> · <a href="../dalton-atomic-model/">Dalton's atomic model</a> · <a href="../cosmic-distance-ladder/">Cosmic distance ladder</a></p></section>
+  </main>
+  <footer>Science Concepts Demonstrated · Interactive educational model · <a href="../../">Explore all concepts</a> · <a href="https://github.com/ValRCS/Science_Concepts_Demonstrated">Source on GitHub</a></footer>
+</body>
+</html>

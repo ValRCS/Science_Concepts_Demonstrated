@@ -233,5 +233,31 @@
       "Fraunhofer",
       "coherence"
     ]
+  },
+  {
+    "id": "radiometric-dating",
+    "title": "Radiometric Dating: Earth's Atomic Clocks",
+    "summary": "Watch radioactive atoms transform, compare carbon-14, potassium–argon and uranium–lead clocks, and investigate dating methods, rock layers and disturbed samples at four learning levels.",
+    "subject": "Earth & Space",
+    "levels": [
+      "Primary",
+      "Lower secondary",
+      "Upper secondary",
+      "University"
+    ],
+    "path": "visualizations/radiometric-dating/",
+    "keywords": [
+      "radiometric dating",
+      "half-life",
+      "radioactive decay",
+      "carbon-14",
+      "radiocarbon dating",
+      "potassium-argon",
+      "uranium-lead",
+      "zircon",
+      "geochronology",
+      "isotopes",
+      "geological time"
+    ]
   }
 ]
