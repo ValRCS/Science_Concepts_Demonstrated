@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#09172a">
+<meta name="description" content="Experiment with Hyperion's chaotic spin: simulate gravity-gradient torques, compare nearly identical starting conditions, and explore four scientific learning levels.">
+<title>Hyperion: Saturn's Chaotic Moon | Science Concepts Demonstrated</title>
+<style>
+:root{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color-scheme:dark;background:#09172a;color:#eef5ff;--panel:#14273e;--border:#34516b;--muted:#b8cede;--cyan:#77e3dc;--gold:#f2cb83;--blue:#9fb9ff}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;line-height:1.6}a{color:#a5ebe5;text-underline-offset:3px}a:hover{color:#fff}h1,h2,h3{line-height:1.18}h1{font-size:clamp(2.1rem,5.5vw,3.7rem);margin:.45rem 0 .75rem}h1 em{color:var(--cyan);font-style:normal}h2{font-size:clamp(1.35rem,3vw,1.9rem)}h3{font-size:1.15rem}p,li{color:#d5e2ee}small,.muted{color:var(--muted)}.wrap{max-width:1200px;margin:auto;padding:0 clamp(15px,3vw,28px)}.skip{position:absolute;top:-100px;left:8px;background:#fff;color:#081629;padding:10px;z-index:20}.skip:focus{top:8px}.topbar{border-bottom:1px solid #31516d;background:#0c1c31}.topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;padding-top:13px;padding-bottom:13px}.brand{font-weight:750;text-decoration:none}.topbar nav{display:flex;gap:15px;flex-wrap:wrap}.topbar nav a{font-size:.92rem}.hero{padding:38px 0 22px}.eyebrow{font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:var(--cyan)}.lead{font-size:1.12rem;max-width:850px}.hero-grid{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(230px,.9fr);gap:25px;align-items:center}.photo{margin:0;background:#071320;border:1px solid var(--border);border-radius:15px;overflow:hidden}.photo img{display:block;width:100%;aspect-ratio:1.75;object-fit:contain}.photo figcaption{padding:8px 13px;font-size:.78rem;color:var(--muted)}.panel{border:1px solid var(--border);border-radius:16px;background:var(--panel);padding:clamp(15px,2.5vw,24px);margin:19px 0}.panel>h2:first-child{margin-top:0}.level-tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.level-tabs button{padding:11px 8px;text-align:left;min-height:65px}.level-tabs strong,.level-tabs span{display:block}.level-tabs span{font-size:.76rem;margin-top:2px;font-weight:400;color:#ccdae7}button,select,input{font:inherit}button,select{border:1px solid #7291a7;background:#213b56;color:white;border-radius:9px;padding:10px 13px;cursor:pointer}button:hover{background:#305372}button[aria-selected="true"],button[aria-pressed="true"]{background:#176d77;border-color:#95eadd}button.primary{background:#147985;border-color:#a1e7e6;font-weight:750}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #ffdb85;outline-offset:3px}input[type=range]{width:100%;accent-color:#72ded5;cursor:pointer}.lab-head{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}.pill{font-size:.72rem;letter-spacing:.07em;border-radius:999px;border:1px solid #63869e;padding:5px 11px;color:#b9e9df}.lab-grid{display:grid;grid-template-columns:minmax(0,1.75fr) minmax(272px,.9fr);gap:19px}.visual-stack{min-width:0}.canvas-box{background:#081629;border:1px solid #29445f;border-radius:12px;overflow:hidden;margin-bottom:10px}.canvas-box canvas{display:block;width:100%;height:auto}.visual-label{display:flex;align-items:center;justify-content:space-between;gap:6px;flex-wrap:wrap;font-size:.82rem;padding:10px 12px 0;color:#cde2f0}.visual-label strong{color:var(--gold)}.annotation{font-size:.81rem;color:var(--muted);margin:5px 0 12px}.control-block{padding:13px 0;border-bottom:1px solid #33506b}.control-block:first-child{padding-top:0}.control-block:last-child{border-bottom:0}.control-block label{display:block;font-weight:680;margin-bottom:5px}.control-block output{float:right;font-variant-numeric:tabular-nums;color:var(--cyan)}.control-help{display:block;font-size:.79rem;color:var(--muted)}.actions{display:flex;flex-wrap:wrap;gap:7px;margin:12px 0}.actions button{flex:1;min-width:74px}.preset-buttons{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.preset-buttons button{font-size:.88rem;padding:9px 7px}.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:16px 0}.stat{padding:11px;background:#0a1c31;border-radius:10px}.stat span{display:block;color:#bad0e2;font-size:.78rem}.stat strong{display:block;color:#b7f6e7;font-size:clamp(1rem,2vw,1.42rem);font-variant-numeric:tabular-nums}.notice{background:#0b2236;border-left:3px solid var(--cyan);padding:10px 12px;color:#d2e8ee;border-radius:0 8px 8px 0}.status{min-height:3em}.research-only{display:none}body[data-level="3"] .research-only,body[data-level="4"] .research-only{display:block}.advanced-only{display:none}body[data-level="2"] .advanced-only,body[data-level="3"] .advanced-only,body[data-level="4"] .advanced-only{display:block}.charts{display:grid;grid-template-columns:1fr 1fr;gap:15px}.charts .canvas-box{height:100%}.charts .canvas-box canvas{width:100%}.chart-picker{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:6px 0 8px}.chart-picker select{max-width:290px}.level-panel[hidden]{display:none}table{border-collapse:collapse;width:100%}th,td{padding:9px;border-bottom:1px solid #36536b;text-align:left}th{color:#dceefa}code,.formula{color:#b5f2db;font-size:.96em}.formula{display:block;background:#0c2035;padding:12px;overflow:auto;border-radius:8px;white-space:nowrap}.experiment-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.experiment-grid article{background:#0d2035;border-radius:12px;padding:13px}.experiment-grid h3{margin:0 0 5px}.references li{margin:8px 0}.footer{padding:20px 0 45px;border-top:1px solid #294159;margin-top:30px}.sr-only{position:absolute;overflow:hidden;clip:rect(0,0,0,0);width:1px;height:1px;white-space:nowrap}@media(max-width:880px){.hero-grid,.lab-grid{grid-template-columns:1fr}.hero-grid .photo{max-width:530px}.stats{grid-template-columns:repeat(2,1fr)}}@media(max-width:670px){.level-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}.charts,.experiment-grid{grid-template-columns:1fr}.topbar nav{gap:9px}.panel{padding:15px}.preset-buttons{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body data-level="1">
+<a class="skip" href="#experiment">Skip to simulation</a>
+<header class="topbar"><div class="wrap"><a class="brand" href="../../">∑ Science Concepts Demonstrated</a><nav aria-label="On this page"><a href="#experiment">Simulation</a><a href="#learn">Learn</a><a href="#experiments">Experiments</a><a href="#references">References</a><a href="../../#category-earth-space">← Earth & Space</a></nav></div></header>
+<main class="wrap">
+<section class="hero" aria-labelledby="title"><p class="eyebrow">Earth & Space · Saturn · Chaos theory</p><div class="hero-grid"><div><h1 id="title">Hyperion: Saturn's <em>chaotic moon</em></h1><p class="lead">Saturn's oddly shaped moon follows a fairly regular orbit—but its <strong>rotation</strong> can be extraordinarily difficult to predict. Can two nearly identical spinning moons stay in step?</p><p>Change the moon's shape, orbit and starting spin. Every movement in this demonstration follows a mathematical rule: <strong>no random rotations are added.</strong></p></div><figure class="photo"><img src="https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/09/i/IMG001753.jpg" width="420" height="240" loading="lazy" alt="Cassini spacecraft photograph of Hyperion, an irregular, deeply cratered moon against black space"><figcaption>Actual Hyperion, photographed by Cassini · <a href="https://science.nasa.gov/resource/saturns-spongy-hyperion-tumbles-into-view/">NASA/JPL-Caltech/SSI</a></figcaption></figure></div></section>
+<section class="panel" aria-labelledby="levels-title"><h2 id="levels-title">Choose your learning level</h2><p>One physical model, four depths of explanation. Begin by playing, or jump directly to university-level analysis.</p><div class="level-tabs" role="tablist" aria-label="Learning levels"><button role="tab" type="button" id="tab-1" aria-controls="level-1" aria-selected="true" tabindex="0" data-tab="1"><strong>1 · Discover</strong><span>Ages 7–10</span></button><button role="tab" type="button" id="tab-2" aria-controls="level-2" aria-selected="false" tabindex="-1" data-tab="2"><strong>2 · Explore</strong><span>Ages 14–18</span></button><button role="tab" type="button" id="tab-3" aria-controls="level-3" aria-selected="false" tabindex="-1" data-tab="3"><strong>3 · Analyze</strong><span>Bachelor</span></button><button role="tab" type="button" id="tab-4" aria-controls="level-4" aria-selected="false" tabindex="-1" data-tab="4"><strong>4 · Research</strong><span>Master</span></button></div></section>
+<section id="experiment" class="panel" aria-labelledby="experiment-title"><div class="lab-head"><h2 id="experiment-title">Spin–orbit laboratory</h2><span class="pill">REAL ODE SOLVER · IDEALIZED 2D MODEL</span></div><p>Saturn pulls on the long axis of each moon. The strength and direction of this torque change as it travels along its orbit. Moon A and B share an orbit but start at slightly different angles.</p><div class="lab-grid"><div class="visual-stack"><div class="canvas-box"><div class="visual-label"><span>Orbit and orientation · not to scale</span><strong>Saturn → Hyperion</strong></div><canvas id="orbit" width="760" height="340" role="img" aria-label="Computed position of Hyperion on an elliptical orbit around Saturn; the moon's orientation updates with gravitational torque."></canvas></div><div class="canvas-box"><div class="visual-label"><span>Twin moons: nearly the same start</span><strong>Gold A · Cyan B</strong></div><canvas id="twins" width="760" height="196" role="img" aria-label="Two enlarged, calculated rotations of a triaxial moon side by side; their orientations diverge when parameters give chaotic motion."></canvas></div><p class="annotation">Moon shapes and Saturn's rings are illustrative. Both spin pointers and the plotted results come from numerical integration, not a prerecorded animation. The model rotates in the orbital plane; it cannot reproduce genuine three-dimensional tumbling.</p></div><div class="controls"><div class="control-block"><label>Choose a starting experiment</label><div class="preset-buttons" role="group" aria-label="Model presets"><button data-preset="hyperion" aria-pressed="true">🪐 Hyperion-like</button><button data-preset="locked" aria-pressed="false">🔒 Tidal lock</button><button data-preset="circular" aria-pressed="false">⭕ Circular orbit</button><button data-preset="round" aria-pressed="false">⚪ Nearly round</button></div><small class="control-help">The named presets are model configurations, not observations of Hyperion's exact current spin.</small></div><div class="actions"><button id="play" type="button" class="primary" aria-pressed="false">▶ Play</button><button id="step" type="button">Step +1 orbit</button><button id="reset" type="button">↺ Reset</button></div><div class="control-block"><label for="speed">Playback: <output id="speed-value" for="speed">1.0 orbit/s</output></label><input id="speed" type="range" min="0.25" max="8" step="0.25" value="1"><small class="control-help">Accelerated simulated time, not real-time motion.</small></div><div class="control-block advanced-only"><label for="eccentricity">Orbital eccentricity: <output id="eccentricity-value" for="eccentricity">0.104</output></label><input id="eccentricity" type="range" min="0" max="0.35" step="0.001" value="0.104"><small class="control-help">0 means circular; Hyperion's value is approximately 0.104.</small></div><div class="control-block advanced-only"><label for="asymmetry">Shape asymmetry (B − A)/C: <output id="asymmetry-value" for="asymmetry">0.260</output></label><input id="asymmetry" type="range" min="0" max="0.50" step="0.005" value="0.26"><small class="control-help">A, B, C are principal moments of inertia. 0 means no torque in this model.</small></div><div class="control-block advanced-only"><label for="angle">Starting orientation: <output id="angle-value" for="angle">30°</output></label><input id="angle" type="range" min="0" max="180" step="1" value="30"></div><div class="control-block advanced-only"><label for="spin">Starting spin rate ω/n: <output id="spin-value" for="spin">1.00</output></label><input id="spin" type="range" min="-1" max="4" step="0.05" value="1"><small class="control-help">1 means one complete turn per orbit if the spin stays constant.</small></div><div class="control-block advanced-only"><label for="offset">Moon B's initial offset: <output id="offset-value" for="offset">0.010°</output></label><select id="offset"><option value="0.01">0.01°</option><option value="0.1">0.1°</option><option value="1">1°</option><option value="0">Exactly identical (0°)</option></select><div class="actions"><button id="advance" type="button">Fast-forward +20 orbits</button></div></div></div></div>
+<div class="stats" aria-label="Simulation measurements"><div class="stat"><span>Simulated time</span><strong id="orbits-out">0.00 orbits</strong></div><div class="stat"><span>Moon A's spin / mean motion</span><strong id="rotation-out">1.00 × n</strong></div><div class="stat"><span>Relative angle A ↔ B</span><strong id="separation-out">0.010°</strong></div><div class="stat"><span>Distance from Saturn</span><strong id="distance-out">1.344 Mkm</strong></div></div><p id="feedback" class="notice status" role="status" aria-live="polite">Try Play, or choose Step +1 orbit. Will the nearly identical moons stay aligned?</p><div class="advanced-only"><h3>Live measurements</h3><div class="chart-picker"><label for="chart-metric">Plot</label><select id="chart-metric"><option value="difference">Relative orientation (0–90°)</option><option value="spin">Moon A rotation rate (ω/n)</option><option value="log">Log phase-space separation</option></select></div><div class="canvas-box"><canvas id="chart" width="760" height="232" role="img" aria-label="Time series of calculated angular separation, spin rate, or phase-space separation over simulated orbits."></canvas></div><p class="annotation">Relative orientation is measured modulo 180° because an ideal triaxial ellipsoid has a half-turn symmetry. Differences can decrease after growing. The logarithmic plot uses a dimensionless phase-space norm and is not automatically a Lyapunov exponent.</p></div><div class="research-only"><h3>Periapsis Poincaré section</h3><div class="canvas-box"><canvas id="poincare" width="760" height="260" role="img" aria-label="Poincaré map: moon orientation modulo 180 degrees versus spin angular velocity, sampled once per orbit at periapsis."></canvas></div><p class="annotation">Each dot is sampled at a successive periapsis passage, not at an arbitrary animation frame. A single orbit may produce only a sparse set; advance many orbits to reveal phase-space structure.</p></div></section>
+<section class="panel" id="learn" aria-labelledby="learn-title"><h2 id="learn-title">Understand the motion</h2><article id="level-1" class="level-panel" role="tabpanel" aria-labelledby="tab-1"><h3>Level 1 · Discover and play</h3><p>Most people know our Moon shows us nearly the same face every night. Hyperion is different! It has the shape of a battered potato, and Saturn's gravity keeps tugging on it as it moves.</p><p>Watch the two moons. They start just a tiny bit apart. Do they turn together forever, or can they end up facing different directions? <strong>Predict first, then press Play.</strong></p><p>Try <em>Tidal lock</em>: it keeps the same face toward Saturn. Then try <em>Hyperion-like</em>. In this experiment, surprising motion follows exact rules—even though you cannot easily guess what will happen next.</p><p><strong>Remember:</strong> the real Hyperion spins in three dimensions, so the simple flat illustration is a way to learn one part of the story.</p></article>
+<article id="level-2" class="level-panel" role="tabpanel" aria-labelledby="tab-2" hidden><h3>Level 2 · Explore and understand</h3><p><strong>Tidal locking</strong> occurs when the rotation period matches the orbital period, so the same hemisphere approximately faces a planet. Hyperion is not steadily locked. Its irregular body presents a gravity-gradient torque: Saturn attracts its closer portions more strongly than its farther portions, tending to orient its long axis along the Saturn–moon line.</p><p>The orbit is an ellipse, not a circle. Hyperion moves faster at periapsis (nearest Saturn) and slower at apoapsis (farthest away). The gravitational torque becomes stronger when the moon approaches Saturn. Together these periodic changes and the body's asymmetry create nonlinear <strong>spin–orbit coupling</strong>.</p><p>Compare the circular and Hyperion-like presets. Change eccentricity <em>e</em> and asymmetry <em>(B−A)/C</em> independently. Try a spin of 1.00 × n, where <em>n = 2π/T</em> is the average orbital angular speed; the actual instantaneous orbital speed varies on an ellipse.</p><p>Hyperion orbits Saturn in approximately 21.2766 days, at a semimajor axis near 1.5 million km and eccentricity about 0.104. Its orbit is in a 4:3 mean-motion resonance with Titan (Titan completes approximately four orbits for every three Hyperion orbits), helping preserve the eccentricity. <a href="https://science.nasa.gov/saturn/moons/hyperion/">NASA overview</a>.</p><p><strong>Observation:</strong> a wildly changing spin does not mean the orbit itself is random. The simulation keeps the same mathematically prescribed ellipse in every run.</p></article>
+<article id="level-3" class="level-panel" role="tabpanel" aria-labelledby="tab-3" hidden><h3>Level 3 · Analyze and model</h3><p>Represent the moon as a rigid triaxial ellipsoid with principal moments <em>A &lt; B &lt; C</em> and a principal spin axis perpendicular to the orbital plane. Let <em>θ</em> be its long-axis orientation in inertial space, <em>f</em> the true anomaly, <em>r</em> the orbital radius, and <em>μ = GM</em> Saturn's gravitational parameter.</p><div class="formula" aria-label="Spin orbit equation">d²θ/dt² = −[3μ(B−A)/(2Cr³)] sin(2(θ−f))</div><p>Derivation: the leading gravitational quadrupole potential depends on <em>cos 2(θ−f)</em>. The torque is <em>−∂U/∂θ</em>; dividing it by the moment of inertia <em>C</em> gives the angular acceleration. The factor <em>sin 2(θ−f)</em> makes this a nonlinear driven pendulum-like problem.</p><p>For <em>τ = nt</em>, <em>n²a³ = μ</em>, <em>ρ=r/a=(1−e²)/(1+e cos f)</em>, and <em>κ=(B−A)/C</em>, the solver integrates:</p><div class="formula" aria-label="Dimensionless spin orbit equations">θ′ = w; w′ = −(3κ/2ρ³) sin(2(θ−f)); f′ = (1+e cos f)²/(1−e²)^(3/2)</div><p>Primes denote derivatives with respect to <em>τ</em>, and <em>w = (dθ/dt)/n</em>. The state is integrated using fixed-step fourth-order Runge–Kutta, including both twins and their common orbital phase. The orbit repeats with period <em>Δτ = 2π</em>. The Poincaré plot samples the Moon A trajectory as <em>f</em> crosses each integer multiple of <em>2π</em>.</p><p>For <em>κ=0</em>, the gravitational torque vanishes and <em>w</em> stays constant. For <em>e=0</em>, the forcing becomes steady in a frame rotating at <em>n</em>, and the planar problem becomes integrable; an initially synchronous, aligned moon stays aligned. For nonzero <em>e</em>, interacting spin–orbit resonances can yield chaotic regions in phase space.</p><p>Use the twin-moon experiment to investigate sensitivity. A difference growing quickly is <em>suggestive</em>, but a finite-time separation trace is not a mathematical proof of chaos. Boundaries, numerical error, and eventually saturation must be examined.</p></article>
+<article id="level-4" class="level-panel" role="tabpanel" aria-labelledby="tab-4" hidden><h3>Level 4 · Investigate and research</h3><p>Introduce the canonical momentum <em>p=Cθ̇</em>. A time-dependent planar spin Hamiltonian, ignoring θ-independent terms, can be written <em>H(θ,p,t)=p²/(2C) − [3μ(B−A)/(4r(t)³)] cos(2[θ−f(t)])</em>. The nonautonomous periodic forcing adds a phase dimension, allowing a two-dimensional area-preserving return map and the coexistence of regular islands and chaotic layers.</p><p>Resonances occur when the averaged spin rate is near a rational multiple of mean motion. Eccentricity introduces additional orbital harmonics; resonance overlap can produce widespread transport through rotational phase space. The 1984 study by Wisdom, Peale and Mignard identified large chaotic regions in the simplified model and important instabilities of its assumed spin-axis geometry.</p><p><strong>Formal distinction:</strong> the displayed scalar “log phase-space separation” is <em>log10(√(δθ²+δw²))</em>, with angular differences wrapped modulo π. It is a diagnostic, not a computed maximal Lyapunov exponent. Robust exponent estimation requires tangent dynamics or repeated renormalization, convergence studies, and careful treatment of the phase-space metric.</p><p>Physical Hyperion requires three Euler rotational equations and three attitude coordinates (typically represented numerically by quaternions), accounting for non-principal-axis rotation, three moments of inertia, nutation, possible dissipation and orbital perturbations from Titan. A decorative 3D rendering of this planar simulation would not represent those degrees of freedom.</p><p><strong>Research context:</strong> Mathematical chaos of the planar spin–orbit model is firmly established, including computer-assisted symbolic-dynamics proofs. Goldberg and Batygin (2024) investigated nutation–orbit resonances and argued that a quasi-regular resonant explanation may describe the currently observed rapid non-principal-axis spin. A 2026 multifractal analysis investigated observational signatures of Hamiltonian chaos in photometric time series. These approaches address different questions; the present page does not resolve Hyperion's present 3D spin state from observations.</p><p><strong>Limitations:</strong> fixed Kepler orbit; rigid planar body; quadrupole gravity-gradient term only; no self-consistent Titan perturbations, dissipation, shape reconstruction, interior variation, or fitted ephemeris. The drawn irregular craters are artistic and do not determine the torque coefficient. Long integrations can be accurate over finite intervals without implying infinite-horizon trajectory predictability.</p></article></section>
+<section class="panel" id="experiments"><h2>Try these experiments</h2><div class="experiment-grid"><article><h3>1 · Lock the Moon</h3><p>Select Tidal lock. In this special circular, aligned state, Hyperion's long axis keeps pointing at Saturn. Reset and choose Hyperion-like to compare.</p></article><article><h3>2 · Test the orbit</h3><p>At Level 2, reduce eccentricity to 0 while keeping the shape unchanged. Watch how the orbital forcing changes, then increase it.</p></article><article><h3>3 · Remove the torque</h3><p>Set asymmetry to 0. The model now has exactly constant spin rate, even though the moon continues to orbit Saturn.</p></article><article><h3>4 · Change almost nothing</h3><p>Set the twin offset to 0.01°, then 1°, then exactly 0°. Compare the traces: identical deterministic starting states stay identical.</p></article><article><h3>5 · Sample once per orbit</h3><p>At Level 3, fast-forward repeatedly. Watch the Poincaré points fill a curve or region depending on the chosen parameters and trajectory.</p></article><article><h3>6 · Verify the mathematics</h3><p>Use the research level to distinguish physical orientation differences (bounded) from logarithmic separation and genuine Lyapunov exponents.</p></article></div></section>
+<section class="panel"><h2>What the demonstration does—and does not—show</h2><p>The trajectories are solutions of the stated deterministic differential equations, not observed trajectories. The orbit is calculated as a prescribed two-body Kepler ellipse, and the moon's rotation does not feed back on the orbit. Both moons share the same orbital phase and differ only in their starting orientation. The visualization is schematic, with enormously exaggerated moon and Saturn sizes. The code uses a fixed normalized time step and numerical RK4 integration; it can accumulate error over long integrations, especially along chaotic trajectories.</p></section>
+<section class="panel references" id="references"><h2>References and further reading</h2><ol><li><a href="https://science.nasa.gov/saturn/moons/hyperion/">NASA Science: Hyperion</a> — overview, observations and Cassini imagery.</li><li><a href="https://nssdc.gsfc.nasa.gov/planetary/factsheet/saturniansatfact.html">NASA NSSDC: Saturnian satellite fact sheet</a> — orbital period, eccentricity and semimajor axis.</li><li>Wisdom, J., Peale, S. J., &amp; Mignard, F. (1984). <a href="https://doi.org/10.1016/0019-1035(84)90032-0">The chaotic rotation of Hyperion</a>. <em>Icarus</em>, 58, 137–152 — foundational spin–orbit chaos analysis.</li><li>Gierzkiewicz, A., &amp; Zgliczyński, P. (2019). <a href="https://doi.org/10.1007/s10569-019-9910-8">A computer-assisted proof of symbolic dynamics in Hyperion's rotation</a>. <em>Celestial Mechanics and Dynamical Astronomy</em> — rigorous result within an idealized model.</li><li>Goldberg, M., &amp; Batygin, K. (2024). <a href="https://doi.org/10.1051/0004-6361/202452443">Nutation–orbit resonances: The origin of the chaotic rotation of Hyperion and the barrel instability</a>. <em>Astronomy &amp; Astrophysics</em>, 692, A9 — alternative dynamical interpretation of the observed rotation.</li><li><a href="https://doi.org/10.1063/5.0321856">Multifractal signatures of Hamiltonian chaos in Hyperion's rotational dynamics</a> (2026), <em>Chaos</em> — analysis of observational diagnostics.</li></ol></section>
+<section class="panel"><h2>Related concepts</h2><p><a href="../cosmic-distance-ladder/">Cosmic Distance Ladder</a> · <a href="../fourier-transform/">Fourier Transform</a> · <a href="../speed-of-light/">Speed of light</a></p></section>
+</main><footer class="footer"><div class="wrap"><a href="../../">← Return to the concept directory</a><p class="muted">Science Concepts Demonstrated · A numerical teaching model, not a mission reconstruction.</p></div></footer>
+<script>
+"use strict";
+// Deterministic planar spin-orbit model. Time tau = n*t; f and theta in radians.
+// Kepler orbit is prescribed; no feedback from the rigid body's rotation.
+const TAU = 2 * Math.PI;
+const PERIOD_DAYS = 21.276609;
+const SEMIMAJOR_MKM = 1.50093;
+const INTEGRATION_STEP = TAU / 540;
+const $ = id => document.getElementById(id);
+const presets = {
+  hyperion: {e:0.104, k:0.26, angle:30, spin:1},
+  locked: {e:0, k:0.26, angle:0, spin:1},
+  circular: {e:0, k:0.26, angle:30, spin:1},
+  round: {e:0.104, k:0, angle:30, spin:1}
+};
+let cfg = {...presets.hyperion, offset:0.01};
+let state, elapsed, running=false, lastFrame=null, nextSample, samples=[], periapsis=[], activePreset="hyperion", activeLevel=1;
+const inputs = {e:$("eccentricity"), k:$("asymmetry"), angle:$("angle"), spin:$("spin"), offset:$("offset")};
+const clamp = (v,a,b) => Math.max(a,Math.min(b,v));
+const mod = (x,m) => (x % m + m) % m;
+const wrapPi = x => mod(x + Math.PI/2, Math.PI) - Math.PI/2;
+const rad = d => d*Math.PI/180;
+const deg = a => a*180/Math.PI;
+function derivative(s) {
+  const f=s[4], rho=(1-cfg.e*cfg.e)/(1+cfg.e*Math.cos(f));
+  const fDot = Math.pow(1+cfg.e*Math.cos(f),2)/Math.pow(1-cfg.e*cfg.e,1.5);
+  const factor = -1.5*cfg.k/(rho*rho*rho);
+  return [s[1], factor*Math.sin(2*(s[0]-f)), s[3], factor*Math.sin(2*(s[2]-f)), fDot];
+}
+function addScaled(s,k,h){return s.map((v,i)=>v+h*k[i]);}
+function rk4(s,h){
+  const a=derivative(s),b=derivative(addScaled(s,a,h/2));
+  const c=derivative(addScaled(s,b,h/2)),d=derivative(addScaled(s,c,h));
+  return s.map((v,i)=>v+h*(a[i]+2*b[i]+2*c[i]+d[i])/6);
+}
+function orbitRadius(f){return (1-cfg.e*cfg.e)/(1+cfg.e*Math.cos(f));}
+function separationDegrees(s=state){return deg(Math.abs(wrapPi(s[0]-s[2])));}
+function phaseDistance(s=state){return Math.hypot(wrapPi(s[0]-s[2]), s[1]-s[3]);}
+function recordSample(){
+  samples.push({orbits:elapsed/TAU, difference:separationDegrees(),spin:state[1],log:Math.log10(Math.max(phaseDistance(),1e-6))});
+  if(samples.length>650)samples.shift();
+}
+function advanceTime(delta){
+  // The numerical step is independent of the animation frame rate and speed control.
+  const n=Math.max(1,Math.ceil(delta/INTEGRATION_STEP));
+  const h=delta/n;
+  for(let i=0;i<n;i++){
+    const before=state;
+    const after=rk4(before,h);
+    const oldOrbit=Math.floor((before[4]+1e-9)/TAU);
+    const newOrbit=Math.floor((after[4]+1e-9)/TAU);
+    if(newOrbit>oldOrbit){
+      const target=newOrbit*TAU;
+      const frac=clamp((target-before[4])/(after[4]-before[4]),0,1);
+      const theta=before[0]+frac*(after[0]-before[0]);
+      const omega=before[1]+frac*(after[1]-before[1]);
+      periapsis.push({angle:deg(mod(theta,Math.PI)),spin:omega});
+      if(periapsis.length>600)periapsis.shift();
+    }
+    state=after;
+    elapsed+=h;
+    if(elapsed >= nextSample){recordSample();nextSample+=0.08*TAU;}
+  }
+}
+function pause(){running=false;lastFrame=null;$("play").textContent="▶ Play";$("play").setAttribute("aria-pressed","false");}
+function message(s){$("feedback").textContent=s;}
+function updateLabels(){
+  $("eccentricity-value").textContent=cfg.e.toFixed(3);
+  $("asymmetry-value").textContent=cfg.k.toFixed(3);
+  $("angle-value").textContent=cfg.angle.toFixed(0)+"°";
+  $("spin-value").textContent=cfg.spin.toFixed(2);
+  $("offset-value").textContent=cfg.offset.toFixed(3)+"°";
+  $("speed-value").textContent=Number($("speed").value).toFixed(2).replace(/0$/,"")+" orbits/s";
+}
+function syncInputs(){
+  inputs.e.value=cfg.e;
+  inputs.k.value=cfg.k;
+  inputs.angle.value=cfg.angle;
+  inputs.spin.value=cfg.spin;
+  inputs.offset.value=String(cfg.offset);
+  updateLabels();
+}
+function reset(messageText="Reset to the selected starting conditions. Make a prediction, then press Play."){
+  pause();elapsed=0;nextSample=0.08*TAU;
+  state=[rad(cfg.angle),cfg.spin,rad(cfg.angle+cfg.offset),cfg.spin,0];
+  samples=[];periapsis=[];recordSample();
+  draw();message(messageText);
+}
+function setPreset(name){
+  cfg={...presets[name],offset:cfg.offset};activePreset=name;
+  document.querySelectorAll("[data-preset]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.preset===name)));
+  syncInputs();reset(name==="locked"?"Moon A is exactly synchronous in a circular orbit. Moon B begins slightly tilted and may gently librate.":"Selected "+(name==="hyperion"?"the Hyperion-like configuration":name==="circular"?"a circular-orbit comparison":"a torque-free, nearly round comparison")+". Press Play or Step +1 orbit.");
+}
+function drawMoon(ctx,x,y,scale,angle,color){
+  ctx.save();ctx.translate(x,y);ctx.rotate(angle);
+  ctx.beginPath();
+  for(let i=0;i<24;i++){
+    const a=i*TAU/24;
+    const bump=1+0.05*Math.sin(5*a+0.7)+0.035*Math.cos(9*a);
+    const px=scale*1.26*bump*Math.cos(a),py=scale*0.78*bump*Math.sin(a);
+    if(i===0)ctx.moveTo(px,py);else ctx.lineTo(px,py);
+  }
+  ctx.closePath();
+  const fill=ctx.createLinearGradient(-scale,-scale,scale,scale);
+  fill.addColorStop(0,"#ded6c1");fill.addColorStop(0.6,"#8f918d");fill.addColorStop(1,"#575f65");
+  ctx.fillStyle=fill;ctx.fill();ctx.strokeStyle=color;ctx.lineWidth=2;ctx.stroke();
+  const craters=[[-.67,-.18,.20],[.12,-.36,.17],[.61,.21,.13],[-.12,.31,.11],[-.44,.36,.11]];
+  for(const [cx,cy,r] of craters){ctx.beginPath();ctx.ellipse(cx*scale,cy*scale,r*scale,r*scale*.7,0,0,TAU);ctx.fillStyle="rgba(31,43,52,.5)";ctx.fill();ctx.strokeStyle="rgba(234,229,206,.45)";ctx.lineWidth=1;ctx.stroke();}
+  ctx.beginPath();ctx.moveTo(-scale*1.38,0);ctx.lineTo(scale*1.55,0);ctx.strokeStyle=color;ctx.lineWidth=Math.max(2,scale*.065);ctx.stroke();
+  ctx.beginPath();ctx.arc(scale*1.55,0,scale*.13,0,TAU);ctx.fillStyle=color;ctx.fill();
+  ctx.restore();
+}
+function canvas(id){const el=$(id);return el.getContext("2d");}
+function baseCanvas(ctx,w,h){ctx.clearRect(0,0,w,h);ctx.fillStyle="#081629";ctx.fillRect(0,0,w,h);}
+function line(ctx,x1,y1,x2,y2,color,width=1,dash=[]){ctx.save();ctx.beginPath();ctx.setLineDash(dash);ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.strokeStyle=color;ctx.lineWidth=width;ctx.stroke();ctx.restore();}
+function label(ctx,s,x,y,size=13,color="#c9dceb",align="left") {ctx.font=size+"px system-ui,sans-serif";ctx.fillStyle=color;ctx.textAlign=align;ctx.fillText(s,x,y);}
+function drawOrbit(){
+  const ctx=canvas("orbit"),w=760,h=340; baseCanvas(ctx,w,h);
+  for(let i=0;i<55;i++){const x=(i*173+17)%w,y=(i*137+23)%h;ctx.fillStyle="rgba(213,237,250,.34)";ctx.fillRect(x,y,i%5===0?2:1,i%5===0?2:1);}
+  const a=262,b=a*Math.sqrt(1-cfg.e*cfg.e),cx=372,cy=171,focus=a*cfg.e,sx=cx+focus;
+  ctx.beginPath();ctx.ellipse(cx,cy,a,b,0,0,TAU);ctx.strokeStyle="#6c8fa7";ctx.lineWidth=1.7;ctx.setLineDash([6,8]);ctx.stroke();ctx.setLineDash([]);
+  line(ctx,sx,cy,cx+a,cy,"rgba(219,234,244,.24)",1,[4,5]);
+  // Saturn and stylized rings (visual sizes intentionally exaggerated).
+  ctx.save();ctx.translate(sx,cy);ctx.rotate(-.32);
+  ctx.beginPath();ctx.ellipse(0,0,56,18,0,0,TAU);ctx.strokeStyle="#c5a77c";ctx.lineWidth=12;ctx.stroke();
+  const sat=ctx.createRadialGradient(-13,-17,5,0,0,35);sat.addColorStop(0,"#f5dcac");sat.addColorStop(1,"#a67b59");
+  ctx.beginPath();ctx.arc(0,0,31,0,TAU);ctx.fillStyle=sat;ctx.fill();
+  ctx.beginPath();ctx.ellipse(0,0,56,18,0,0,Math.PI);ctx.strokeStyle="#e8d5aa";ctx.lineWidth=6;ctx.stroke();ctx.restore();
+  const r=orbitRadius(state[4])*a,fx=sx+r*Math.cos(state[4]),fy=cy-r*Math.sin(state[4]);
+  line(ctx,sx,cy,fx,fy,"rgba(118,226,217,.42)",1.5,[5,6]);
+  ctx.beginPath();ctx.arc(fx,fy,34,0,TAU);ctx.strokeStyle="rgba(255,255,255,.16)";ctx.stroke();
+  drawMoon(ctx,fx,fy,23,-state[0],"#f2cb83");
+  label(ctx,"Saturn",sx,cy+62,14,"#f3dab8","center");
+  label(ctx,"Hyperion A",fx+(fx>sx?26:-26),fy-35,13,"#f8d796",fx>sx?"left":"right");
+  label(ctx,"PERIAPSIS",cx+a-5,cy+23,10,"#a8c4d8","right");
+  label(ctx,"Orbit speed varies; sizes not to scale",18,319,13,"#c3d9e7");
+}
+function drawTwins(){
+  const ctx=canvas("twins"),w=760,h=196;baseCanvas(ctx,w,h);
+  for(const [i,x] of [190,570].entries()){
+    const color=i===0?"#f2cb83":"#77e3dc";
+    ctx.beginPath();ctx.arc(x,103,68,0,TAU);ctx.strokeStyle="rgba(153,186,214,.28)";ctx.lineWidth=1.3;ctx.stroke();
+    line(ctx,x-92,103,x+92,103,"rgba(169,218,221,.23)",1,[3,6]);
+    drawMoon(ctx,x,103,43,-(state[i*2]-state[4]),color);
+    label(ctx,"Moon "+(i===0?"A":"B"),x,26,16,color,"center");
+    label(ctx,"Saturn ←",x-79,185,12,"#bad0e4");
+  }
+  line(ctx,380,17,380,181,"#38556d",1);
+}
+function plotGraph(id,points,getX,getY,yMin,yMax,xMin,xMax,xTitle,yTitle){
+  const c=$(id),ctx=c.getContext("2d"),w=c.width,h=c.height;
+  baseCanvas(ctx,w,h);const l=62,r=17,t=20,b=41,pw=w-l-r,ph=h-t-b;
+  for(let j=0;j<=4;j++){
+    const y=t+(ph*j/4);line(ctx,l,y,w-r,y,"rgba(171,212,239,.2)");
+    label(ctx,(yMax-(yMax-yMin)*j/4).toFixed(1),l-8,y+4,11,"#b4cee0","right");
+  }
+  for(let j=0;j<=5;j++){
+    const x=l+pw*j/5;line(ctx,x,t,x,t+ph,"rgba(171,212,239,.10)");
+    label(ctx,(xMin+(xMax-xMin)*j/5).toFixed(1),x,t+ph+18,11,"#b4cee0","center");
+  }
+  label(ctx,xTitle,l+pw/2,h-7,12,"#b8d6e3","center");label(ctx,yTitle,l,14,12,"#b8d6e3");
+  if(!points.length)return;
+  ctx.save();ctx.beginPath();ctx.rect(l,t,pw,ph);ctx.clip();ctx.beginPath();
+  for(let i=0;i<points.length;i++){
+    const x=l+pw*(getX(points[i])-xMin)/(xMax-xMin),y=t+ph*(1-(getY(points[i])-yMin)/(yMax-yMin));
+    if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+  }
+  ctx.strokeStyle="#75e8dc";ctx.lineWidth=2.2;ctx.stroke();ctx.restore();
+}
+function drawChart(){
+  const metric=$("chart-metric").value;
+  const xMin=Math.max(0,elapsed/TAU-40),xMax=Math.max(3,elapsed/TAU);
+  const shown=samples.filter(p=>p.orbits>=xMin);
+  const [fn,min,max,labelText]=metric==="spin"?[p=>p.spin,-2,5,"Spin rate ω / n"]:metric==="log"?[p=>p.log,-6,1,"log10 phase distance"]:[p=>p.difference,0,90,"Relative angle (degrees)"];
+  plotGraph("chart",shown,p=>p.orbits,fn,min,max,xMin,xMax,"Simulated orbits",labelText);
+}
+function drawPoincare(){
+  const c=$("poincare"),ctx=c.getContext("2d"),w=c.width,h=c.height;baseCanvas(ctx,w,h);
+  const l=62,r=22,t=24,b=44,pw=w-l-r,ph=h-t-b;
+  for(let i=0;i<=6;i++){const x=l+pw*i/6;line(ctx,x,t,x,t+ph,"rgba(171,212,239,.16)");label(ctx,String(i*30)+"°",x,t+ph+20,11,"#b4cee0","center");}
+  for(let i=0;i<=6;i++){const y=t+ph*i/6;line(ctx,l,y,w-r,y,"rgba(171,212,239,.16)");label(ctx,(5-i).toFixed(0),l-9,y+4,11,"#b4cee0","right");}
+  label(ctx,"θ mod 180° at periapsis",l+pw/2,h-7,12,"#d1e1f0","center");label(ctx,"ω / n",l,15,12,"#d1e1f0");
+  ctx.save();ctx.beginPath();ctx.rect(l,t,pw,ph);ctx.clip();
+  for(const p of periapsis){const x=l+pw*p.angle/180,y=t+ph*(5-p.spin)/6;ctx.beginPath();ctx.arc(x,y,2.65,0,TAU);ctx.fillStyle="rgba(245,205,134,.82)";ctx.fill();}
+  ctx.restore();label(ctx,periapsis.length+" periapsis crossings",w-r,16,12,"#f2cb83","right");
+}
+function draw(){
+  drawOrbit();drawTwins();
+  $("orbits-out").textContent=(elapsed/TAU).toFixed(2)+" orbits";
+  $("rotation-out").textContent=state[1].toFixed(2)+" × n";
+  $("separation-out").textContent=separationDegrees().toFixed(3)+"°";
+  $("distance-out").textContent=(SEMIMAJOR_MKM*orbitRadius(state[4])).toFixed(3)+" Mkm";
+  if(activeLevel>=2)drawChart();if(activeLevel>=3)drawPoincare();
+}
+function frame(now){
+  if(!running)return;
+  if(lastFrame!==null){
+    const dt=Math.min(Math.max((now-lastFrame)/1000,0),.05);
+    advanceTime(dt*TAU*Number($("speed").value));draw();
+  }
+  lastFrame=now;
+  requestAnimationFrame(frame);
+}
+$("play").addEventListener("click",()=>{
+  if(running){pause();message("Paused. You can inspect the current orientations or step forward one full orbit.");}
+  else{running=true;lastFrame=null;$("play").textContent="Ⅱ Pause";$("play").setAttribute("aria-pressed","true");message("Both moons follow the same deterministic laws. Watch their orientation difference as the simulated orbits accumulate.");requestAnimationFrame(frame);}
+});
+$("step").addEventListener("click",()=>{pause();advanceTime(TAU);draw();message("Advanced one simulated orbit ("+PERIOD_DAYS.toFixed(2)+" Earth days). Current relative orientation: "+separationDegrees().toFixed(2)+"°.");});
+$("advance").addEventListener("click",()=>{pause();advanceTime(20*TAU);draw();message("Advanced 20 complete orbits. A separation may grow, fluctuate, or decrease: chaotic motion is not simply continuous divergence.");});
+$("reset").addEventListener("click",()=>reset());
+$("speed").addEventListener("input",updateLabels);
+for(const [key,node] of Object.entries(inputs)){
+  node.addEventListener("input",()=>{
+    cfg[key]=Number(node.value);activePreset="custom";
+    document.querySelectorAll("[data-preset]").forEach(b=>b.setAttribute("aria-pressed","false"));
+    updateLabels();reset("Changed the initial conditions; the two trajectories restart together for a fair comparison.");
+  });
+}
+document.querySelectorAll("[data-preset]").forEach(b=>b.addEventListener("click",()=>setPreset(b.dataset.preset)));
+$("chart-metric").addEventListener("change",drawChart);
+const tabs=Array.from(document.querySelectorAll("[data-tab]"));
+function selectLevel(level,focus=false){
+  activeLevel=level;document.body.dataset.level=String(level);
+  for(const tab of tabs){const yes=Number(tab.dataset.tab)===level;tab.setAttribute("aria-selected",String(yes));tab.tabIndex=yes?0:-1;if(yes&&focus)tab.focus();}
+  for(let i=1;i<=4;i++)$("level-"+i).hidden=i!==level;
+  draw();
+}
+tabs.forEach((tab,i)=>{
+  tab.addEventListener("click",()=>selectLevel(i+1));
+  tab.addEventListener("keydown",e=>{
+    const delta=e.key==="ArrowRight"?1:e.key==="ArrowLeft"?-1:0;
+    const target=e.key==="Home"?1:e.key==="End"?4:delta?mod(i+delta,4)+1:null;
+    if(target){e.preventDefault();selectLevel(target,true);}
+  });
+});
+document.addEventListener("visibilitychange",()=>{if(document.hidden&&running){pause();message("Playback paused while this page was in the background.");}});
+syncInputs();reset("Ready. Two moons begin just 0.01° apart. Predict whether they will stay aligned and press Play or Step +1 orbit.");
+</script>
+</body>
+</html>

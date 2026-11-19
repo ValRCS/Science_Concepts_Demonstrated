@@ -285,5 +285,31 @@
       "decoherence",
       "Merli Missiroli Pozzi"
     ]
+  },
+  {
+    "id": "hyperion-chaotic-rotation",
+    "title": "Hyperion: Saturn's chaotic moon",
+    "summary": "Simulate Hyperion-like spin–orbit chaos, compare nearly identical rotations, and explore nonlinear dynamics, Poincaré maps and current research across four learning levels.",
+    "subject": "Earth & Space",
+    "levels": [
+      "Primary",
+      "Lower secondary",
+      "Upper secondary",
+      "University"
+    ],
+    "path": "visualizations/hyperion-chaotic-rotation/",
+    "keywords": [
+      "Hyperion",
+      "Saturn",
+      "Titan",
+      "chaos",
+      "chaotic rotation",
+      "gravity gradient",
+      "spin-orbit resonance",
+      "Poincaré map",
+      "dynamical systems",
+      "celestial mechanics",
+      "sensitivity to initial conditions"
+    ]
   }
 ]

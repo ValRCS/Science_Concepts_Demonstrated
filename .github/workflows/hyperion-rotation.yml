@@ -1,0 +1,29 @@
+name: Hyperion spin-orbit regression tests
+
+on:
+  push:
+    paths:
+      - 'docs/visualizations/hyperion-chaotic-rotation/**'
+      - 'docs/concepts.json'
+      - 'tests/hyperion-rotation.test.cjs'
+      - '.github/workflows/hyperion-rotation.yml'
+  pull_request:
+    paths:
+      - 'docs/visualizations/hyperion-chaotic-rotation/**'
+      - 'docs/concepts.json'
+      - 'tests/hyperion-rotation.test.cjs'
+      - '.github/workflows/hyperion-rotation.yml'
+  workflow_dispatch:
+
+jobs:
+  numerical-model:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check spin-orbit dynamics and solver limits
+        run: node --test tests/hyperion-rotation.test.cjs
