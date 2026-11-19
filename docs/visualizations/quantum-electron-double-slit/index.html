@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Fire individual electrons through an idealized double slit, watch quantum interference emerge, and study matter waves and historical electron-biprism experiments at four learning levels.">
+  <meta name="theme-color" content="#0b1425">
+  <title>Quantum double slit: one electron at a time | Science Concepts Demonstrated</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./simulation.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#lab">Skip to the experiment</a>
+  <header class="site-header">
+    <a href="../../">← Science Concepts Demonstrated</a>
+    <span>PHYSICS / QUANTUM MECHANICS</span>
+  </header>
+  <main>
+    <div class="intro">
+      <p class="eyebrow">MATTER WAVES · INDIVIDUAL DETECTIONS · INTERFERENCE</p>
+      <h1>The quantum double-slit experiment: <em>one electron at a time</em></h1>
+      <p class="lead">Each electron leaves one tiny mark. Yet many marks reveal stripes, as though a wave passed through two openings. Fire electrons, change the experiment, and discover what the pattern means.</p>
+    </div>
+    <nav class="level-nav panel" aria-label="Learning depth">
+      <div class="nav-head"><strong>Choose your learning level</strong><span>One shared experiment · increasing depth</span></div>
+      <div class="level-buttons" role="group" aria-label="Learning level">
+        <button type="button" data-level="1" aria-pressed="true">1 · Discover <small>7–10</small></button>
+        <button type="button" data-level="2" aria-pressed="false">2 · Explore <small>14–18</small></button>
+        <button type="button" data-level="3" aria-pressed="false">3 · Analyze <small>University</small></button>
+        <button type="button" data-level="4" aria-pressed="false">4 · Research <small>Graduate</small></button>
+      </div>
+    </nav>
+    <section id="lab" class="panel" aria-labelledby="lab-title">
+      <div class="section-head">
+        <div><p class="eyebrow">INTERACTIVE LABORATORY</p><h2 id="lab-title">Build the interference pattern</h2></div>
+        <span class="pill">Calculated simulation · not experimental footage</span>
+      </div>
+      <p class="challenge"><strong>Predict:</strong> If electrons arrive one by one, will they make two broad piles or a repeating pattern of stripes? Fire 100, then 1,000, to find out.</p>
+      <div class="lab-grid">
+        <div class="visuals">
+          <figure class="visual-card">
+            <figcaption><strong>1. Experiment geometry</strong><span>Side-on schematic, not to scale</span></figcaption>
+            <canvas id="apparatus" width="840" height="240" role="img" aria-label="Illustrated electron source above a two-slit barrier, with schematic coherent wave components reaching a detector"></canvas>
+            <p class="figure-note">The arcs depict possible wave contributions, <em>not</em> measured electron trajectories. A real apparatus uses a vacuum, electron optics and a sensitive detector.</p>
+          </figure>
+          <figure class="visual-card">
+            <figcaption><strong>2. Detection screen, viewed face-on</strong><span>One dot = one simulated detection</span></figcaption>
+            <canvas id="detector" width="840" height="285" role="img" aria-label="Individual simulated electron impacts accumulating into vertical interference stripes"></canvas>
+            <p class="figure-note">Horizontal position is the measured transverse displacement. Vertical placement spreads hits across the detector for visibility; the model samples one transverse dimension.</p>
+          </figure>
+          <figure class="visual-card">
+            <figcaption><strong>3. Detection probability</strong><span>Blue: theory · Amber: recorded detections</span></figcaption>
+            <canvas id="distribution" width="840" height="234" role="img" aria-label="Theoretical detection density curve and histogram of accumulated simulated electron detections across the screen"></canvas>
+            <p class="figure-note">Both distributions are normalized over the shown field of view; the histogram becomes more stable as detections accumulate.</p>
+          </figure>
+        </div>
+        <aside class="control-panel" aria-label="Experiment controls">
+          <div class="count-box"><span>Detected electrons</span><strong id="count" aria-label="Detected electron count">0</strong><span id="count-sub">Start with a single electron</span></div>
+          <div class="action-grid">
+            <button type="button" id="fire-one" class="primary">+1 electron</button>
+            <button type="button" id="fire-ten">+10</button>
+            <button type="button" id="fire-hundred">+100</button>
+            <button type="button" id="fire-thousand">+1,000</button>
+            <button type="button" id="auto" aria-pressed="false">▶ Auto-fire</button>
+            <button type="button" id="clear">↺ New run</button>
+          </div>
+          <div class="control-group">
+            <label for="slit-mode">Openings in the barrier</label>
+            <select id="slit-mode">
+              <option value="both">Both slits open</option>
+              <option value="left">Only left slit</option>
+              <option value="right">Only right slit</option>
+            </select>
+          </div>
+          <div data-min-level="2" hidden>
+            <div class="control-group"><label for="voltage">Accelerating voltage <output id="voltage-value" for="voltage">100 V</output></label><input id="voltage" type="range" min="50" max="500" step="10" value="100"></div>
+            <div class="control-group"><label for="separation">Slit center separation <output id="separation-value" for="separation">1.20 µm</output></label><input id="separation" type="range" min="0.8" max="2.8" step="0.1" value="1.2"></div>
+          </div>
+          <div data-min-level="3" hidden>
+            <div class="control-group"><label for="width">Each slit width <output id="width-value" for="width">0.25 µm</output></label><input id="width" type="range" min="0.1" max="0.6" step="0.05" value="0.25"></div>
+            <div class="control-group"><label for="distance">Slit-to-screen distance <output id="distance-value" for="distance">0.32 m</output></label><input id="distance" type="range" min="0.2" max="0.65" step="0.01" value="0.32"></div>
+            <div class="control-group"><label for="resolution">Detector position blur (σ) <output id="resolution-value" for="resolution">0.0 µm</output></label><input id="resolution" type="range" min="0" max="8" step="0.5" value="0"></div>
+          </div>
+          <div data-min-level="4" hidden>
+            <div class="control-group"><label for="distinguishability">Which-path distinguishability (D) <output id="distinguishability-value" for="distinguishability">0.00</output></label><input id="distinguishability" type="range" min="0" max="1" step="0.05" value="0"></div>
+            <p class="control-note">An ideal equal-path coherence model: D = 0 means no available path information; D = 1 means perfectly distinguishable path-marker states.</p>
+          </div>
+          <div class="metrics">
+            <div><span>De Broglie wavelength</span><strong id="lambda-value">0.123 nm</strong></div>
+            <div><span>Approx. fringe spacing</span><strong id="spacing-value">32.7 µm</strong></div>
+            <div data-min-level="4" hidden><span>Ideal visibility before blur</span><strong id="visibility-value">1.00</strong></div>
+          </div>
+          <p id="feedback" class="feedback" aria-live="polite">Try one electron, then compare 100 and 1,000.</p>
+          <p class="control-note">Changing any physical setting starts a new run, so incompatible data are never silently mixed.</p>
+        </aside>
+      </div>
+    </section>
+    <section class="panel explanations" aria-labelledby="explain-title">
+      <h2 id="explain-title">Understand what you see</h2>
+      <article id="level-1" class="level-content">
+        <h3>Level 1 · Discover and play</h3>
+        <p>Think of dropping pebbles onto a beach. Each pebble lands in one place. Electrons also make separate little marks when detected. But unlike ordinary pebbles, many electrons passing through two tiny openings make a striped pattern.</p>
+        <p>We cannot know the exact place the next mark will appear. Quantum physics predicts <em>which places are more likely</em>. Watch the dots build up. The stripes are not painted onto the screen: they appear after many separate detections.</p>
+        <div class="question"><strong>Try it:</strong> Fire one, then ten, then a thousand. Close one opening. Are the stripes still there?</div>
+        <p>Seeing an electron as a dot does not mean it traveled like a tiny marble with a known path. The experiment tells us where it was detected, not a classical route through the apparatus.</p>
+      </article>
+      <article id="level-2" class="level-content" hidden>
+        <h3>Level 2 · Explore and understand</h3>
+        <p>In 1924, Louis de Broglie proposed that matter has a wavelength. An electron accelerated by a voltage U has momentum p and, at modest energies, wavelength <code>λ = h/p ≈ h/√(2mₑeU)</code>. Increasing voltage increases momentum, so the wavelength becomes shorter.</p>
+        <p>The probability amplitudes associated with the two slits combine. They reinforce at some screen positions and oppose at others. A detection still occurs as one localized event, but repeated events are distributed according to the squared magnitude of the combined amplitude.</p>
+        <p>Near the middle of the screen, neighboring fringe maxima are separated by approximately <code>Δx ≈ λL/d</code>, where L is screen distance and d the separation of slit centers. Increase d: fringes move closer together. Increase U: λ shrinks, so the fringes also move closer together.</p>
+        <div class="question"><strong>Test a prediction:</strong> Keep the other settings fixed and double the voltage. Does the fringe spacing halve, or decrease by a factor of about √2? Verify with the numerical readout.</div>
+        <p>Having a measurement system that can perfectly distinguish the two paths destroys their coherent interference term. Conscious observation is not required: interaction with a path marker suffices.</p>
+      </article>
+      <article id="level-3" class="level-content" hidden>
+        <h3>Level 3 · Analyze and model</h3>
+        <p>Assume a coherent, monochromatic paraxial electron beam, two identical uniformly transmitting rectangular slits of width a and center separation d, and a sufficiently distant screen. In the Fraunhofer approximation, the one-slit probability density is proportional to <code>sinc²(πa sinθ/λ)</code>. For two equally weighted, coherent slits:</p>
+        <p class="equation">P₂(x) ∝ sinc²(β) cos²(α), &nbsp; β = πa sinθ/λ, &nbsp; α = πd sinθ/λ.</p>
+        <p>Here <code>sinc(z) = sin(z)/z</code> with <code>sinc(0) = 1</code>, and <code>sinθ = x/√(L² + x²)</code>. The familiar <code>cos²</code> expression is proportional to <code>[1 + cos(2α)]/2</code>; this is the form computed by the simulator. The density is numerically normalized on a finite detector window of ±180 µm, so the graph does not represent absolute beam throughput.</p>
+        <p>The detector blur control convolves the ideal transverse density with a Gaussian point-spread function of standard deviation σ, truncated and renormalized at the window edges. Individual impacts are sampled from the <em>same blurred distribution</em> plotted in blue. A histogram of N samples fluctuates around it and converges statistically as N grows.</p>
+        <p>For acceleration from rest, <code>p ≈ √(2mₑeU)</code> assumes negligible relativistic corrections, while <code>λ = h/p</code> remains valid more generally. The geometry uses an ideal free-space model and omits electron-optical magnification, aperture charging, and source coherence limitations.</p>
+        <div class="question"><strong>Quantitative experiment:</strong> Change slit width a. Predict the first zero of the diffraction envelope at approximately <code>|x| ≈ λL/a</code>, then inspect how the outer fringes disappear.</div>
+      </article>
+      <article id="level-4" class="level-content" hidden>
+        <h3>Level 4 · Investigate and research</h3>
+        <p>For equal-amplitude coherent paths the post-aperture state can be represented schematically as <code>(|1⟩ + |2⟩)/√2</code>. If the paths become entangled with a marker, the joint state takes the form <code>(|1⟩|m₁⟩ + |2⟩|m₂⟩)/√2</code>. Tracing out an unread marker reduces the off-diagonal coherence by the overlap <code>γ = |⟨m₁|m₂⟩|</code>.</p>
+        <p>For a pure, ideal, equally populated two-path marker model, the path distinguishability D and coherence obey <code>γ = √(1 − D²)</code>. The program uses the envelope-weighted expression</p>
+        <p class="equation">P(x) ∝ sinc²(β) [1 + γ cos(2α)] / 2, &nbsp; γ = √(1 − D²).</p>
+        <p>Before finite-resolution blur, the local two-beam visibility in this ideal equal-intensity case is V = γ. The general visibility–distinguishability bound is <code>V² + D² ≤ 1</code> (Englert, 1996). Finite slit width, unequal beam strengths, averaging, decoherence and detector resolution can reduce measured visibility further. The slider models an ideal path marker; it does <em>not</em> calculate a physical microscopic detector interaction.</p>
+        <p>More rigorous treatments propagate an initial wave packet through a potential using the time-dependent Schrödinger equation or a propagator, account for source transverse coherence and energy spread, and compute the instrument response. A charged electron interacting with material edges may acquire extra phases. This page instead uses a transparent, stationary Fraunhofer probability model.</p>
+        <p><strong>Historical apparatus distinction:</strong> Merli, Missiroli and Pozzi used an electron <em>biprism</em>, not two machined openings. A biased fine filament between grounded plates deflects two coherent portions of an electron wave toward an overlap region; the detection pattern then builds up one event at a time. Jönsson's earlier slit experiment (1961), the 1976 Bologna result, Tonomura's 1989 biprism result and Bach and colleagues' 2013 controlled physical double-slit experiment answer related but technically distinct questions.</p>
+        <div class="question"><strong>Research question:</strong> Keep both slits open. Increase D toward 1. Why is the broad diffraction envelope retained while the fine interference fringes disappear? Compare this to increasing detector blur: the graphs can look similar, but the underlying physical mechanisms differ.</div>
+        <p>The observations do not uniquely select Copenhagen, Bohmian, many-worlds or another empirically equivalent interpretation. “An electron literally took both paths” is interpretation-dependent language; the experimentally supported statement concerns interfering amplitudes and their detection probabilities.</p>
+      </article>
+    </section>
+    <section class="panel" aria-labelledby="history-title">
+      <h2 id="history-title">From de Broglie's proposal to electrons arriving one at a time</h2>
+      <div class="timeline">
+        <div><time datetime="1924">1924</time><p><strong>Louis de Broglie</strong> proposes a wavelength for matter: λ = h/p.</p></div>
+        <div><time datetime="1927">1927</time><p><strong>Davisson–Germer and G. P. Thomson</strong> establish electron diffraction experimentally.</p></div>
+        <div><time datetime="1961">1961</time><p><strong>Claus Jönsson</strong> publishes electron interference through fabricated fine slits.</p></div>
+        <div><time datetime="1976">1976</time><p><strong>Pier Giorgio Merli, Gian Franco Missiroli and Giulio Pozzi</strong> publish their electron-biprism single-detection buildup (submitted in 1974).</p></div>
+        <div><time datetime="1989">1989</time><p><strong>Akira Tonomura and colleagues</strong> report a later influential single-electron buildup movie using an electron biprism and sensitive counting techniques.</p></div>
+        <div><time datetime="2013">2013</time><p><strong>Roger Bach and colleagues</strong> demonstrate controlled electron diffraction using physical nanofabricated double slits.</p></div>
+      </div>
+      <details>
+        <summary>How does a historical electron biprism differ from two holes?</summary>
+        <div class="biprism">
+          <svg viewBox="0 0 640 190" role="img" aria-labelledby="bip-title bip-desc">
+            <title id="bip-title">Electron biprism schematic</title><desc id="bip-desc">A coherent electron beam encounters a positively biased wire between grounded electrodes. Deflected wave components overlap at a detector.</desc>
+            <rect x="0" y="0" width="640" height="190" rx="10" fill="#0a1d30"/>
+            <circle cx="42" cy="95" r="9" fill="#ffd888"/><text x="9" y="125" fill="#c8dced" font-size="13">Source</text>
+            <path d="M52 95L310 63L570 90M52 95L310 127L570 100" fill="none" stroke="#69dfe7" stroke-width="3"/>
+            <rect x="297" y="12" width="8" height="36" rx="2" fill="#839fbf"/><rect x="297" y="142" width="8" height="36" rx="2" fill="#839fbf"/>
+            <circle cx="301" cy="95" r="9" fill="#fcae70"/><text x="282" y="79" fill="#f7c199" font-size="17">+</text>
+            <rect x="572" y="29" width="8" height="131" fill="#9fe4d4"/>
+            <text x="255" y="12" fill="#e1eaff" font-size="11">Grounded plates</text><text x="245" y="189" fill="#e1eaff" font-size="11">Biased fine filament</text><text x="550" y="178" fill="#e1eaff" font-size="11">Screen</text>
+          </svg>
+          <p>The filament and electrodes deflect electron-wave components electrostatically so they overlap. This diagram is an idealized explanatory schematic; it is not to scale, and the blue lines are not individual electron paths.</p>
+        </div>
+      </details>
+    </section>
+    <section class="panel">
+      <h2>Guided experiments</h2>
+      <ol>
+        <li><strong>Statistical buildup:</strong> compare 1, 10, 100, 1,000 and 10,000 impacts against the theoretical curve.</li>
+        <li><strong>One versus two slits:</strong> keep everything else fixed and watch the fine fringe modulation disappear when only one slit is open.</li>
+        <li><strong>Energy and wavelength:</strong> at Level 2, increase accelerating voltage from 100 V to 400 V. The nonrelativistic wavelength, and fringe spacing, should approximately halve.</li>
+        <li><strong>Geometry and diffraction:</strong> at Level 3, increase slit separation to compress fringes; increase slit width to narrow the broad envelope.</li>
+        <li><strong>Coherence versus resolution:</strong> at Level 4, compare increasing D to blurring the detector. Both suppress visible fringes, but for different reasons.</li>
+      </ol>
+    </section>
+    <section class="panel">
+      <h2>Assumptions and limitations</h2>
+      <p>This is a <strong>synthetic calculation, not historical footage or empirical observations</strong>. It assumes nonrelativistic electrons, a coherent monochromatic source, two ideal equal rectangular apertures, a paraxial far-field approximation and a detector spanning ±180 µm in one transverse coordinate. Some extreme control combinations may no longer strictly satisfy the Fraunhofer condition; a Fresnel or full wave-packet model would then be more accurate.</p>
+      <p>Samples are independent draws from a normalized one-dimensional probability density. The other on-screen direction is randomized only to make separate events visible. Physical throughput, energy spread, Coulomb repulsion, environmental decoherence, finite source size and detector efficiency are not simulated. The path-distinguishability slider is a specific idealized equal-path coherence model, not a general quantum-measurement simulator.</p>
+    </section>
+    <section class="panel references">
+      <h2>References and further reading</h2>
+      <ol>
+        <li>de Broglie, L. (1924). <em>Recherches sur la théorie des quanta</em>. Doctoral thesis, University of Paris — original matter-wave proposal.</li>
+        <li>Jönsson, C. (1961). <em>Elektroneninterferenzen an mehreren künstlich hergestellten Feinspalten</em>. <em>Zeitschrift für Physik</em>, 161, 454–474. <a href="https://www.leifiphysik.de/quantenphysik/quantenobjekt-elektron/geschichte/originalarbeit-von-joensson">Historical source and article context</a>.</li>
+        <li>Merli, P. G., Missiroli, G. F. &amp; Pozzi, G. (1976). On the statistical aspect of electron interference phenomena. <em>American Journal of Physics</em>, 44, 306–307. <a href="https://doi.org/10.1119/1.10184">DOI: 10.1119/1.10184</a>.</li>
+        <li>Tonomura, A., Endo, J., Matsuda, T., Kawasaki, T. &amp; Ezawa, H. (1989). Demonstration of single-electron buildup of an interference pattern. <em>American Journal of Physics</em>, 57, 117–120. <a href="https://doi.org/10.1119/1.16104">DOI: 10.1119/1.16104</a>.</li>
+        <li>Bach, R., Pope, D., Liou, S.-H. &amp; Batelaan, H. (2013). Controlled double-slit electron diffraction. <em>New Journal of Physics</em>, 15, 033018. <a href="https://doi.org/10.1088/1367-2630/15/3/033018">DOI: 10.1088/1367-2630/15/3/033018</a>.</li>
+        <li>Englert, B.-G. (1996). Fringe visibility and which-way information: An inequality. <em>Physical Review Letters</em>, 77, 2154–2157. <a href="https://doi.org/10.1103/PhysRevLett.77.2154">DOI: 10.1103/PhysRevLett.77.2154</a>.</li>
+        <li><a href="https://www.feynmanlectures.caltech.edu/III_01.html">Feynman Lectures on Physics, Vol. III, chapter 1: Quantum Behavior</a> — accessible conceptual introduction.</li>
+        <li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4617474/">The Merli–Missiroli–Pozzi Two-Slit Electron-Interference Experiment</a> — detailed historical analysis of the 1970s experiment.</li>
+      </ol>
+    </section>
+    <section class="panel"><h2>Related concepts</h2><p><a href="../classical-double-slit-experiment/">Classical double-slit interference</a> · <a href="../fourier-transform/">Fourier Transform</a> · <a href="../rutherford-bohr-atomic-model/">Rutherford–Bohr atomic model</a> · <a href="../../">All concepts</a></p></section>
+  </main>
+  <footer><a href="../../">← Science concept directory</a><span>Science Concepts Demonstrated · An educational simulation</span></footer>
+  <noscript><p class="no-script">Enable JavaScript to operate the single-electron simulation. The explanations and references remain readable without it.</p></noscript>
+</body>
+</html>

@@ -259,5 +259,31 @@
       "isotopes",
       "geological time"
     ]
+  },
+  {
+    "id": "quantum-electron-double-slit",
+    "title": "Quantum double-slit experiment: one electron at a time",
+    "summary": "Fire individual electrons, watch interference emerge from quantum probabilities, and investigate de Broglie waves, path information and electron-biprism history across four levels.",
+    "subject": "Physics",
+    "levels": [
+      "Primary",
+      "Lower secondary",
+      "Upper secondary",
+      "University"
+    ],
+    "path": "visualizations/quantum-electron-double-slit/",
+    "keywords": [
+      "electron",
+      "double slit",
+      "quantum interference",
+      "de Broglie",
+      "matter waves",
+      "wave-particle duality",
+      "Born rule",
+      "electron biprism",
+      "which-path information",
+      "decoherence",
+      "Merli Missiroli Pozzi"
+    ]
   }
 ]
