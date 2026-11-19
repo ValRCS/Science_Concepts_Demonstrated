@@ -1,0 +1,30 @@
+name: Speed of light page regression tests
+
+on:
+  push:
+    paths:
+      - 'docs/visualizations/speed-of-light/**'
+      - 'docs/concepts.json'
+      - 'tests/speed-of-light.test.cjs'
+      - '.github/workflows/speed-of-light.yml'
+  pull_request:
+    paths:
+      - 'docs/visualizations/speed-of-light/**'
+      - 'docs/concepts.json'
+      - 'tests/speed-of-light.test.cjs'
+      - '.github/workflows/speed-of-light.yml'
+  workflow_dispatch:
+
+jobs:
+  model-and-ui:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check light-time mathematics and simulated DOM interactions
+        run: node --test tests/speed-of-light.test.cjs
