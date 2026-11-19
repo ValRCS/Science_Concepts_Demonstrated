@@ -77,8 +77,9 @@ function detailedTime(seconds){
 function setText(id,value){$(id).textContent=String(value);}
 
 function signalDestination(){
-  // 240–455 px: diagram distance is deliberately illustrative.
-  return 240+(distanceAU(state.angle)- (state.R-1))/2*215;
+  // Scale visual path length in proportion to physical travel time at c.
+  // Maximum (far-side) separation occupies a 360 px track.
+  return 90+360*distanceAU(state.angle)/(state.R+1);
 }
 function drawSignal(){
   const panel=$("signal-scene");
