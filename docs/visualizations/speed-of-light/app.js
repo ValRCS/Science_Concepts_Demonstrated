@@ -1,282 +1,498 @@
 "use strict";
 
-// Educational two-dimensional geometry; not an Io eclipse ephemeris.
-// Distances in kilometres; light times in seconds; angular phases in degrees.
-const C_KM_S = 299792.458;
-const AU_KM = 149597870.7;
-const JUPITER_AU = 5.2;
-const IO_PERIOD_DAYS = 1.769137786;
-const EARTH_YEAR_DAYS = 365.25;
-const ROMER_INFERRED_KM_S = 2 * AU_KM / (22 * 60);
-const MIN_AU = JUPITER_AU - 1;
-const NS = "http://www.w3.org/2000/svg";
+// A single pedagogical model drives all four levels. No historical measurements
+// or real Io ephemerides are loaded. Model distances are AU, times are seconds.
+const C_KM_S = 299792.458; // exact SI definition
+const AU_KM = 149597870.7; // exact IAU astronomical unit
+const ROMER_KM_S = 2 * AU_KM / (22 * 60); // retrospective using today's AU
+const EARTH_YEAR_D = 365.25;
+const DEFAULTS = Object.freeze({R:5.2, period:1.769, speedRatio:.75});
+const SVG_NS = "http://www.w3.org/2000/svg";
 const $ = id => document.getElementById(id);
 const $$ = selector => Array.from(document.querySelectorAll(selector));
+const state = {
+  level:1, angle:0, R:DEFAULTS.R, period:DEFAULTS.period,
+  speedRatio:DEFAULTS.speedRatio, comparison:"instant", chartMode:"cumulative",
+  sampleCount:24, noise:30, distanceBias:0, seed:314159,
+  elapsed:0, playing:false, frame:0, lastTime:0, delivered:false,
+  reducedMotion:false, samples:[], fit:null
+};
 
-function earthJupiterAU(angleDegrees) {
-  const rad = angleDegrees * Math.PI / 180;
-  return Math.hypot(JUPITER_AU - Math.cos(rad), Math.sin(rad));
+function clamp(x,a,b){return Math.min(b,Math.max(a,x));}
+function distanceAU(deg, R=state.R){
+  const theta=deg*Math.PI/180;
+  return Math.sqrt(R*R+1-2*R*Math.cos(theta));
 }
-function lightTimeSeconds(distanceKm, speedKmS = C_KM_S) {
-  return distanceKm / speedKmS;
+function travelSeconds(angle, speed=C_KM_S, R=state.R){
+  return distanceAU(angle,R)*AU_KM/speed;
 }
-function extraDelaySeconds(angleDegrees, speedKmS = C_KM_S) {
-  return (earthJupiterAU(angleDegrees) - MIN_AU) * AU_KM / speedKmS;
+function excessSeconds(angle, speed=C_KM_S, R=state.R){
+  return (distanceAU(angle,R)-(R-1))*AU_KM/speed;
 }
-function nextEclipseCorrectionSeconds(angleDegrees) {
-  const stepDegrees = 360 * IO_PERIOD_DAYS / EARTH_YEAR_DAYS;
-  const next = earthJupiterAU(angleDegrees + stepDegrees);
-  const current = earthJupiterAU(angleDegrees);
-  return (next - current) * AU_KM / C_KM_S;
+function intervalSeconds(angle, speed=C_KM_S, R=state.R, period=state.period){
+  const step=360*period/EARTH_YEAR_D;
+  return (distanceAU(angle+step,R)-distanceAU(angle,R))*AU_KM/speed;
 }
-function makeSvg(tag, attrs = {}, text = null) {
-  const e = document.createElementNS(NS, tag);
-  for (const key in attrs) e.setAttribute(key, String(attrs[key]));
-  if (text !== null) e.textContent = text;
+function comparisonSpeed(){
+  if(state.comparison==="instant")return Infinity;
+  if(state.comparison==="romer")return ROMER_KM_S;
+  return state.speedRatio*C_KM_S;
+}
+function compareValue(angle){
+  const speed=comparisonSpeed();
+  if(speed===Infinity)return 0;
+  return state.chartMode==="interval"
+    ? intervalSeconds(angle,speed)
+    : excessSeconds(angle,speed);
+}
+function svg(tag,attr={},content){
+  const e=document.createElementNS(SVG_NS,tag);
+  for(const [k,v] of Object.entries(attr))e.setAttribute(k,String(v));
+  if(content!==undefined)e.textContent=content;
   return e;
 }
-function add(parent, tag, attrs = {}, text = null) {
-  const e = makeSvg(tag, attrs, text);
-  parent.appendChild(e);
-  return e;
+function append(group,tag,attr={},content){
+  const node=svg(tag,attr,content);
+  group.appendChild(node);
+  return node;
 }
-function fixed(n, digits = 1) {
-  return Number(n).toLocaleString("en-US", {minimumFractionDigits:digits,maximumFractionDigits:digits});
+function fmt(value,places=1){
+  return value.toLocaleString("en-US",{minimumFractionDigits:places,maximumFractionDigits:places});
 }
-function integer(n) { return Math.round(n).toLocaleString("en-US"); }
-function minutesAndSeconds(s) {
-  const total = Math.round(s);
-  return Math.floor(total / 60) + " min " + String(total % 60).padStart(2,"0") + " s";
+function whole(value){return Math.round(value).toLocaleString("en-US");}
+function minuteClock(seconds){
+  const n=Math.max(0,Math.round(seconds));
+  return Math.floor(n/60)+" min "+String(n%60).padStart(2,"0")+" s";
 }
-function shortTravel(s) {
-  if (s < 1e-6) return fixed(s * 1e9, 3) + " nanoseconds";
-  if (s < .001) return fixed(s * 1e6, 3) + " microseconds";
-  if (s < 1) return fixed(s * 1e3, 3) + " milliseconds";
-  if (s < 60) return fixed(s, 3) + " seconds";
-  if (s < 3600) return minutesAndSeconds(s);
-  if (s < 86400) return fixed(s / 3600, 3) + " hours";
-  if (s < 31557600) return fixed(s / 86400, 3) + " days";
-  return fixed(s / 31557600, 3) + " Julian years";
+function detailedTime(seconds){
+  if(seconds < 1e-6)return fmt(seconds*1e9,3)+" nanoseconds";
+  if(seconds < .001)return fmt(seconds*1e6,3)+" microseconds";
+  if(seconds < 1)return fmt(seconds*1e3,3)+" milliseconds";
+  if(seconds < 60)return fmt(seconds,3)+" seconds";
+  if(seconds < 3600)return minuteClock(seconds);
+  if(seconds < 86400)return fmt(seconds/3600,3)+" hours";
+  if(seconds < EARTH_YEAR_D*86400)return fmt(seconds/86400,3)+" days";
+  return fmt(seconds/(EARTH_YEAR_D*86400),3)+" Julian years";
 }
-function comparisonDelay(angle) {
-  const type = $("light-model").value;
-  return type === "instant" ? 0 : extraDelaySeconds(angle, ROMER_INFERRED_KM_S);
-}
-function updateReadouts(angle) {
-  const distance = earthJupiterAU(angle);
-  const duration = distance * AU_KM / C_KM_S;
-  const residual = extraDelaySeconds(angle);
-  const drift = nextEclipseCorrectionSeconds(angle);
-  $("angle-value").textContent = Math.round(angle) + "°";
-  $("earth-distance").textContent = fixed(distance, 3) + " AU";
-  $("light-time").textContent = minutesAndSeconds(duration);
-  $("extra-delay").textContent = minutesAndSeconds(residual);
-  $("clock-drift").textContent = (drift >= 0 ? "+" : "") + fixed(drift, 2) + " s";
-  let movement;
-  if (angle === 0 || angle === 360) movement = "At the nearest modeled point, the extra travel-time residual is zero.";
-  else if (angle === 180) movement = "At the farthest modeled point, the signal arrives about 16 min 38 s later than at the nearest point.";
-  else if (angle < 180) movement = "Earth is travelling away from Jupiter: successive eclipse signals take progressively longer to arrive.";
-  else movement = "Earth is approaching Jupiter: successive eclipse signals take progressively less time to arrive.";
-  const compare = $("light-model").value === "instant"
-    ? " Instantaneous light would produce no distance-dependent delay."
-    : " The historical 22-minute estimate predicts a larger delay than the modern value.";
-  $("orbit-feedback").textContent = movement + compare;
-}
-function drawOrbit(angle) {
-  const svg = $("orbit-drawing");
-  svg.replaceChildren();
-  const cx = 238, cy = 203, orbitRadius = 146, jx = 781, jy = 203;
-  const radians = angle * Math.PI / 180;
-  const ex = cx + orbitRadius * Math.cos(radians);
-  const ey = cy - orbitRadius * Math.sin(radians);
+function setText(id,value){$(id).textContent=String(value);}
 
-  for (let i = 0; i < 24; i++) {
-    const x = 19 + ((i * 151) % 882), y = 18 + ((i * 103) % 375);
-    add(svg, "circle", {cx:x,cy:y,r:i % 4 === 0 ? 1.7 : 1,fill:"#b2c7e6",opacity:".3"});
+function signalDestination(){
+  // 240–455 px: diagram distance is deliberately illustrative.
+  return 240+(distanceAU(state.angle)- (state.R-1))/2*215;
+}
+function drawSignal(){
+  const panel=$("signal-scene");
+  panel.replaceChildren();
+  append(panel,"rect",{x:0,y:0,width:520,height:238,rx:16,fill:"#091a30"});
+  for(let i=0;i<21;i++)append(panel,"circle",{cx:14+(i*79)%488,cy:12+(i*53)%213,r:i%4===0?1.9:1.1,fill:"#b9cce3",opacity:.45});
+  const target=signalDestination();
+  const total=travelSeconds(state.angle);
+  const fraction=clamp(state.elapsed/total,0,1);
+  const px=90+(target-90)*fraction;
+  // The source represents a change in Io's received light, not photons
+  // travelling directly from the eclipsed satellite.
+  append(panel,"circle",{cx:45,cy:112,r:29,fill:"#c89972",stroke:"#e8c2a1","stroke-width":2});
+  for(const dy of [-13,4,18])append(panel,"path",{d:"M 19 "+(112+dy)+" Q 45 "+(117+dy)+" 70 "+(112+dy),fill:"none",stroke:"#8c624e","stroke-width":4,opacity:.8});
+  append(panel,"circle",{cx:77,cy:112,r:5,fill:"#afc6e8"});
+  append(panel,"path",{d:"M 82 94 l 10 -12 v 58 l -10 -13 Z",fill:"#57728f",opacity:.55});
+  append(panel,"line",{x1:90,y1:112,x2:target,y2:112,stroke:"#476786","stroke-width":5,"stroke-linecap":"round"});
+  append(panel,"line",{x1:90,y1:112,x2:px,y2:112,stroke:"#7de6da","stroke-width":5,"stroke-linecap":"round"});
+  append(panel,"circle",{cx:target,cy:112,r:22,fill:"#419ac9",stroke:"#a8e8fc","stroke-width":3});
+  append(panel,"path",{d:"M "+(target-13)+" 109 l 12 -15 8 5 -3 10 -11 11 z",fill:"#68be94"});
+  if(state.elapsed>0){
+    append(panel,"circle",{cx:px,cy:112,r:8.5,fill:"#ffe1a1",stroke:"#fff5d3","stroke-width":2});
+    append(panel,"circle",{cx:px,cy:112,r:16,fill:"none",stroke:"#ffe1a1","stroke-width":1.5,opacity:.45});
   }
-  add(svg, "circle", {cx,cy,r:62,fill:"url(#sun-glow)"});
-  add(svg, "circle", {cx,cy,r:orbitRadius,fill:"none",stroke:"#7194b7","stroke-width":2,"stroke-dasharray":"6 8",opacity:".8"});
-  add(svg, "line", {x1:cx,y1:cy,x2:jx,y2:jy,stroke:"#3b617d","stroke-width":1.5,"stroke-dasharray":"5 9"});
-  add(svg, "circle", {cx,cy,r:24,fill:"#ffd175",stroke:"#ffe7b4","stroke-width":3});
-  add(svg, "text", {x:cx,y:cy+43,"text-anchor":"middle",class:"big-label"},"Sun");
-  add(svg, "text", {x:cx,y:cy+orbitRadius+24,"text-anchor":"middle",class:"axis-label"},"Earth's circular orbit · 1 AU");
-
-  add(svg, "polygon", {points: (jx+34)+","+(jy-22)+" 918,"+(jy-50)+" 918,"+(jy+50)+" "+(jx+34)+","+(jy+22),fill:"#304660",opacity:".4"});
-  add(svg, "circle", {cx:jx,cy:jy,r:40,fill:"url(#jupiter-fill)",stroke:"#dfbe9d","stroke-width":2});
-  for (const d of [-22,-9,8,24]) {
-    add(svg, "path", {d:"M "+(jx-32)+" "+(jy+d)+" Q "+jx+" "+(jy+d+8)+" "+(jx+31)+" "+(jy+d),stroke:"#8e654e",fill:"none","stroke-width":4,opacity:".8"});
-  }
-  add(svg, "text", {x:jx,y:jy-54,"text-anchor":"middle",class:"big-label"},"Jupiter");
-  add(svg, "circle", {cx:jx+56,cy:jy,r:6,fill:"#cfd7e2",stroke:"#7f96af","stroke-width":2});
-  add(svg, "text", {x:jx+58,y:jy+32,"text-anchor":"middle",class:"axis-label"},"Io");
-  add(svg, "text", {x:883,y:jy-54,"text-anchor":"middle",class:"axis-label"},"shadow");
-
-  // Light-time readout uses centre-to-centre Earth–Jupiter distance,
-  // ignoring Io's orbital displacement (as labelled in the page).
-  add(svg, "line", {x1:jx,y1:jy,x2:ex,y2:ey,stroke:"#79e6db","stroke-width":3.5,"stroke-dasharray":"10 8",opacity:".93"});
-  add(svg, "circle", {cx:ex,cy:ey,r:16,fill:"#60bfe4",stroke:"#d4f2ff","stroke-width":3});
-  add(svg, "path", {d:"M "+(ex-10)+" "+(ey-4)+" l 8 -6 5 6 -4 7 -9 -1 z",fill:"#5cb78f",opacity:".85"});
-  add(svg, "text", {x:ex,y:ey-29,"text-anchor":"middle",class:"big-label"},"Earth");
-  const distMidX = (ex + jx) / 2, distMidY = (ey + jy) / 2;
-  add(svg, "rect", {x:distMidX-84,y:distMidY-22,width:168,height:26,rx:7,fill:"#102b45",opacity:".95"});
-  add(svg, "text", {x:distMidX,y:distMidY-5,"text-anchor":"middle",class:"axis-label"},fixed(earthJupiterAU(angle),2)+" AU · signal path");
-  add(svg, "text", {x:25,y:35,class:"axis-label"},"Top-down schematic · angle "+Math.round(angle)+"°");
-  add(svg, "text", {x:25,y:385,class:"axis-label"},"The eclipse happens at Jupiter; its observed arrival time changes.");
+  if(state.delivered)append(panel,"circle",{cx:target,cy:112,r:29,stroke:"#ffe1a1","stroke-width":3,fill:"none"});
+  append(panel,"text",{x:45,y:160,"text-anchor":"middle",class:"label-large"},"Jupiter");
+  append(panel,"text",{x:77,y:74,"text-anchor":"middle",class:"label-small"},"Io");
+  append(panel,"text",{x:target,y:160,"text-anchor":"middle",class:"label-large"},"Earth");
+  append(panel,"text",{x:(90+target)/2,y:81,"text-anchor":"middle",class:"label-small"},state.angle===0?"Shorter trip":state.angle===180?"Longer trip":"Changing trip");
+  append(panel,"text",{x:16,y:25,class:"label-small"},"Io eclipse at Jupiter");
+  append(panel,"text",{x:16,y:218,class:"label-small"},state.delivered?"Earth has received the change in light":"Earth sees the event only after the signal arrives");
+  const caption=state.delivered?"Signal has arrived after "+minuteClock(total)
+    :state.playing?"Signal moving toward Earth · simulated time "+minuteClock(state.elapsed)
+    :"Waiting · one-way journey takes "+minuteClock(total);
+  panel.setAttribute("aria-label","Jupiter and Earth separated by "+fmt(distanceAU(state.angle),2)+" AU. "+caption+".");
+  setText("clock-readout",minuteClock(state.elapsed));
 }
-function plotLine(points, color, dash = null) {
-  const attrs = {points:points.map(p=>p[0].toFixed(2)+","+p[1].toFixed(2)).join(" "),fill:"none",stroke:color,"stroke-width":3.5,"stroke-linecap":"round","stroke-linejoin":"round"};
-  if (dash) attrs["stroke-dasharray"] = dash;
-  return makeSvg("polyline",attrs);
+function drawOrbit(){
+  const view=$("orbit-svg");
+  view.replaceChildren();
+  append(view,"rect",{x:0,y:0,width:700,height:290,rx:15,fill:"#091a30"});
+  const cx=184,cy=141,er=104,jx=579,jy=141;
+  const rad=state.angle*Math.PI/180;
+  const ex=cx+er*Math.cos(rad),ey=cy-er*Math.sin(rad);
+  append(view,"circle",{cx,cy,r:er,fill:"none",stroke:"#7992b3","stroke-width":2,"stroke-dasharray":"8 7"});
+  append(view,"line",{x1:cx,y1:cy,x2:jx,y2:jy,stroke:"#345d7b","stroke-dasharray":"5 9"});
+  append(view,"line",{x1:ex,y1:ey,x2:jx,y2:jy,stroke:"#7de6da","stroke-width":3});
+  append(view,"circle",{cx,cy,r:24,fill:"#ffd179",stroke:"#fff0c1","stroke-width":2});
+  append(view,"circle",{cx:jx,cy:jy,r:31,fill:"#cb9570",stroke:"#ecc4a4","stroke-width":2});
+  for(const d of [-13,1,13])append(view,"path",{d:"M "+(jx-24)+" "+(jy+d)+" Q "+jx+" "+(jy+d+7)+" "+(jx+24)+" "+(jy+d),fill:"none",stroke:"#936d56","stroke-width":3.5});
+  append(view,"circle",{cx:ex,cy:ey,r:14,fill:"#409dc9",stroke:"#aceafa","stroke-width":2});
+  append(view,"text",{x:cx,y:cy+45,"text-anchor":"middle",class:"label-large"},"Sun");
+  append(view,"text",{x:jx,y:jy-46,"text-anchor":"middle",class:"label-large"},"Jupiter");
+  append(view,"text",{x:ex,y:ey-22,"text-anchor":"middle",class:"label-large"},"Earth");
+  append(view,"text",{x:cx,y:cy+er+31,"text-anchor":"middle",class:"label-small"},"Circular Earth orbit (1 AU)");
+  append(view,"text",{x:498,y:244,class:"label-small"},"Jupiter fixed: "+fmt(state.R,1)+" AU");
+  append(view,"text",{x:20,y:27,class:"label-small"},"Top-down schematic · θ = "+Math.round(state.angle)+"°");
+  append(view,"text",{x:510,y:275,class:"label-small"},"Signal path: "+fmt(distanceAU(state.angle),2)+" AU");
 }
-function drawTimingPlot(angle) {
-  const plot = $("timing-plot");
+function drawLine(view,data,color,dashed=false){
+  const p=data.map(([x,y])=>fmt(x,2)+","+fmt(y,2)).join(" ");
+  const attrs={points:p,fill:"none",stroke:color,"stroke-width":3.4,"stroke-linejoin":"round","stroke-linecap":"round"};
+  if(dashed)attrs["stroke-dasharray"]="9 7";
+  view.appendChild(svg("polyline",attrs));
+}
+function drawTimingPlot(){
+  const plot=$("timing-plot");
   plot.replaceChildren();
-  const left = 78, right = 866, top = 26, bottom = 276, ymax = 24;
-  const x = a => left + a / 360 * (right - left);
-  const y = minutes => bottom - minutes / ymax * (bottom - top);
-  for (let m = 0; m <= 24; m += 6) {
-    const py = y(m);
-    add(plot,"line",{x1:left,y1:py,x2:right,y2:py,stroke:"#2a4763","stroke-width":1});
-    add(plot,"text",{x:left-13,y:py+5,"text-anchor":"end",class:"axis-label"},m+"");
+  append(plot,"rect",{x:0,y:0,width:760,height:320,rx:14,fill:"#091a30"});
+  const interval=state.chartMode==="interval";
+  const cValue=a=>interval?intervalSeconds(a):excessSeconds(a)/60;
+  const other=a=>compareValue(a)/(interval?1:60);
+  const xs=Array.from({length:121},(_,i)=>i*3);
+  const values=xs.flatMap(a=>[cValue(a),other(a)]);
+  let lo=Math.min(0,...values),hi=Math.max(0,...values);
+  if(interval){const d=Math.max(Math.abs(lo),Math.abs(hi),.5)*1.15;lo=-d;hi=d;}
+  else{hi=Math.max(hi,1)*1.12;lo=0;}
+  const left=73,right=734,top=24,bottom=267;
+  const x=a=>left+(right-left)*a/360;
+  const y=v=>bottom-(v-lo)/(hi-lo)*(bottom-top);
+  for(let i=0;i<=4;i++){
+    const v=lo+(hi-lo)*i/4,py=y(v);
+    append(plot,"line",{x1:left,y1:py,x2:right,y2:py,stroke:"#2c4965"});
+    append(plot,"text",{x:left-9,y:py+5,"text-anchor":"end",class:"axis-text"},fmt(v,interval?1:0));
   }
-  for (let a = 0; a <= 360; a += 60) {
-    const px = x(a);
-    add(plot,"line",{x1:px,y1:top,x2:px,y2:bottom,stroke:"#28435d","stroke-width":1,"stroke-dasharray":"3 6"});
-    add(plot,"text",{x:px,y:bottom+23,"text-anchor":"middle",class:"axis-label"},a+"°");
+  for(let a=0;a<=360;a+=60){
+    append(plot,"line",{x1:x(a),y1:top,x2:x(a),y2:bottom,stroke:"#27415b","stroke-dasharray":"4 8"});
+    append(plot,"text",{x:x(a),y:bottom+22,"text-anchor":"middle",class:"axis-text"},a+"°");
   }
-  add(plot,"text",{x:22,y:18,class:"axis-label"},"Minutes");
-  add(plot,"text",{x:(left+right)/2,y:bottom+52,"text-anchor":"middle",class:"axis-label"},"Earth's orbital angle, from nearest to farthest and back");
-  const observed = [], alternative = [];
-  for (let a = 0; a <= 360; a += 3) {
-    observed.push([x(a),y(extraDelaySeconds(a)/60)]);
-    alternative.push([x(a),y(comparisonDelay(a)/60)]);
-  }
-  plot.appendChild(plotLine(observed,"#75e5d9"));
-  plot.appendChild(plotLine(alternative,"#ffad7e","9 7"));
-  add(plot,"line",{x1:x(angle),y1:top,x2:x(angle),y2:bottom,stroke:"#ffd08a","stroke-width":1.6,opacity:".75"});
-  add(plot,"circle",{cx:x(angle),cy:y(extraDelaySeconds(angle)/60),r:7.5,fill:"#ffd08a",stroke:"#10223a","stroke-width":2.5});
-  add(plot,"circle",{cx:x(angle),cy:y(comparisonDelay(angle)/60),r:6,fill:"#ffad7e",stroke:"#10223a","stroke-width":2});
+  append(plot,"text",{x:15,y:19,class:"axis-text"},interval?"seconds":"minutes");
+  append(plot,"text",{x:(left+right)/2,y:310,"text-anchor":"middle",class:"axis-text"},"Earth orbital angle");
+  drawLine(plot,xs.map(a=>[x(a),y(cValue(a))]),"#76e3d9");
+  drawLine(plot,xs.map(a=>[x(a),y(other(a))]),"#ffb181",true);
+  append(plot,"line",{x1:x(state.angle),y1:top,x2:x(state.angle),y2:bottom,stroke:"#ffd68c","stroke-width":2,opacity:.75});
+  append(plot,"circle",{cx:x(state.angle),cy:y(cValue(state.angle)),r:7.5,fill:"#ffd68c",stroke:"#162a43","stroke-width":2.5});
+  append(plot,"circle",{cx:x(state.angle),cy:y(other(state.angle)),r:5.5,fill:"#ffb181",stroke:"#162a43","stroke-width":2});
+  const kind=interval?"change in arrival time between successive Io-like clock ticks":"cumulative extra light travel time relative to Earth's nearest position";
+  plot.setAttribute("aria-label","Model-generated graph of "+kind+". The current point is at "+Math.round(state.angle)+" degrees.");
+  setText("chart-description",interval
+    ?"Model-generated change in one observed clock interval, in seconds. It can be positive or negative. These are not actual eclipse observations."
+    :"Cumulative one-way travel-time difference relative to Earth's nearest modeled position, in minutes. This is not the delay in any single eclipse interval.");
+  const angle=state.angle,base=interval?intervalSeconds(angle):excessSeconds(angle)/60;
+  const compare=other(angle);
+  setText("timing-feedback",interval
+    ?"Here the next observed eclipse interval differs from the intrinsic period by "+fmt(base,2)+" seconds (modern c). Positive means it appears later; negative means earlier."
+    :"At "+Math.round(angle)+"°, the extra arrival time is "+fmt(base,2)+" minutes with modern c; the selected comparison predicts "+fmt(compare,2)+" minutes.");
 }
-function selectedAngle() {
-  return Math.max(0,Math.min(360,Number($("earth-angle").value) || 0));
+
+function renderReadouts(){
+  setText("angle-value",Math.round(state.angle)+"°");
+  setText("earth-distance",fmt(distanceAU(state.angle),3)+" AU");
+  setText("light-time",minuteClock(travelSeconds(state.angle)));
+  setText("extra-delay",minuteClock(excessSeconds(state.angle)));
+  const correction=intervalSeconds(state.angle);
+  setText("clock-drift",(correction>=0?"+":"")+fmt(correction,2)+" s");
+  setText("jupiter-value",fmt(state.R,1)+" AU");
+  setText("period-value",fmt(state.period,3)+" days");
+  setText("speed-value",fmt(state.speedRatio,2)+" c");
+  $$("[data-position]").forEach(b=>b.setAttribute("aria-pressed",String((b.dataset.position==="near") === (state.angle===0))));
 }
-function render() {
-  const a = selectedAngle();
-  updateReadouts(a);
-  drawOrbit(a);
-  drawTimingPlot(a);
+function renderAll(){
+  renderReadouts();
+  drawSignal();
+  drawOrbit();
+  drawTimingPlot();
+  renderJourney();
+  generateResearch();
 }
-function travelKm() {
-  const selection = $("journey").value;
-  if (selection === "custom") {
-    const v = Number($("custom-km").value);
-    return Number.isFinite(v) && v >= 0 && v <= 1e13 ? v : null;
-  }
-  return Number(selection);
+function stopSignal(){
+  if(state.playing)cancelAnimationFrame(state.frame);
+  state.playing=false;
+  $("run-signal").textContent=state.elapsed>0&&!state.delivered?"▶ Continue signal":"▶ Send the eclipse signal";
+  $("run-signal").setAttribute("aria-pressed","false");
 }
-function renderJourney() {
-  const custom = $("journey").value === "custom";
-  $("custom-km").disabled = !custom;
-  const km = travelKm();
-  if (km === null) {
-    $("journey-time").textContent = "Enter a distance from 0 to 10 trillion km";
-    $("journey-equation").textContent = "Use a non-negative, finite number of kilometres.";
-    $("journey-explanation").textContent = "The speed calculation requires a valid distance.";
+function resetSignal(){
+  stopSignal();
+  state.elapsed=0;
+  state.delivered=false;
+  setText("signal-status","Ready: Io's eclipse happens at Jupiter. Send the signal to find out when Earth sees it.");
+  drawSignal();
+}
+function completeSignal(){
+  stopSignal();
+  state.elapsed=travelSeconds(state.angle);
+  state.delivered=true;
+  setText("signal-status","Arrival! Earth sees the eclipse after "+minuteClock(state.elapsed)+". Moving Earth farther away changes when we SEE it, not when it HAPPENED at Jupiter.");
+  drawSignal();
+}
+function tick(time){
+  if(!state.playing)return;
+  const dt=clamp(time-state.lastTime,0,120);
+  state.lastTime=time;
+  // 400 simulated seconds per real second. Playback time, not physical c.
+  state.elapsed=Math.min(travelSeconds(state.angle),state.elapsed+dt*.4);
+  if(state.elapsed>=travelSeconds(state.angle)){
+    completeSignal();
     return;
   }
-  const seconds = lightTimeSeconds(km);
-  $("journey-time").textContent = shortTravel(seconds);
-  $("journey-equation").textContent = km.toLocaleString("en-US",{maximumSignificantDigits:12})+" km ÷ 299,792.458 km/s";
-  let message = "This is a one-way light travel time in vacuum, not the elapsed time of any real-time animation.";
-  if (km === 9460730472580.8) message = "One light-year is a distance: light travels this far in 365.25 days.";
-  else if (km === 149597870.7) message = "Sunlight reaches the Earth after roughly 8 minutes 19 seconds.";
-  else if (km === 384400) message = "A laser pulse going to the Moon and back would take approximately twice as long.";
-  $("journey-explanation").textContent = message;
+  drawSignal();
+  state.frame=requestAnimationFrame(tick);
 }
-let playing = false, lastTick = 0, lastPaint = 0, frameId = 0;
-function stopOrbit() {
-  if (!playing) return;
-  playing = false;
-  cancelAnimationFrame(frameId);
-  $("play-orbit").setAttribute("aria-pressed","false");
-  $("play-orbit").textContent = "▶ Play Earth's orbit";
-  $("orbit-feedback").setAttribute("aria-live","polite");
+function runSignal(){
+  if(state.delivered)resetSignal();
+  if(state.reducedMotion){completeSignal();return;}
+  if(state.playing){stopSignal();setText("signal-status","Paused. Continue the same journey or show the arrival.");return;}
+  state.playing=true;
+  state.lastTime=performance.now();
+  $("run-signal").textContent="Ⅱ Pause signal";
+  $("run-signal").setAttribute("aria-pressed","true");
+  setText("signal-status","The eclipse has happened. Its change in light is on the way to Earth…");
+  state.frame=requestAnimationFrame(tick);
 }
-function animate(t) {
-  if (!playing) return;
-  const delta = Math.min(100,t-lastTick);
-  lastTick = t;
-  const next = (selectedAngle() + delta * 360 / 18000) % 360;
-  $("earth-angle").value = String(next);
-  if (t-lastPaint > 80) {
-    render();
-    lastPaint = t;
+function setAngle(value){
+  resetSignal();
+  state.angle=clamp(Number(value)||0,0,360);
+  $("earth-angle").value=String(Math.round(state.angle));
+  renderAll();
+}
+function setLevel(n,focus=false){
+  n=clamp(Number(n),1,4);
+  stopSignal();
+  state.level=n;
+  document.body.dataset.activeLevel=String(n);
+  const tabs=$$("[data-level]");
+  tabs.forEach(b=>{
+    const active=Number(b.dataset.level)===n;
+    b.setAttribute("aria-selected",String(active));
+    b.tabIndex=active?0:-1;
+    $("level-"+b.dataset.level).hidden=!active;
+    if(active&&focus)b.focus();
+  });
+  const option=$("comparison-model").querySelector('option[value="hypothetical"]');
+  if(option)option.disabled=n<3;
+  if(n<3&&state.comparison==="hypothetical"){
+    state.comparison="instant";
+    $("comparison-model").value="instant";
   }
-  frameId = requestAnimationFrame(animate);
+  if(n<3){
+    state.chartMode="cumulative";
+    $("chart-mode").value="cumulative";
+  }
+  if(n===1 && state.angle!==0 && state.angle!==180){
+    state.angle=state.angle>=90&&state.angle<=270?180:0;
+    $("earth-angle").value=String(state.angle);
+    resetSignal();
+  }
+  renderAll();
 }
-function toggleOrbit() {
-  if (playing) { stopOrbit(); render(); return; }
-  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-  playing = true;
-  lastTick = performance.now();
-  lastPaint = 0;
-  $("play-orbit").setAttribute("aria-pressed","true");
-  $("play-orbit").textContent = "Ⅱ Pause Earth's orbit";
-  $("orbit-feedback").setAttribute("aria-live","off");
-  frameId = requestAnimationFrame(animate);
+
+function renderJourney(){
+  const chosen=$("journey").value;
+  const custom=chosen==="custom";
+  $("custom-km").disabled=!custom;
+  const km=custom?Number($("custom-km").value):Number(chosen);
+  if(!Number.isFinite(km)||km<0||km>1e13||(custom&&$("custom-km").value.trim()==="")){
+    setText("journey-time","Enter a distance from 0 to 10 trillion km");
+    setText("journey-equation","Distance must be a nonnegative number in kilometres.");
+    setText("journey-explanation","Enter a valid distance to calculate light-time.");
+    return;
+  }
+  const seconds=km/C_KM_S;
+  setText("journey-time",detailedTime(seconds));
+  setText("journey-equation",km.toLocaleString("en-US",{maximumSignificantDigits:12})+" km ÷ "+C_KM_S.toLocaleString("en-US",{maximumFractionDigits:3})+" km/s");
+  setText("journey-explanation",chosen==="9460730472580.8"
+    ?"One light-year is a distance; light takes one Julian year (365.25 days) to cross it."
+    :chosen==="384400"?"The Moon's distance varies; a round-trip radar/laser pulse takes about twice as long."
+    :chosen==="149597870.7"?"Sunlight takes about 8 minutes and 19 seconds to travel 1 AU."
+    :"This is an idealized one-way vacuum travel time, not an animation running in real time.");
 }
-function activateLevel(index, moveFocus = false) {
-  const tabs = $$("[data-level]");
-  tabs.forEach((button,i)=>{
-    const selected = i === index;
-    button.setAttribute("aria-selected",String(selected));
-    button.tabIndex = selected ? 0 : -1;
-    $("level-"+button.dataset.level).hidden = !selected;
-  });
-  if (moveFocus) tabs[index].focus();
-}
-function initialise() {
-  $("earth-angle").addEventListener("input",()=>{ stopOrbit(); render(); });
-  $("light-model").addEventListener("change",render);
-  $("play-orbit").addEventListener("click",toggleOrbit);
-  $("reset").addEventListener("click",()=>{
-    stopOrbit();
-    $("earth-angle").value = "0";
-    $("light-model").value = "instant";
-    render();
-  });
-  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
-  const syncMotion = ()=>{
-    if (reduced.matches) {
-      stopOrbit();
-      $("play-orbit").disabled = true;
-      $("motion-note").textContent = "Reduced motion is enabled. The animation is disabled; use the accessible angle slider instead.";
-    } else {
-      $("play-orbit").disabled = false;
-      $("motion-note").textContent = "Drag the slider to investigate freely. The orbit animation is accelerated, not real time.";
-    }
+
+function seededRandom(seed){
+  let a=seed>>>0;
+  return function(){
+    a=(a+0x6D2B79F5)>>>0;
+    let t=a;
+    t=Math.imul(t^(t>>>15),t|1);
+    t^=t+Math.imul(t^(t>>>7),t|61);
+    return ((t^(t>>>14))>>>0)/4294967296;
   };
-  if (reduced.addEventListener) reduced.addEventListener("change",syncMotion);
-  syncMotion();
+}
+function normalRandom(random){
+  return Math.sqrt(-2*Math.log(Math.max(1e-12,random())))*Math.cos(2*Math.PI*random());
+}
+function syntheticObservations(n=state.sampleCount, noise=state.noise, biasPercent=state.distanceBias, seed=state.seed, R=state.R){
+  const random=seededRandom(seed);
+  return Array.from({length:n},(_,i)=>{
+    const angle=360*i/(n-1);
+    const x=excessSeconds(angle,C_KM_S,R);
+    // The 30-second clock offset is a fitted nuisance parameter.
+    const observed=30+(1+biasPercent/100)*x+noise*normalRandom(random);
+    return {angle,x,observed};
+  });
+}
+function fitTiming(data){
+  const n=data.length;
+  const xmean=data.reduce((s,p)=>s+p.x,0)/n;
+  const ymean=data.reduce((s,p)=>s+p.observed,0)/n;
+  const sxx=data.reduce((s,p)=>s+(p.x-xmean)**2,0);
+  const sxy=data.reduce((s,p)=>s+(p.x-xmean)*(p.observed-ymean),0);
+  const slope=sxy/sxx;
+  const intercept=ymean-slope*xmean;
+  const sse=data.reduce((s,p)=>s+(p.observed-intercept-slope*p.x)**2,0);
+  const instantSse=data.reduce((s,p)=>s+(p.observed-ymean)**2,0);
+  const standardSlope=Math.sqrt((sse/(n-2))/sxx);
+  const inferredSpeed=slope>0?C_KM_S/slope:NaN;
+  const speedError=slope>0?C_KM_S*standardSlope/(slope*slope):NaN;
+  return {n,xmean,ymean,slope,intercept,sse,instantSse,standardSlope,inferredSpeed,speedError,rmse:Math.sqrt(sse/n),instantRmse:Math.sqrt(instantSse/n)};
+}
+function plotResearch(data,fit){
+  const view=$("research-plot");
+  view.replaceChildren();
+  append(view,"rect",{x:0,y:0,width:760,height:330,rx:14,fill:"#091a30"});
+  const samples=Array.from({length:121},(_,i)=>i*3);
+  const predict=angle=>fit.intercept+fit.slope*excessSeconds(angle);
+  const allY=[...data.map(p=>p.observed),...samples.map(predict),fit.ymean];
+  let minY=Math.min(...allY), maxY=Math.max(...allY);
+  const margin=Math.max((maxY-minY)*.10,10);
+  minY-=margin;maxY+=margin;
+  const left=76,right=734,top=25,bottom=272;
+  const x=a=>left+a/360*(right-left);
+  const y=v=>bottom-(v-minY)/(maxY-minY)*(bottom-top);
+  for(let i=0;i<=4;i++){
+    const py=top+(bottom-top)*i/4, val=maxY-(maxY-minY)*i/4;
+    append(view,"line",{x1:left,y1:py,x2:right,y2:py,stroke:"#304c66"});
+    append(view,"text",{x:left-10,y:py+5,"text-anchor":"end",class:"axis-text"},fmt(val,0));
+  }
+  for(let a=0;a<=360;a+=60){
+    append(view,"text",{x:x(a),y:bottom+23,"text-anchor":"middle",class:"axis-text"},a+"°");
+    append(view,"line",{x1:x(a),y1:top,x2:x(a),y2:bottom,stroke:"#29445d","stroke-dasharray":"4 8"});
+  }
+  append(view,"text",{x:12,y:18,class:"axis-text"},"Seconds");
+  append(view,"text",{x:(left+right)/2,y:316,"text-anchor":"middle",class:"axis-text"},"Earth orbital angle · synthetic observations");
+  drawLine(view,samples.map(a=>[x(a),y(predict(a))]),"#76e3d9");
+  drawLine(view,[[x(0),y(fit.ymean)],[x(360),y(fit.ymean)]],"#ffb181",true);
+  for(const p of data){
+    append(view,"circle",{cx:x(p.angle),cy:y(p.observed),r:4.3,fill:"#ffd68c",stroke:"#10223d","stroke-width":1.2});
+  }
+  view.setAttribute("aria-label",data.length+" simulated eclipse arrival times. Fitted speed "+whole(fit.inferredSpeed)+" kilometres per second, using the stated statistical and systematic assumptions.");
+}
+function generateResearch(){
+  state.samples=syntheticObservations();
+  state.fit=fitTiming(state.samples);
+  const f=state.fit;
+  setText("count-value",state.sampleCount);
+  setText("noise-value",state.noise+" s");
+  setText("bias-value",(state.distanceBias>0?"+":"")+state.distanceBias+"%");
+  setText("fit-speed",Number.isFinite(f.inferredSpeed)?whole(f.inferredSpeed)+" km/s":"Not physically interpretable");
+  setText("fit-error",Number.isFinite(f.speedError)?"± "+whole(f.speedError)+" km/s":"Not available");
+  setText("finite-rmse",fmt(f.rmse,2)+" s");
+  setText("instant-rmse",fmt(f.instantRmse,2)+" s");
+  setText("research-feedback",state.distanceBias===0
+    ?"No distance-scale bias was introduced. The fitted speed varies with synthetic random noise; its statistical error assumes the ideal model is correct."
+    :"The hidden distance scale is "+(state.distanceBias>0?"too large":"too small")+" by "+Math.abs(state.distanceBias)+"%. This changes the fitted speed even as random noise is reduced. The displayed statistical error does not capture that bias.");
+  plotResearch(state.samples,f);
+}
+function csvDownload(name,lines){
+  const blob=new Blob([lines.join("\n")+"\n"],{type:"text/csv;charset=utf-8"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");
+  a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+function exportModel(){
+  const lines=["angle_deg,distance_au,travel_time_s,excess_time_s,next_interval_correction_s,romer_excess_s,hypothetical_excess_s"];
+  for(let deg=0;deg<=360;deg+=5)lines.push([
+    deg,distanceAU(deg),travelSeconds(deg),excessSeconds(deg),
+    intervalSeconds(deg),excessSeconds(deg,ROMER_KM_S),
+    excessSeconds(deg,C_KM_S*state.speedRatio)
+  ].join(","));
+  csvDownload("light-time-model-generated.csv",lines);
+}
+function exportResearch(){
+  const f=state.fit;
+  const lines=["angle_deg,nominal_excess_s,synthetic_observed_s,finite_fit_s,instantaneous_fit_s"];
+  for(const p of state.samples)lines.push([
+    p.angle,p.x,p.observed,f.intercept+f.slope*p.x,f.ymean
+  ].join(","));
+  csvDownload("synthetic-eclipse-observations.csv",lines);
+}
+function initialize(){
+  $$("[data-position]").forEach(button=>button.addEventListener("click",()=>setAngle(button.dataset.position==="near"?0:180)));
+  $("earth-angle").addEventListener("input",()=>setAngle($("earth-angle").value));
+  $("run-signal").addEventListener("click",runSignal);
+  $("jump-arrival").addEventListener("click",completeSignal);
+  $("reset-signal").addEventListener("click",resetSignal);
+  $$("[data-predict]").forEach(button=>button.addEventListener("click",()=>{
+    const correct=button.dataset.predict==="later";
+    $$("[data-predict]").forEach(b=>b.setAttribute("aria-pressed",String(b===button)));
+    setText("prediction-result",correct
+      ?"Correct! The eclipse happens at Jupiter at the same time, but its light has farther to travel to the distant Earth. Try the Far away button."
+      :"Try again: the event happens at the same time at Jupiter, but light needs longer to travel farther. Does that mean Earth sees it earlier or later?");
+  }));
+  $("comparison-model").addEventListener("change",()=>{
+    state.comparison=$("comparison-model").value;
+    drawTimingPlot();
+  });
+  $("chart-mode").addEventListener("change",()=>{
+    state.chartMode=$("chart-mode").value;
+    drawTimingPlot();
+  });
+  const modelInputs=[["jupiter-au","R"],["io-period","period"],["speed-ratio","speedRatio"]];
+  modelInputs.forEach(([id,key])=>$(id).addEventListener("input",()=>{
+    state[key]=Number($(id).value);
+    resetSignal();
+    renderAll();
+  }));
+  $("reset-model").addEventListener("click",()=>{
+    Object.assign(state,DEFAULTS);
+    modelInputs.forEach(([id,key])=>$(id).value=String(state[key]));
+    resetSignal();
+    renderAll();
+  });
+  $("export-model").addEventListener("click",exportModel);
+  const researchInputs=[["sample-count","sampleCount"],["timing-noise","noise"],["distance-bias","distanceBias"]];
+  researchInputs.forEach(([id,key])=>$(id).addEventListener("input",()=>{
+    state[key]=Number($(id).value);
+    generateResearch();
+  }));
+  $("resample").addEventListener("click",()=>{state.seed++;generateResearch();});
+  $("reset-research").addEventListener("click",()=>{
+    state.sampleCount=24;state.noise=30;state.distanceBias=0;state.seed=314159;
+    researchInputs.forEach(([id,key])=>$(id).value=String(state[key]));
+    generateResearch();
+  });
+  $("export-research").addEventListener("click",exportResearch);
   $("journey").addEventListener("change",renderJourney);
   $("custom-km").addEventListener("input",renderJourney);
-  const tabs = $$("[data-level]");
-  tabs.forEach((button,i)=>{
-    button.addEventListener("click",()=>activateLevel(i));
+  const tabs=$$("[data-level]");
+  tabs.forEach((button,index)=>{
+    button.addEventListener("click",()=>setLevel(Number(button.dataset.level)));
     button.addEventListener("keydown",event=>{
-      let next = i;
-      if (event.key === "ArrowRight") next = (i+1)%tabs.length;
-      else if (event.key === "ArrowLeft") next = (i+tabs.length-1)%tabs.length;
-      else if (event.key === "Home") next = 0;
-      else if (event.key === "End") next = tabs.length-1;
+      let next=index;
+      if(event.key==="ArrowRight")next=(index+1)%tabs.length;
+      else if(event.key==="ArrowLeft")next=(index+tabs.length-1)%tabs.length;
+      else if(event.key==="Home")next=0;
+      else if(event.key==="End")next=tabs.length-1;
       else return;
       event.preventDefault();
-      activateLevel(next,true);
+      setLevel(next+1,true);
     });
   });
-  $("modern-diameter").textContent = "≈ "+minutesAndSeconds(2*AU_KM/C_KM_S);
-  activateLevel(0);
-  render();
-  renderJourney();
+  const mql=window.matchMedia("(prefers-reduced-motion: reduce)");
+  const reflectMotion=()=>{
+    state.reducedMotion=mql.matches;
+    if(state.reducedMotion){
+      stopSignal();
+      setText("motion-note","Reduced motion: pressing Send the eclipse signal reveals the arrival immediately. The manual controls still work.");
+    }else setText("motion-note","Playback is accelerated (400 simulated seconds per real second). The clock shows simulated travel time.");
+  };
+  if(mql.addEventListener)mql.addEventListener("change",reflectMotion);
+  reflectMotion();
+  document.addEventListener("visibilitychange",()=>{if(document.hidden&&state.playing){stopSignal();setText("signal-status","Paused because the page was hidden. Resume when ready.");}});
+  const hash=window.location.hash.match(/^#level-([1-4])$/);
+  setLevel(hash?Number(hash[1]):1);
+  resetSignal();
 }
-document.addEventListener("DOMContentLoaded",initialise);
+document.addEventListener("DOMContentLoaded",initialize);
