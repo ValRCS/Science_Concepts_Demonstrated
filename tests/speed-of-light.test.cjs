@@ -64,7 +64,8 @@ test("no duplicated HTML IDs; script uses existing DOM targets",()=>{
   assert.equal(new Set(ids).size,ids.length);
   const known=new Set(ids);
   for(const match of source.matchAll(/\$\("([^"]+)"\)/g)){
-    if(match[1]==="[data-level]")continue;
+    // Selector strings inside $("[data-...]") are not element IDs.
+    if(match[1].startsWith("["))continue;
     assert.ok(known.has(match[1]),"Missing DOM target "+match[1]);
   }
 });
