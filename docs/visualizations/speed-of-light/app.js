@@ -94,7 +94,9 @@ function drawSignal(){
   // travelling directly from the eclipsed satellite.
   append(panel,"circle",{cx:45,cy:112,r:29,fill:"#c89972",stroke:"#e8c2a1","stroke-width":2});
   for(const dy of [-13,4,18])append(panel,"path",{d:"M 19 "+(112+dy)+" Q 45 "+(117+dy)+" 70 "+(112+dy),fill:"none",stroke:"#8c624e","stroke-width":4,opacity:.8});
-  append(panel,"circle",{cx:77,cy:112,r:5,fill:"#afc6e8"});
+  const eclipseStarted=state.playing||state.elapsed>0||state.delivered;
+  append(panel,"circle",{cx:77,cy:112,r:5.8,fill:eclipseStarted?"#253347":"#f0ecce",stroke:"#d7d8c6","stroke-width":1.2});
+  append(panel,"text",{x:91,y:63,class:"label-small"},eclipseStarted?"Io enters shadow":"Io is bright");
   append(panel,"path",{d:"M 82 94 l 10 -12 v 58 l -10 -13 Z",fill:"#57728f",opacity:.55});
   append(panel,"line",{x1:90,y1:112,x2:target,y2:112,stroke:"#476786","stroke-width":5,"stroke-linecap":"round"});
   append(panel,"line",{x1:90,y1:112,x2:px,y2:112,stroke:"#7de6da","stroke-width":5,"stroke-linecap":"round"});
@@ -110,7 +112,7 @@ function drawSignal(){
   append(panel,"text",{x:target,y:160,"text-anchor":"middle",class:"label-large"},"Earth");
   append(panel,"text",{x:(90+target)/2,y:81,"text-anchor":"middle",class:"label-small"},state.angle===0?"Shorter trip":state.angle===180?"Longer trip":"Changing trip");
   append(panel,"text",{x:16,y:25,class:"label-small"},"Io eclipse at Jupiter");
-  append(panel,"text",{x:16,y:218,class:"label-small"},state.delivered?"Earth has received the change in light":"Earth sees the event only after the signal arrives");
+  append(panel,"text",{x:16,y:218,class:"label-small"},state.delivered?"Earth has received the eclipse signal":"Earth sees the event only after arrival");
   const caption=state.delivered?"Signal has arrived after "+minuteClock(total)
     :state.playing?"Signal moving toward Earth · simulated time "+minuteClock(state.elapsed)
     :"Waiting · one-way journey takes "+minuteClock(total);
