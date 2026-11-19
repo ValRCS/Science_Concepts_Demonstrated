@@ -105,3 +105,48 @@ The graph plots **Δτ**, a cumulative extra light time in minutes **relative to
 7. [NASA, Jovian Satellite Fact Sheet](https://nssdc.gsfc.nasa.gov/planetary/factsheet/joviansatfact.html?level=1).
 8. [NASA, Earth and the Moon by the numbers](https://science.nasa.gov/moon/by-the-numbers/).
 9. [OpenStax Astronomy 2e, §19.1](https://openstax.org/books/astronomy-2e/pages/19-1-fundamental-units-of-distance).
+
+
+---
+
+## Educational redesign implemented, 19 November 2026
+
+The original page exposed the same technical simulation to all ages and placed the learning-level selector below the demonstration. The redesign now introduces progressive disclosure: one consistent geometric/light-time model with level-specific controls, challenges, readouts, and explanatory depth.
+
+### Increment 1 — visual discovery and accessible navigation
+
+- Four learning-level tabs are at the top; keyboard arrow/Home/End navigation and direct URL fragments (#level-1 through #level-4) are supported.
+- Level 1 uses Near/Far buttons, a signal that visibly travels from Jupiter toward Earth, an eclipse-state change for Io, a simulated clock, arrival feedback, one-click Show arrival, and a prediction exercise.
+- Drawn light-path length is proportional to actual modeled time for a fixed Jupiter distance. The playback speed is deliberately accelerated: 400 simulated seconds per real second.
+- Reduced-motion mode produces the same arrival result immediately, without animation. Animation is optional.
+- Level 2 reveals Earth's angle slider, orbit geometry, modern-vs-historical/instantaneous timing graph, and the light-time calculator.
+- Large scientific graphs have horizontally scrollable containers on phones, while the simpler Level 1 scene remains wholly visible. Labels, units, keyboard access and feedback are included.
+
+### Increment 2 — analysis and synthetic research
+
+- Level 3 separates two distinct observables: cumulative reference-relative light-time residuals (minutes) and differences between successive Io-like clock intervals (seconds).
+- Adjustable Jupiter fixed radius, Io-like clock period and a hypothetical comparison speed affect model predictions. The modern vacuum speed always remains fixed at the SI definition.
+- CSV export contains labeled **model-generated**, not observed, data.
+- Level 4 adds seeded synthetic eclipse-timing observations with independent Gaussian noise (user-selected standard deviation), a hidden distance-scale bias and adjustable sample count.
+- The generator uses y_i = 30 s + (1+b) x_i + epsilon_i. Ordinary least squares fits A + k x_i; the speed estimate is c/k. An instantaneous hypothesis fits a constant offset only.
+- The research experiment displays inferred speed, an approximate conditional one-standard-deviation statistical error, finite-fit residual RMSE and instantaneous-hypothesis RMSE.
+- Distance-scale bias is *not* included in the displayed OLS statistical error. It is confounded with 1/c, demonstrating why more observations cannot remove systematic model error.
+- These data are entirely synthetic; no actual eclipse log or modern ephemeris is used.
+
+### Verification and remaining browser checks
+
+The revised dependency-free test suite in tests/speed-of-light.test.cjs has 17 cases: constants, orbit geometry, the ~998-second maximum additional delay, the sign of incremental timing corrections, noiseless unbiased and biased inversion, catalog and DOM IDs, reduced motion, model controls, levels, simulated playback, calculator and references.
+
+**All 17 test callbacks passed against the current GitHub source in a JavaScript test harness on 19 November 2026.** A GitHub Actions workflow was added at .github/workflows/speed-of-light.yml, running the standard command:
+
+    node --test tests/speed-of-light.test.cjs
+
+The workflow status remains separately verifiable; test-harness success is not evidence of a completed remote Actions run.
+
+Still recommended: a manual browser audit on mobile and desktop, at 200% zoom and with screen readers; verify keyboard and reduced-motion behavior; inspect both CSVs; verify external references and GitHub Pages deployment.
+
+### Sources and interpretive caution
+
+The 350-year anniversary was cross-checked with [ScienceNorway](https://www.sciencenorway.no/culture-history-history-of-science/350-years-ago-this-man-discovered-that-light-has-a-finite-speed/2737969), the [Niels Bohr Institute](https://nbi.ku.dk/hhh/roemer/roemer/lysets_toeven/), and the [Paris Observatory](https://clic.obspm.fr/). Scientific constants and orbital figures are documented by [BIPM](https://www.bipm.org/en/si-base-units/metre), [NASA's Jovian moon data](https://nssdc.gsfc.nasa.gov/planetary/factsheet/joviansatfact.html), and [JPL](https://cneos.jpl.nasa.gov/glossary/au.html).
+
+The 1676 ten-minute prediction referred to an eclipse event's deviation from a historical forecast, NOT the modeled near-versus-far ~16 min 38 s difference. The research lab is a pedagogical inversion, not a reanalysis of seventeenth-century observations. The model omits Jupiter's changing ephemeris, eccentricity and inclination, Io's orbital position and perturbations, visibility selection, light-time iteration and instrument errors.
