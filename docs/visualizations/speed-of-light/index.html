@@ -3,196 +3,264 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#091629">
-  <meta name="description" content="Why does light take time to travel? Explore Ole Rømer's 1676 discovery using Jupiter's moon Io, compare eclipse delays, and calculate light travel times.">
-  <title>Speed of Light: Rømer's Cosmic Clock | Science Concepts Demonstrated</title>
+  <meta name="theme-color" content="#0b192b">
+  <meta name="description" content="Watch light travel from Jupiter to Earth, discover Ole Rømer's 1676 experiment, and explore speed-of-light models from primary school through university.">
+  <title>Speed of Light — Rømer's Cosmic Clock | Science Concepts Demonstrated</title>
   <link rel="stylesheet" href="style.css">
   <script src="app.js" defer></script>
 </head>
-<body>
-  <a class="skip-link" href="#main">Skip to the demonstration</a>
+<body data-active-level="1">
+  <a class="skip-link" href="#main">Skip to the experiment</a>
   <header class="site-header">
-    <a class="brand" href="../../">∑ Science Concepts Demonstrated</a>
-    <nav aria-label="Page navigation">
-      <a href="#experiment">Experiment</a>
-      <a href="#learn">Four levels</a>
-      <a href="#sources">References</a>
-      <a href="../../#category-physics">← Physics directory</a>
-    </nav>
+    <a href="../../" class="brand">∑ Science Concepts Demonstrated</a>
+    <nav aria-label="Page navigation"><a href="#experiment">Experiment</a><a href="#explanation">Explanation</a><a href="#references">References</a><a href="../../#category-physics">← Physics directory</a></nav>
   </header>
   <main id="main">
-    <section class="hero">
-      <p class="eyebrow">PHYSICS / ASTRONOMY / 350 YEARS OF A DISCOVERY</p>
-      <h1>How fast does <em>light</em> travel?</h1>
-      <p class="intro">Light is extraordinarily fast—but not instantaneous. In 1676, Danish astronomer <strong>Ole Rømer</strong> used eclipses of Jupiter's moon Io as a cosmic clock and discovered that light takes time to reach us.</p>
-      <div class="hero-stats" aria-label="Speed of light facts">
-        <div><strong>299,792,458</strong><span>metres per second in vacuum, exactly</span></div>
-        <div><strong>8 min 19 s</strong><span>from the Sun across 1 AU (rounded)</span></div>
-        <div><strong>1676</strong><span>Rømer's observational prediction</span></div>
-      </div>
-      <p class="source-note">Inspired by <a href="https://www.sciencenorway.no/culture-history-history-of-science/350-years-ago-this-man-discovered-that-light-has-a-finite-speed/2737969">ScienceNorway's 16 November 2026 retrospective</a>. The graphics and models here are original educational reconstructions, not historical observations.</p>
+    <section class="hero" aria-labelledby="page-title">
+      <p class="eyebrow">PHYSICS · LIGHT · ASTRONOMY</p>
+      <h1 id="page-title">How fast does <em>light</em> travel?</h1>
+      <p>Light is astonishingly fast, but its journey takes time. Discover how the changing distance between Earth and Jupiter helped astronomers find this out in 1676.</p>
+      <p class="source-note">Inspired by <a href="https://www.sciencenorway.no/culture-history-history-of-science/350-years-ago-this-man-discovered-that-light-has-a-finite-speed/2737969">ScienceNorway's 350-year retrospective</a> on Ole Rømer. This is an original teaching simulation, not a historical observation or an animation at real light speed.</p>
     </section>
 
-    <section class="panel lab-panel" id="experiment" aria-labelledby="experiment-heading">
-      <div class="panel-heading">
-        <div><p class="eyebrow">THE MAIN EXPERIMENT</p><h2 id="experiment-heading">Rømer's cosmic clock</h2></div>
-        <span class="panel-tag">IDEALIZED ORBITS · NOT TO SCALE</span>
+    <section class="level-picker panel" aria-labelledby="choose-title">
+      <h2 id="choose-title">Choose how deeply to explore</h2>
+      <p>Begin with a visual experiment. Switch levels whenever you like—the same underlying physics connects them all.</p>
+      <div class="level-tabs" role="tablist" aria-label="Learning depth">
+        <button type="button" role="tab" id="tab-1" aria-controls="level-1" aria-selected="true" tabindex="0" data-level="1"><strong>1 · Discover</strong><small>Watch and play · Ages 7–10</small></button>
+        <button type="button" role="tab" id="tab-2" aria-controls="level-2" aria-selected="false" tabindex="-1" data-level="2"><strong>2 · Explore</strong><small>Explain and measure · Ages 14–18</small></button>
+        <button type="button" role="tab" id="tab-3" aria-controls="level-3" aria-selected="false" tabindex="-1" data-level="3"><strong>3 · Analyze</strong><small>Build the model · Bachelor</small></button>
+        <button type="button" role="tab" id="tab-4" aria-controls="level-4" aria-selected="false" tabindex="-1" data-level="4"><strong>4 · Research</strong><small>Investigate uncertainty · Master</small></button>
       </div>
-      <p>Imagine that Io's eclipses happen at regular intervals, like ticks of a clock. When Earth is farther from Jupiter, the signal that tells us an eclipse happened has farther to travel. <strong>Move Earth</strong> and watch the delay change.</p>
+    </section>
 
-      <div class="orbit-layout">
-        <div>
-          <svg id="orbit-svg" viewBox="0 0 920 410" role="img" aria-label="Top-down schematic of the Sun, Earth's circular orbit, Jupiter and Io. The selected Earth position and information-travel path are updated with the slider.">
-            <title>Earth, Jupiter and the travelling eclipse signal</title>
-            <defs>
-              <radialGradient id="sun-glow"><stop stop-color="#ffdf90" stop-opacity=".55"/><stop offset="1" stop-color="#ffdf90" stop-opacity="0"/></radialGradient>
-              <radialGradient id="jupiter-fill"><stop stop-color="#e7b48a"/><stop offset="1" stop-color="#91634b"/></radialGradient>
-            </defs>
-            <g id="orbit-drawing"></g>
-          </svg>
-          <p class="figure-note">Schematic view from above. Earth travels around the Sun; Jupiter is held fixed at 5.2 AU. The dashed line represents how a change in light from the Io eclipse reaches Earth—not a laser beam or a ray emitted by an eclipsed moon. Sizes, positions, periods, and eclipse visibility are simplified.</p>
+    <section class="panel hero-experiment" id="experiment" aria-labelledby="signal-title">
+      <div class="section-heading"><div><p class="eyebrow">EXPERIMENT 01 · SAME EVENT, DIFFERENT ARRIVAL</p><h2 id="signal-title">Watch the eclipse signal</h2></div><span class="pill">SIMPLIFIED MODEL</span></div>
+      <p class="short-intro">Io, a moon of Jupiter, moves into Jupiter's shadow. The change in the light reaching Earth does not arrive immediately. Move Earth and see what happens.</p>
+      <div class="signal-grid">
+        <div class="visual-stack">
+          <div class="svg-shell signal-shell">
+            <svg id="signal-scene" viewBox="0 0 520 238" role="img" aria-label="A simplified Jupiter-to-Earth light path. A light-signal marker progresses from Jupiter to near or far Earth, showing the delayed observation of an eclipse."><title>One event, two travel distances</title></svg>
+          </div>
+          <p class="visual-footnote">The diagram is schematic: distances, planet sizes and animation speed are not to scale. The moving dot represents information carried by changing light, not light emitted by an eclipsed moon.</p>
         </div>
         <div class="controls">
-          <label for="earth-angle">Earth's orbital position <output id="angle-value" for="earth-angle">0°</output></label>
-          <input id="earth-angle" type="range" min="0" max="360" step="1" value="0">
-          <div class="control-hint"><span>Near Jupiter (0°)</span><span>Far (180°)</span></div>
-          <label for="light-model">Compare with another hypothesis</label>
-          <select id="light-model">
-            <option value="instant">Light arrives instantly</option>
-            <option value="romer">Rømer's historical 22-minute estimate</option>
-          </select>
-          <div class="control-actions">
-            <button id="play-orbit" type="button" aria-pressed="false">▶ Play Earth's orbit</button>
-            <button id="reset" type="button">Reset</button>
+          <div class="beginner-only">
+            <p class="control-label">Where is Earth?</p>
+            <div class="button-row" role="group" aria-label="Choose Earth's position">
+              <button type="button" data-position="near" aria-pressed="true">🌎 Near Jupiter</button>
+              <button type="button" data-position="far" aria-pressed="false">🌎 Far away</button>
+            </div>
           </div>
-          <p id="motion-note" class="note">Drag the slider to investigate freely. The orbit animation is accelerated, not real time.</p>
-          <div class="experiment-question"><strong>Predict:</strong> does a change in Earth's distance alter when Io's eclipse <em>happens</em>, or when we <em>see</em> it?</div>
+          <div class="from-level2">
+            <label for="earth-angle" class="control-label">Earth's angle <output for="earth-angle" id="angle-value">0°</output></label>
+            <input type="range" id="earth-angle" min="0" max="360" step="1" value="0">
+            <div class="end-labels"><span>0° · near</span><span>180° · far</span><span>360° · near</span></div>
+          </div>
+          <div class="button-row signal-actions">
+            <button type="button" id="run-signal" class="primary">▶ Send the eclipse signal</button>
+            <button type="button" id="jump-arrival">Show arrival</button>
+            <button type="button" id="reset-signal">Reset</button>
+          </div>
+          <p id="signal-status" class="status" role="status" aria-live="polite">The eclipse has not started. Predict what will happen, then send the signal.</p>
+          <div class="signal-clock">
+            <span>Time since eclipse at Jupiter</span>
+            <strong id="clock-readout">0 min 00 s</strong>
+          </div>
+          <p class="visual-footnote" id="motion-note">Playback is accelerated. The clock shows simulated light-travel time.</p>
         </div>
       </div>
 
-      <div class="readouts" aria-label="Model calculations" aria-live="off">
-        <div><span>Earth–Jupiter distance</span><strong id="earth-distance">4.20 AU</strong></div>
-        <div><span>One-way light travel</span><strong id="light-time">34 min 56 s</strong></div>
-        <div><span>Extra delay vs nearest point</span><strong id="extra-delay">0 min 00 s</strong></div>
-        <div><span>Model: change in one Io clock interval</span><strong id="clock-drift">0.0 s</strong></div>
+      <div class="stat-grid">
+        <div><span>Light's one-way travel time</span><strong id="light-time">34 min 56 s</strong></div>
+        <div><span>Extra time compared with near Earth</span><strong id="extra-delay">0 min 00 s</strong></div>
+        <div class="from-level2"><span>Earth–Jupiter separation</span><strong id="earth-distance">4.200 AU</strong></div>
+        <div class="from-level3"><span>Change to the next Io clock interval</span><strong id="clock-drift">+0.00 s</strong></div>
       </div>
-      <p id="orbit-feedback" class="feedback" role="status" aria-live="polite"></p>
-
-      <div class="plot-heading"><h3>Watch the eclipse-timing difference accumulate</h3><p>Extra arrival time compared with an eclipse observed at Earth's nearest modeled position</p></div>
-      <div class="legend"><span><i class="swatch real"></i> Modern vacuum speed</span><span><i class="swatch comparison"></i> Comparison hypothesis</span><span><i class="swatch position"></i> Selected position</span></div>
-      <svg id="timing-plot" viewBox="0 0 900 340" role="img" aria-label="Graph of extra one-way light travel time versus Earth's orbital angle. A solid line shows modern light speed, a dashed line shows the selected comparison hypothesis, and a point shows the current orbital position."><title>Eclipse signal arrival delay over Earth's idealized orbit</title></svg>
-      <p class="figure-note">This graph shows <strong>cumulative light-travel-time differences</strong> relative to the nearest modeled configuration—not a 10-minute delay in each successive eclipse. Changes between adjacent eclipse intervals are only seconds. The plotted curves are calculated, not measured historical data.</p>
+      <div class="prediction" aria-labelledby="prediction-title">
+        <h3 id="prediction-title">Make a prediction</h3>
+        <p>Compared with the near position, when Earth is far from Jupiter, will we <strong>see the same eclipse</strong> earlier or later?</p>
+        <div class="button-row" role="group" aria-label="Prediction answers">
+          <button type="button" data-predict="earlier">Earlier</button>
+          <button type="button" data-predict="same">At the same time</button>
+          <button type="button" data-predict="later">Later</button>
+        </div>
+        <p id="prediction-result" class="prediction-result" aria-live="polite">Choose an answer, then test it by changing Earth's position.</p>
+      </div>
     </section>
 
-    <section class="panel history" aria-labelledby="story-title">
-      <div class="panel-heading"><div><p class="eyebrow">THE 1676 BREAKTHROUGH</p><h2 id="story-title">How an eclipse answered an ancient question</h2></div></div>
-      <ol class="history-steps">
-        <li><strong>Io acts like a clock.</strong> Its regular eclipses provide repeatable events that astronomers can predict.</li>
-        <li><strong>Earth moves.</strong> Over months, Earth changes its distance from Jupiter. Eclipses appear progressively later when Earth moves away, earlier when it approaches.</li>
-        <li><strong>Rømer tests a prediction.</strong> He warned the Paris Academy that the eclipse expected on 9 November 1676 would be about 10 minutes late—and observations supported him.</li>
-        <li><strong>Light takes time.</strong> Rømer estimated roughly 22 minutes for light to cross the diameter of Earth's orbit. The modern value for a 2 AU baseline is about 16 minutes 38 seconds.</li>
-      </ol>
-      <div class="history-compare">
-        <div><small>RØMER'S HISTORICAL INFERENCE</small><strong>≈ 22 min</strong><span>Across an orbital diameter; historical estimate</span></div>
-        <div><small>MODERN CALCULATION</small><strong id="modern-diameter">≈ 16 min 38 s</strong><span>Across exactly 2 AU at the defined SI value of c</span></div>
+    <section class="panel from-level2" id="geometry" aria-labelledby="orbit-title">
+      <div class="section-heading"><div><p class="eyebrow">EXPERIMENT 02 · GEOMETRY OF THE SOLAR SYSTEM</p><h2 id="orbit-title">Why does the distance change?</h2></div><span class="pill">TOP-DOWN SCHEMATIC</span></div>
+      <p>Earth's orbit changes the distance that light must travel from Jupiter. The model holds Jupiter at a fixed position and moves Earth around a circular orbit. The geometry is a teaching approximation, not a planetary ephemeris.</p>
+      <div class="scrollable-visual" tabindex="0" aria-label="Scrollable orbital diagram on narrow screens">
+        <svg id="orbit-svg" viewBox="0 0 700 290" role="img" aria-label="A schematic Sun, Earth's circular orbit, fixed Jupiter, and Earth–Jupiter sightline that changes as Earth moves."><title>Earth's orbit and the varying distance to Jupiter</title></svg>
       </div>
-      <p class="note">Important historical distinction: Rømer showed that light has a finite propagation time. He did not directly report the modern numerical speed in km/s; translating his time estimate into a speed requires an assumed astronomical unit. Christiaan Huygens later developed a numerical estimate. Earlier thinkers had already suggested that light could have a finite speed.</p>
+      <p class="visual-footnote">Earth is modeled at 1 AU from the Sun, Jupiter at 5.2 AU. Real planet diameters, orbital motion of Jupiter, eccentricities and eclipse visibility are not represented to scale.</p>
     </section>
 
-    <section class="panel" id="distance-lab" aria-labelledby="distance-heading">
-      <div class="panel-heading"><div><p class="eyebrow">LIGHT-TRAVEL CALCULATOR</p><h2 id="distance-heading">How long does light take?</h2></div><span class="panel-tag">ONE-WAY · VACUUM</span></div>
-      <p>Choose a journey or enter a distance. Even at nearly 300,000 km per second, a signal needs time to cross space. This also means looking across the universe is looking into the past.</p>
-      <div class="journey-layout">
-        <div class="journey-controls">
-          <label for="journey">Choose a distance</label>
+    <section class="panel from-level2" id="timing-lab" aria-labelledby="timing-title">
+      <div class="section-heading"><div><p class="eyebrow">EXPERIMENT 03 · OBSERVED ECLIPSE TIMING</p><h2 id="timing-title">How late does the eclipse appear?</h2></div></div>
+      <p>The graph shows how much later the signal arrives compared with Earth's nearest position. This is a <strong>cumulative difference</strong>, not the change between two consecutive eclipses.</p>
+      <div class="chart-controls">
+        <div>
+          <label for="comparison-model">Comparison hypothesis</label>
+          <select id="comparison-model">
+            <option value="instant">Light arrives instantly</option>
+            <option value="romer">Rømer's historical 22-minute estimate</option>
+            <option value="hypothetical" class="from-level3">Hypothetical slower light (Level 3+)</option>
+          </select>
+        </div>
+        <div class="from-level3">
+          <label for="chart-mode">Graph quantity</label>
+          <select id="chart-mode">
+            <option value="cumulative">Cumulative excess light time (min)</option>
+            <option value="interval">Extra time per Io eclipse interval (s)</option>
+          </select>
+        </div>
+      </div>
+      <div class="legend"><span><i class="legend-line modern"></i>Modern c</span><span><i class="legend-line compare"></i>Comparison hypothesis</span><span><i class="legend-line picked"></i>Selected Earth position</span></div>
+      <div class="scrollable-visual" tabindex="0" aria-label="Scrollable delay chart on narrow screens">
+        <svg id="timing-plot" viewBox="0 0 760 320" role="img" aria-label="Model-generated timing graph showing modern light speed, a comparison hypothesis, and the current Earth position."><title>Difference in eclipse signal arrival times</title></svg>
+      </div>
+      <p class="visual-footnote" id="chart-description">Graph of the cumulative extra travel time relative to Earth's nearest point. Not actual 1676 telescope observations.</p>
+      <p class="feedback" id="timing-feedback" role="status" aria-live="polite"></p>
+    </section>
+
+    <section class="panel from-level3" id="model-lab" aria-labelledby="model-title">
+      <div class="section-heading"><div><p class="eyebrow">EXPERIMENT 04 · ADJUST THE MATHEMATICAL MODEL</p><h2 id="model-title">What changes the prediction?</h2></div></div>
+      <div class="model-grid">
+        <div class="slider-control">
+          <label for="jupiter-au">Jupiter's fixed orbital radius <output id="jupiter-value" for="jupiter-au">5.2 AU</output></label>
+          <input type="range" id="jupiter-au" min="4.5" max="7.5" step="0.1" value="5.2">
+        </div>
+        <div class="slider-control">
+          <label for="io-period">Io-like clock period <output id="period-value" for="io-period">1.769 days</output></label>
+          <input type="range" id="io-period" min="1.5" max="2.2" step="0.001" value="1.769">
+        </div>
+        <div class="slider-control">
+          <label for="speed-ratio">Hypothetical comparison speed <output id="speed-value" for="speed-ratio">0.75 c</output></label>
+          <input type="range" id="speed-ratio" min="0.5" max="1" step="0.05" value="0.75">
+        </div>
+      </div>
+      <p class="visual-footnote">The modern-c curve always uses the defined vacuum speed. The speed slider affects only the <em>hypothetical</em> comparison, never the measured physical constant. Choose that hypothesis in the graph above to see its curve.</p>
+      <div class="button-row"><button type="button" id="reset-model">Restore model defaults</button><button type="button" id="export-model">Download model-generated timing CSV</button></div>
+      <div class="equation" aria-label="Simplified geometric equations">D(θ) = √(R² + a² − 2Ra cos θ) ; &nbsp; Δτ(θ) = [D(θ) − (R − a)] / c</div>
+      <p>Here a = 1 AU and R is the chosen Jupiter radius; distances are converted to kilometres before division by c. The change in a <em>single</em> observed clock interval is approximately [D(θ + 360°P/Y) − D(θ)] / c, where Y = 365.25 days.</p>
+    </section>
+
+    <section class="panel only-level4" id="research-lab" aria-labelledby="research-title">
+      <div class="section-heading"><div><p class="eyebrow">EXPERIMENT 05 · SYNTHETIC INVERSE PROBLEM</p><h2 id="research-title">Can we recover light's speed from eclipse timings?</h2></div><span class="pill">SYNTHETIC DATA ONLY</span></div>
+      <p>Generate a set of imaginary eclipse-timing measurements from the modern light-speed model. Add random timing error or a systematic error in the distance scale, then fit the propagation delay to the observations. This is <strong>not</strong> Rømer's historical dataset.</p>
+      <div class="research-controls">
+        <div class="slider-control"><label for="sample-count">Number of observations <output id="count-value" for="sample-count">24</output></label><input type="range" id="sample-count" min="8" max="48" step="2" value="24"></div>
+        <div class="slider-control"><label for="timing-noise">Timing noise, standard deviation <output id="noise-value" for="timing-noise">30 s</output></label><input type="range" id="timing-noise" min="0" max="90" step="5" value="30"></div>
+        <div class="slider-control"><label for="distance-bias">Hidden distance-scale bias <output id="bias-value" for="distance-bias">0%</output></label><input type="range" id="distance-bias" min="-10" max="10" step="1" value="0"></div>
+      </div>
+      <div class="button-row"><button type="button" id="resample">Regenerate random observations</button><button type="button" id="reset-research">Reset research experiment</button><button type="button" id="export-research">Download synthetic observations CSV</button></div>
+      <div class="stat-grid research-results" aria-live="off">
+        <div><span>Fitted speed</span><strong id="fit-speed">—</strong></div>
+        <div><span>Approximate 1σ statistical uncertainty</span><strong id="fit-error">—</strong></div>
+        <div><span>Finite-speed residual RMSE</span><strong id="finite-rmse">—</strong></div>
+        <div><span>Instantaneous-light residual RMSE</span><strong id="instant-rmse">—</strong></div>
+      </div>
+      <div class="legend"><span><i class="legend-line modern"></i>Finite-speed fit</span><span><i class="legend-line compare"></i>Instantaneous hypothesis (constant offset)</span><span><i class="legend-point"></i>Synthetic observations</span></div>
+      <div class="scrollable-visual" tabindex="0" aria-label="Scrollable synthetic research chart on narrow screens">
+        <svg id="research-plot" viewBox="0 0 760 330" role="img" aria-label="Synthetic timing measurements with a fitted finite-speed curve and an instantaneous-light constant baseline."><title>Fitting synthetic eclipse arrival delays</title></svg>
+      </div>
+      <p class="feedback" id="research-feedback" role="status" aria-live="polite"></p>
+      <p class="visual-footnote">The fitted model includes a free clock offset and slope. Uncertainty is the ordinary least-squares statistical standard error under independent errors; it deliberately excludes the hidden systematic scale bias. A scale error is confounded with 1/c. No measured data, ephemeris fit, publication-quality uncertainty or experimental evidence is being generated here.</p>
+    </section>
+
+    <section class="panel from-level2" id="distance-lab" aria-labelledby="distance-title">
+      <div class="section-heading"><div><p class="eyebrow">CALCULATOR · DISTANCE ÷ SPEED</p><h2 id="distance-title">How long does light take to get here?</h2></div></div>
+      <div class="calculator-grid">
+        <div>
+          <label for="journey">Choose a journey</label>
           <select id="journey">
             <option value="0.001">Across 1 metre</option>
             <option value="384400" selected>Earth to Moon (mean distance)</option>
             <option value="149597870.7">Sun to Earth (1 AU)</option>
-            <option value="628311057">Earth to Jupiter (near, idealized)</option>
+            <option value="628311057">Earth to Jupiter (4.2 AU in model)</option>
             <option value="9460730472580.8">One light-year</option>
-            <option value="custom">Enter my own distance</option>
+            <option value="custom">My own distance</option>
           </select>
           <label for="custom-km">Custom distance (km)</label>
-          <input id="custom-km" type="number" value="1000000" min="0" max="10000000000000" step="any" disabled>
-          <p class="note">Distances are illustrative: the Moon's and planets' real distances vary. Here, one light-year uses 365.25 days.</p>
+          <input id="custom-km" type="number" min="0" max="10000000000000" step="any" value="1000000" disabled>
         </div>
-        <div class="journey-output">
-          <small>LIGHT TRAVEL TIME</small>
-          <strong id="journey-time">1.282 seconds</strong>
-          <p id="journey-equation">384,400 km ÷ 299,792.458 km/s</p>
-          <div class="travel-track" aria-hidden="true"><span class="travel-source">◉</span><span class="travel-ray"></span><span class="travel-target">◎</span></div>
-          <p id="journey-explanation" class="note">No signal can carry information through vacuum faster than c.</p>
-        </div>
+        <div class="calculator-result"><p>One-way vacuum light time</p><strong id="journey-time">1.282 seconds</strong><p id="journey-equation">384,400 km ÷ 299,792.458 km/s</p><p id="journey-explanation" class="visual-footnote">The Moon's distance changes over its orbit.</p></div>
       </div>
     </section>
 
-    <section class="panel learning" id="learn" aria-labelledby="learn-heading">
-      <div class="panel-heading"><div><p class="eyebrow">ONE PHENOMENON, FOUR DEPTHS</p><h2 id="learn-heading">Choose your learning level</h2></div></div>
-      <div class="level-tabs" role="tablist" aria-label="Choose explanation depth">
-        <button role="tab" id="tab-1" aria-controls="level-1" aria-selected="true" tabindex="0" data-level="1">1 · Discover</button>
-        <button role="tab" id="tab-2" aria-controls="level-2" aria-selected="false" tabindex="-1" data-level="2">2 · Explore</button>
-        <button role="tab" id="tab-3" aria-controls="level-3" aria-selected="false" tabindex="-1" data-level="3">3 · Analyze</button>
-        <button role="tab" id="tab-4" aria-controls="level-4" aria-selected="false" tabindex="-1" data-level="4">4 · Research</button>
-      </div>
-
-      <article class="level-content" id="level-1" role="tabpanel" aria-labelledby="tab-1" tabindex="0">
-        <h3>Discover and play <small>roughly ages 7–10</small></h3>
-        <p>Imagine you are watching a friend clap from very far away. You see the clap before you hear it, because sound is slower than light. But even light needs a tiny amount of time to travel!</p>
-        <p>Now think about Io, a moon of giant Jupiter. It disappears into Jupiter's shadow again and again. It's like a giant clock in space. When Earth is far away, we see that clock's tick later—even though the tick itself did not change.</p>
-        <div class="challenge"><strong>Try this:</strong> Set Earth to <strong>0°</strong> and read the travel time. Move it to <strong>180°</strong>. Does the light have a longer trip? Choose “Light arrives instantly.” What happens to the orange comparison line?</div>
-        <p><strong>Remember:</strong> what we see now may have happened a little while ago. Sunlight reaching us left the Sun about eight minutes earlier.</p>
+    <section class="panel learning" id="explanation" aria-labelledby="explanation-title">
+      <div class="section-heading"><div><p class="eyebrow">EXPLAIN WHAT YOU OBSERVED</p><h2 id="explanation-title">The science behind the experiment</h2></div></div>
+      <article id="level-1" class="level-body" role="tabpanel" aria-labelledby="tab-1" tabindex="0">
+        <h3>1 · Discover and play</h3>
+        <p>Imagine seeing your friend clap from across a giant field. You see the clap before you hear it: sound needs time to travel. <strong>Light travels much faster than sound, but even light takes time.</strong></p>
+        <p>Jupiter has a moon called Io. Sometimes Io disappears into Jupiter's shadow. That happens at Jupiter first. Earth sees the change only when light has finished the trip to us. A longer trip means a later view.</p>
+        <div class="challenge"><strong>Try:</strong> Click <em>Near Jupiter</em>, then <em>Send the eclipse signal</em>. Next try <em>Far away</em>. Which trip takes longer? Why does the eclipse itself not have to happen any later?</div>
+        <p>That is what astronomers learned: far-away things show us light from the past. Sunlight reaching Earth began its journey about eight minutes earlier.</p>
       </article>
-
-      <article class="level-content" id="level-2" role="tabpanel" aria-labelledby="tab-2" tabindex="0" hidden>
-        <h3>Explore and understand <small>roughly ages 14–18</small></h3>
-        <p>Speed tells us how far something travels in a given time: <strong>speed = distance ÷ time</strong>. In a vacuum, light moves at <strong>299,792,458 metres per second</strong>. This value is conventionally written as <em>c</em>. Light travels more slowly through materials such as water or glass; <em>c</em> refers to vacuum.</p>
-        <p>Io circles Jupiter in approximately 1.769 days. Eclipses form a repeatable clock, but the <em>arrival</em> time of light depends on distance. Over months, the extra seconds between successive observed eclipses accumulate into a difference of minutes. Near and far positions along Earth's orbit differ in distance to Jupiter by approximately 2 astronomical units (AU) in our simplified geometry.</p>
-        <div class="equation">travel time = distance / c</div>
-        <p>One AU is exactly 149,597,870,700 m. The extra time across 2 AU is approximately <strong>998 seconds = 16 min 38 s</strong>. Rømer's historical estimate of 22 minutes was longer, but his observation that the time was <em>not zero</em> was revolutionary.</p>
-        <div class="challenge"><strong>Try this:</strong> Choose the “Rømer's historical” comparison. At 180°, how far apart are the two model curves? Why is the estimated speed different? Then calculate the Moon's one-way light-time in the calculator.</div>
-        <p>GPS, radar ranging, spacecraft communications, and astronomy all depend on finite signal propagation times. A <strong>light-year</strong> is a unit of <em>distance</em>, not time: the distance light covers in a Julian year.</p>
+      <article id="level-2" class="level-body" role="tabpanel" aria-labelledby="tab-2" tabindex="0" hidden>
+        <h3>2 · Explore and understand</h3>
+        <p>In 1676, astronomer <strong>Ole Rømer</strong> studied repeated appearances and disappearances of Jupiter's moon Io. When Earth moved away from Jupiter, observed events became progressively later; when Earth approached, they became earlier. A small extra delay per event accumulates over many events.</p>
+        <p>Light's vacuum speed is <strong>299,792,458 m/s</strong>, written c. Travel time is <em>t = d/c</em>. One astronomical unit (AU) is exactly 149,597,870,700 m. In our simplified geometry, the difference between the near and far journeys is 2 AU, corresponding to about 16 min 38 s of extra light time.</p>
+        <p>Rømer proposed that light needed roughly <strong>22 minutes</strong> to cross the diameter of Earth's orbit—an imperfect numerical estimate, but evidence that the delay was not zero. His prediction that an Io event in November 1676 would appear roughly ten minutes late matched observations. That specific prediction is a historical comparison with earlier astronomical tables, <em>not</em> the 16-minute near–far difference in our diagram.</p>
+        <div class="challenge"><strong>Try:</strong> Move Earth from 0° to 180° and read the travel time. Change the comparison from instantaneous light to Rømer's estimate. Then use the light-travel calculator to find the signal time between Earth and the Moon.</div>
+        <p>Real astronomical distances change. Light in glass or water has different propagation characteristics; c always means the speed of light in vacuum.</p>
       </article>
-
-      <article class="level-content" id="level-3" role="tabpanel" aria-labelledby="tab-3" tabindex="0" hidden>
-        <h3>Analyze and model <small>bachelor level</small></h3>
-        <p>Set Jupiter at the fixed position <em>(R, 0)</em> and Earth on a coplanar circular orbit of radius <em>a = 1 AU</em>. The model holds Jupiter's heliocentric distance at <em>R = 5.2 AU</em>, neglects Jupiter's orbital motion, treats Io's position relative to Jupiter as negligible, and uses Euclidean distances:</p>
-        <div class="equation">D(θ) = √[R² + a² − 2Ra cos(θ)]</div>
-        <p>For a constant vacuum propagation speed <em>c</em>, the light-travel time is <em>τ(θ) = D(θ) / c</em>. The plotted residual relative to the minimum distance is:</p>
-        <div class="equation">Δτ(θ) = [D(θ) − (R − a)] / c</div>
-        <p>Thus the largest residual is <em>Δτ(π) = 2a/c</em>, independent of R as long as R &gt; a. Because the astronomical unit and <em>c</em> have exact SI values, this idealized difference is approximately 998.009 seconds. The “instantaneous” comparison sets propagation delay to zero; the historical comparison replaces <em>c</em> by the speed <em>c<sub>R</sub> = 2 AU / (22 min)</em> implied retrospectively by Rømer's time estimate <strong>using today's AU</strong>.</p>
-        <p>Let successive eclipse events occur at idealized emission times <em>t<sub>n</sub> = t<sub>0</sub> + nP</em>, where <em>P ≈ 1.769137786 days</em>. An approximate observer's arrival time is <em>T<sub>n</sub> ≈ t<sub>n</sub> + D[θ(t<sub>n</sub>)]/c</em>. Therefore:</p>
-        <div class="equation">T<sub>n+1</sub> − T<sub>n</sub> ≈ P + {D[θ(t<sub>n</sub> + P)] − D[θ(t<sub>n</sub>)]}/c</div>
-        <p>The “one Io clock interval” readout shows that last correction in seconds, with Earth moving 360° × P / 365.25 days between events. It is <strong>not</strong> the same quantity as the cumulative delay displayed in the graph.</p>
-        <div class="challenge"><strong>Try this:</strong> Find orbital positions where the clock-interval correction is positive, zero or negative. Explain why the cumulative residual can be maximal exactly when the adjacent-eclipse correction is approximately zero.</div>
+      <article id="level-3" class="level-body" role="tabpanel" aria-labelledby="tab-3" tabindex="0" hidden>
+        <h3>3 · Analyze and model</h3>
+        <p>Let Earth travel on a coplanar circle of radius a = 1 AU about the Sun. Fix Jupiter at (R,0), where R &gt; a. The Earth–Jupiter separation follows the cosine law: <em>D(θ)=√(R²+a²−2Ra cos θ)</em>. Travel time is τ(θ)=D(θ)/c after converting AU to kilometres.</p>
+        <p>The cumulative arrival-time residual relative to θ=0 is Δτ(θ)=[D(θ)−(R−a)]/c. Its maximum at θ=180° is <strong>2a/c</strong>, independent of R for this geometry. This residual is not itself the extra delay between consecutive Io eclipses.</p>
+        <p>For a clock with emission period P, with Earth moving 360°P/Y between ticks (Y=365.25 days), the extra observed interval is approximately <em>δP(θ)=[D(θ+360°P/Y)−D(θ)]/c</em>. Its sign changes as Earth moves from receding to approaching Jupiter. At the farthest point, the cumulative residual is largest even though the adjacent-interval correction is close to zero.</p>
+        <p>Use the model sliders to adjust R and P. Change the graph quantity between <em>cumulative difference in minutes</em> and <em>per-eclipse interval correction in seconds</em>. The hypothetical-speed comparison is a deliberately counterfactual test, not a change to physical c. The exported CSV contains model predictions only.</p>
+        <div class="challenge"><strong>Try:</strong> Increase R while keeping Earth's orbital radius at 1 AU. Why does the maximum cumulative delay stay approximately constant, while the shape of the interval-correction curve changes? Use the two graphs to explain.</div>
       </article>
-
-      <article class="level-content" id="level-4" role="tabpanel" aria-labelledby="tab-4" tabindex="0" hidden>
-        <h3>Investigate and research <small>master level</small></h3>
-        <p><strong>Forward model and observability.</strong> A more faithful reconstruction should solve a light-time equation for each observed Io eclipse. For emission at <em>t<sub>e</sub></em> and reception at <em>t<sub>o</sub></em>, <em>t<sub>o</sub> − t<sub>e</sub> = |r<sub>E</sub>(t<sub>o</sub>) − r<sub>Io</sub>(t<sub>e</sub>)|/c</em>, with positions taken from an ephemeris. The model on this page instead evaluates a static Earth–Jupiter separation at an orbital phase. It ignores light-time iteration, planetary eccentricities and inclinations, Io's orbital perturbations, changes in the Sun–Jupiter distance, eclipse geometry and visibility, observer location, and instrumental timing uncertainty.</p>
-        <p><strong>Inference.</strong> With measured eclipse residuals <em>y<sub>i</sub></em> and an ephemeris-based baseline <em>D<sub>i</sub></em>, a model might be <em>y<sub>i</sub> = α + β[D<sub>i</sub> − D<sub>ref</sub>] + ε<sub>i</sub></em>, where <em>β = 1/c</em>, <em>α</em> is an offset and <em>ε<sub>i</sub></em> includes clock and model errors. Correlated errors and ephemeris uncertainties matter; unknown orbital dynamics can be partially degenerate with a propagation delay. The present graph does not fit any empirical eclipse timings or estimate a confidence interval.</p>
-        <p><strong>Historical interpretation.</strong> Giovanni Domenico Cassini recognized timing irregularities, while Rømer defended a finite-propagation interpretation and made a falsifiable eclipse prediction in 1676. His 22-minute figure is a historical light-time inference, not an SI-calibrated direct measurement of 299,792,458 m/s. Huygens later used such timing information to infer a numerical speed. Bradley's 1728 stellar-aberration work supplied an independent method; later laboratory measurements and electromagnetic theory expanded the evidence base.</p>
-        <p><strong>Contemporary physics.</strong> In special relativity <em>c</em> is an invariant limiting speed for causal signals locally in vacuum, not merely a measured property of a particular light source. Since 1983 the metre has been defined through a fixed numerical value of <em>c</em> (retained in the revised SI). Its numerical exactness in m/s is therefore definitional; experiments test physical theories and realize length/time standards, rather than repeatedly assigning uncertainty to that defined number. Wave phase, group velocity, signal front and propagation in dispersive media require separate treatment.</p>
-        <div class="challenge"><strong>Research challenge:</strong> What bias would result if one tried to fit 1/c while assuming Jupiter remains fixed for a full Earth year? Formulate a residual model with an unknown ephemeris error and explain how independent timing or astrometric observations might break that degeneracy.</div>
+      <article id="level-4" class="level-body" role="tabpanel" aria-labelledby="tab-4" tabindex="0" hidden>
+        <h3>4 · Investigate and research</h3>
+        <p>A realistic inversion needs retarded-time geometry. For an emission event at t<sub>e</sub> and observation at t<sub>o</sub>, solve t<sub>o</sub>−t<sub>e</sub> = |r<sub>E</sub>(t<sub>o</sub>)−r<sub>Io</sub>(t<sub>e</sub>)|/c using accurate ephemerides. The simplified model neglects Jupiter's motion, orbital eccentricity and inclination, Io's position and perturbations, eclipse visibility, the observer's location, atmospheric and instrumental effects, and light-time iteration.</p>
+        <p>In the synthetic inversion, let x<sub>i</sub> be predicted extra light-time calculated at modern c for each orbital phase. Generate y<sub>i</sub> = α+(1+b)x<sub>i</sub>+ε<sub>i</sub>, with α a fixed clock offset, b a deliberately hidden distance-scale bias and ε independent Gaussian timing noise. Fit <em>y = A + kx</em> by ordinary least squares; the recovered speed is <em>ĉ = c/k</em>. An instantaneous-light model uses a free constant only, A = mean(y).</p>
+        <p>The ordinary least-squares variance of the slope is approximately <em>s² / Σ(x<sub>i</sub>−x̄)²</em>, with s² = SSE/(n−2). Propagate it to the speed using <em>σ<sub>c</sub> ≈ c σ<sub>k</sub>/k²</em>. This is <strong>statistical uncertainty conditional on the chosen model</strong>, not total uncertainty. A systematic distance-scale error biases k and c even with many data points; random noise alone does not explain every possible discrepancy.</p>
+        <p>Historically, Giovanni Domenico Cassini also studied Io's timing irregularities and considered finite light propagation. Rømer developed a particularly persuasive argument and prediction in 1676; subsequent historical scholarship examines their respective roles. Rømer did not directly measure the modern SI value of c, which is now exact <em>by definition</em> under the SI metre convention. Neither our circular-orbit simulation nor its generated data is a reconstruction of the Paris Observatory's 1676 observations.</p>
+        <div class="challenge"><strong>Try:</strong> Set noise to zero and distance bias to +10%. Does the fit give exactly the defined vacuum speed? Now add noise and increase sample count. Which error decreases, and which systematic effect remains? Explain the parameter degeneracy.</div>
       </article>
     </section>
 
-    <section class="panel references" id="sources" aria-labelledby="sources-heading">
-      <p class="eyebrow">CHECKABLE SOURCES</p><h2 id="sources-heading">References and further reading</h2>
+    <section class="panel" id="history" aria-labelledby="history-title">
+      <p class="eyebrow">THE DISCOVERY · 1676</p>
+      <h2 id="history-title">A cosmic clock changed astronomy</h2>
+      <div class="history-grid">
+        <div><strong>1</strong><h3>Predict the clock</h3><p>Io's recurring eclipses make a repeated event astronomers can compare across months.</p></div>
+        <div><strong>2</strong><h3>Notice a pattern</h3><p>As Earth recedes, arrival times become later; as it approaches, they become earlier.</p></div>
+        <div><strong>3</strong><h3>Test an explanation</h3><p>Rømer publicly predicted a roughly ten-minute delay for an event in November 1676. It was observed.</p></div>
+        <div><strong>4</strong><h3>Infer finite light-time</h3><p>He inferred about 22 minutes to cross Earth's orbital diameter; the modern figure is about 16 min 38 s.</p></div>
+      </div>
+      <p class="visual-footnote">This episode involved a wider astronomical community, including Cassini and Picard. The historical prediction concerned an event compared with an earlier timing forecast; it must not be confused with our full near–far geometric maximum.</p>
+    </section>
+
+    <section class="panel references" id="references" aria-labelledby="references-title">
+      <p class="eyebrow">SOURCES AND SCIENTIFIC LIMITS</p>
+      <h2 id="references-title">Further reading</h2>
       <ul>
-        <li><a href="https://www.sciencenorway.no/culture-history-history-of-science/350-years-ago-this-man-discovered-that-light-has-a-finite-speed/2737969">Elise Kjørstad (2026), “350 years ago, this man discovered that light has a finite speed,” ScienceNorway, 16 November 2026</a> — contemporary historical inspiration.</li>
-        <li><a href="https://nbi.ku.dk/english/www/roemer/roemer/lysets_toeven/">Niels Bohr Institute, University of Copenhagen — Ole Rømer and the retardation of light</a> — historical context and the 22-minute estimate.</li>
-        <li><a href="https://celerite.observatoiredeparis.psl.eu/">Observatoire de Paris–PSL — 350 years of Rømer's light-speed discovery</a> — archival and historical overview.</li>
-        <li><a href="https://www.optica-opn.org/home/articles/volume_20/issue_7/features/ole_r%C3%B8mer_and_the_speed_of_light/">Optics &amp; Photonics News (2009), “Ole Rømer and the Speed of Light”</a> — deeper historical analysis.</li>
-        <li><a href="https://www.bipm.org/en/si-base-units/metre">BIPM — definition of the metre</a> — exact SI value of vacuum <em>c</em>.</li>
-        <li><a href="https://cneos.jpl.nasa.gov/glossary/au.html">NASA/JPL — astronomical unit</a> — exactly 149,597,870,700 m.</li>
-        <li><a href="https://science.nasa.gov/moon/by-the-numbers/">NASA Science — Earth and Moon by the numbers</a> — mean lunar distance.</li>
-        <li><a href="https://openstax.org/books/astronomy-2e/pages/19-1-fundamental-units-of-distance">OpenStax Astronomy 2e, §19.1</a> — light-years and astronomical distances.</li>
+        <li><a href="https://www.sciencenorway.no/culture-history-history-of-science/350-years-ago-this-man-discovered-that-light-has-a-finite-speed/2737969">Elise Kjørstad, ScienceNorway (16 November 2026): “350 years ago, this man discovered that light has a finite speed”</a> — original inspiration.</li>
+        <li><a href="https://nbi.ku.dk/hhh/roemer/roemer/lysets_toeven/">Niels Bohr Institute, University of Copenhagen: Ole Rømer og lysets tøven</a> — historical context (in Danish).</li>
+        <li><a href="https://clic.obspm.fr/">Observatoire de Paris–PSL: La vitesse de la lumière — 350 ans de Rømer</a> — historical account including Cassini's role (in French).</li>
+        <li><a href="https://www.optica-opn.org/home/articles/volume_20/issue_7/features/ole_r%C3%B8mer_and_the_speed_of_light/">Optics &amp; Photonics News (2009): Ole Rømer and the Speed of Light</a> — contextual history.</li>
+        <li><a href="https://www.bipm.org/en/si-base-units/metre">BIPM: The definition of the metre</a> — defined exact vacuum light speed.</li>
+        <li><a href="https://cneos.jpl.nasa.gov/glossary/au.html">NASA/JPL: Astronomical unit</a> — exact value of 1 AU.</li>
+        <li><a href="https://nssdc.gsfc.nasa.gov/planetary/factsheet/joviansatfact.html">NASA: Jovian satellite fact sheet</a> — Io's orbital period.</li>
+        <li><a href="https://openstax.org/books/astronomy-2e/pages/19-1-fundamental-units-of-distance">OpenStax Astronomy 2e: Fundamental units of distance</a> — light-years and distance units.</li>
       </ul>
-      <p class="note">Scientific scope: this is a pedagogical geometric simulation, not a reproduction of Rømer's original observing logs, a full Io ephemeris, or a determination of c from telescope data. No data or graphics from the ScienceNorway article are reproduced.</p>
+      <p class="visual-footnote">All graphics, timings and graphs here are generated educational models. They are not historic data, contemporary astronomical measurements, or fitted ephemerides. Light speed in a vacuum is fixed at 299,792,458 metres per second in SI.</p>
     </section>
-    <aside class="related"><h2>Keep exploring</h2><a href="../how-lidar-works/">How LiDAR works — measure distance with light travel time</a><a href="../michelson-morley-experiment/">Michelson–Morley — testing light propagation and relativity</a><a href="../cosmic-distance-ladder/">Cosmic Distance Ladder — looking farther into the past</a></aside>
+
+    <aside class="related" aria-label="Related concepts">
+      <h2>Related demonstrations</h2>
+      <a href="../how-lidar-works/">LiDAR — measure distance using returning light</a>
+      <a href="../michelson-morley-experiment/">Michelson–Morley — light propagation and relativity</a>
+      <a href="../cosmic-distance-ladder/">Cosmic Distance Ladder — distance and looking back in time</a>
+    </aside>
   </main>
-  <footer><a href="../../#category-physics">← Back to Physics concepts</a><span>Science Concepts Demonstrated · Open educational resource</span></footer>
+  <footer><a href="../../#category-physics">← Browse Physics concepts</a><span>Science Concepts Demonstrated · Educational models</span></footer>
 </body>
 </html>
